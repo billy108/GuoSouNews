@@ -1,65 +1,76 @@
 package com.example.administrator.guosounews.ui;
 
-import android.app.Activity;
+
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.GuidePagerAdapter;
-import com.lidroid.xutils.view.annotation.ViewInject;
+import com.example.administrator.guosounews.base.BasePage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuideActivity extends Activity implements ViewPager.OnPageChangeListener{
-    @ViewInject(R.id.viewpager)
+public class GuideFragment extends Fragment implements ViewPager.OnPageChangeListener{
+    private Context context;
+
     private ViewPager vp;
     private GuidePagerAdapter vpAdapter;
-    private List<View> views;
+    private List<View> views = new ArrayList<View>();
+    private View view;
+
     // 底部小点图片
     private ImageView[] dots;
 
     // 记录当前选中位置
     private int currentIndex;
 
+    public GuideFragment(Context context) {
+        this.context = context;
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_guide);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = LayoutInflater.from(context).inflate(R.layout.layout_guide, null);
 
         // 初始化页面
         initViews();
 
         // 初始化底部小点
         initDots();
+
+        return view;
     }
 
     private void initViews() {
-        LayoutInflater inflater = LayoutInflater.from(this);
+        LayoutInflater in = LayoutInflater.from(context);
 
-        views = new ArrayList<View>();
         // 初始化引导图片列表
-        views.add(inflater.inflate(R.layout.what_new_one, null));
-        views.add(inflater.inflate(R.layout.what_new_two, null));
-        views.add(inflater.inflate(R.layout.what_new_three, null));
-        views.add(inflater.inflate(R.layout.what_new_four, null));
-
+        views.add(in.inflate(R.layout.what_new_one, null));
+        views.add(in.inflate(R.layout.what_new_one, null));
+        views.add(in.inflate(R.layout.what_new_one, null));
+        views.add(in.inflate(R.layout.what_new_one, null));
         // 初始化Adapter
-        vpAdapter = new GuidePagerAdapter(views, this);
+        vpAdapter = new GuidePagerAdapter(views, getActivity());
 
-        vp = (ViewPager) findViewById(R.id.viewpager);
+        vp = (ViewPager) view.findViewById(R.id.viewpager);
         vp.setAdapter(vpAdapter);
         // 绑定回调
         vp.setOnPageChangeListener(this);
     }
 
     private void initDots() {
-        LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
+        LinearLayout ll = (LinearLayout) view.findViewById(R.id.ll);
 
         dots = new ImageView[views.size()];
 
@@ -73,28 +84,6 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         dots[currentIndex].setEnabled(false);// 设置为白色，即选中状态
     }
 
-    private void setCurrentDot(int position) {
-        if (position < 0 || position > views.size() - 1 || currentIndex == position) {
-            return;
-        }
-
-        dots[position].setEnabled(false);
-        dots[currentIndex].setEnabled(true);
-
-        currentIndex = position;
-    }
-
-    // 不可点击返回键
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-
-
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -102,8 +91,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
 
     @Override
     public void onPageSelected(int position) {
-        // 设置底部小点选中状态
-        setCurrentDot(position);
+
     }
 
     @Override
