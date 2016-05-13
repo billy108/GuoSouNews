@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.base.BasePage;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
@@ -21,7 +22,9 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class FunctionPage extends BasePage {
@@ -37,6 +40,7 @@ public class FunctionPage extends BasePage {
 		textView.setText("我是首页");
 		return textView;
 	}
+
 
 	@Override
 	public void initData() {
@@ -75,9 +79,7 @@ public class FunctionPage extends BasePage {
 		if (menuNewCenterList.size() == 0 && result != null) {
 			BaseFragment.flag = true;
 			menuNewCenterList.add("新闻");
-			menuNewCenterList.add("专题");
-			menuNewCenterList.add("组图");
-			menuNewCenterList.add("互动");
+			menuNewCenterList.add("订阅");
 			menuNewCenterList.add("投票");
 		}
 
