@@ -19,6 +19,7 @@ import com.example.administrator.guosounews.home.SettingPage;
 import com.example.administrator.guosounews.home.SmartServicePage;
 import com.example.administrator.guosounews.ui.CustomViewPager;
 import com.example.administrator.guosounews.ui.LazyViewPager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -28,10 +29,15 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.viewpager)
     private LazyViewPager viewPager;
-//    @ViewInject(R.id.main_radio)
     private RadioGroup main_radio;
-//    private int checkId = R.id.rb_function;
     private View view;
+
+    @Override
+    public View initView(LayoutInflater inflater) {
+        view = inflater.inflate(R.layout.frag_home2, null);
+        ViewUtils.inject(this, view);
+        return view;
+    }
 
     List<BasePage> list = new ArrayList<BasePage>();
     @Override
@@ -52,11 +58,11 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-//                if (0 == position) {
-//                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-//                } else {
-//                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-//                }
+                if (0 == position) {
+                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+                } else {
+                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+                }
                 BasePage page = list.get(position);
                 if (!flag) {
                     page.initData();
@@ -97,9 +103,9 @@ public class HomeFragment extends BaseFragment {
 //            }
 //        });
     }
-
     class HomePageAdapter extends PagerAdapter {
         private Context ct;
+
         private List<BasePage> list;
 
         public HomePageAdapter(Context ct, List<BasePage> list) {
@@ -121,7 +127,6 @@ public class HomeFragment extends BaseFragment {
         public void destroyItem(ViewGroup container, int position, Object object) {
             ((LazyViewPager) container).removeView(list.get(position).getRootView());
         }
-
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             if(position == 0){
@@ -130,13 +135,7 @@ public class HomeFragment extends BaseFragment {
             ((LazyViewPager) container).addView(list.get(position).getRootView(), 0);
             return list.get(position).getRootView();
         }
-    }
 
-    @Override
-    public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.frag_home2, null);
-        ViewUtils.inject(this, view);
-        return view;
     }
 }
 
