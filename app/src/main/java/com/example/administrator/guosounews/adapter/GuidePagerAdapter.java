@@ -56,7 +56,7 @@ public class GuidePagerAdapter extends PagerAdapter {
 				@Override
 				public void onClick(View v) {
 					// 设置已经引导
-//					setGuided();
+					setGuided();
 					goHome();
 				}
 
