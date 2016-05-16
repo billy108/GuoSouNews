@@ -62,11 +62,11 @@ public class MenuFragment2 extends BaseFragment {
 
     class MenuAdapter extends MyBaseAdapter {
         private int curPostion = 0;
-        Integer[] leftmenu_item_icon = {R.drawable.left_menu_home,
+        Integer[] left_menu_item_icon = {R.drawable.left_menu_home,
                 R.drawable.left_menu_subscription,
                 R.drawable.left_menu_vote};
 
-        Integer[] leftmenu_item_icon_selected = {R.drawable.left_menu_home_selected,
+        Integer[] left_menu_item_icon_selected = {R.drawable.left_menu_home_selected,
                 R.drawable.left_menu_subscription_selected,
                 R.drawable.left_menu_vote_selected};
 
@@ -87,14 +87,14 @@ public class MenuFragment2 extends BaseFragment {
             TextView tv = (TextView) convertView.findViewById(R.id.tv_menu_item);
             ImageView iv = (ImageView) convertView.findViewById(R.id.iv_menu_item);
             tv.setText(menuList.get(position));
-            iv.setBackgroundResource(leftmenu_item_icon[position]);
+            iv.setBackgroundResource(left_menu_item_icon[position]);
 
             if (curPostion == position) {
                 tv.setTextColor(getResources().getColor(R.color.colorAccent));
-                iv.setBackgroundResource(leftmenu_item_icon_selected[position]);
+                iv.setBackgroundResource(left_menu_item_icon_selected[position]);
             } else {
                 tv.setTextColor(getResources().getColor(R.color.white));
-                iv.setBackgroundResource(leftmenu_item_icon[position]);
+                iv.setBackgroundResource(left_menu_item_icon[position]);
 //                convertView.setBackgroundResource(R.drawable.enter_btn_normal);
             }
             return convertView;

@@ -14,7 +14,7 @@
             android:id="@+id/top_title_sliding"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:background="@drawable/detail_fav_btn"
+            android:background="@drawable/header_left_icon"
             />
 
         <TextView

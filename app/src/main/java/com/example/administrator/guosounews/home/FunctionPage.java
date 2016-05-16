@@ -36,9 +36,8 @@ public class FunctionPage extends BasePage {
 
 	@Override
 	public View initView(LayoutInflater inflater) {
-		TextView textView = new TextView(ct);
-		textView.setText("我是首页");
-		return textView;
+		View view = inflater.inflate(R.layout.layout_hot, null);
+		return view;
 	}
 
 

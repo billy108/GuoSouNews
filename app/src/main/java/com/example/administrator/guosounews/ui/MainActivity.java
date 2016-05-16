@@ -1,5 +1,6 @@
 package com.example.administrator.guosounews.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.fragment.HomeFragment;
 import com.example.administrator.guosounews.fragment.MenuFragment2;
+import com.example.administrator.guosounews.fragment.RightMenuFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -31,16 +33,6 @@ public class MainActivity extends SlidingFragmentActivity {
 
         initMenuData();
 
-//        Fragment1 fragment1 = new Fragment1();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment1).commit();
-//        slidingMenu.setSecondaryMenu(R.layout.right_menu);
-
-//        slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
-//        slidingMenu.setSecondaryShadowDrawable(R.drawable.shadowright);
-//        RightMenuFragment rightMenuFragment = new RightMenuFragment();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.right_menu_frame,
-//                rightMenuFragment).commit();
-
     }
 
     private void initFragment() {
@@ -53,13 +45,16 @@ public class MainActivity extends SlidingFragmentActivity {
                 homeFragment, "Home").commit();
     }
 
-    private List<String> menuNewCenterList = new ArrayList<String>();
     private void initMenuData() {
         slidingMenu = getSlidingMenu();
-        slidingMenu.setMode(SlidingMenu.LEFT);
+        slidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
         slidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
-//        slidingMenu.setShadowDrawable(R.drawable.shadow);
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+
+        RightMenuFragment rightMenuFragment = new RightMenuFragment();
+        slidingMenu.setSecondaryMenu(R.layout.right_menu);
+        getSupportFragmentManager().beginTransaction().replace(R.id.right_menu_frame,
+                rightMenuFragment).commit();
     }
 
     public void switchFragment(Fragment fragment){
@@ -74,9 +69,4 @@ public class MainActivity extends SlidingFragmentActivity {
         return menuFragment;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 }

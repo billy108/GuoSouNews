@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
 import com.example.administrator.guosounews.R;
@@ -22,6 +23,7 @@ import com.example.administrator.guosounews.ui.LazyViewPager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,13 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.viewpager)
     private LazyViewPager viewPager;
+
+    @ViewInject(R.id.top_title_sliding)
+    private ImageButton top_sliding_btn;
+
+    @ViewInject(R.id.top_title_refresh)
+    private ImageButton top_refresh_btn;
+
     private RadioGroup main_radio;
     private View view;
 
@@ -36,8 +45,29 @@ public class HomeFragment extends BaseFragment {
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.frag_home2, null);
         ViewUtils.inject(this, view);
+        initOnclick();
         return view;
     }
+
+    private void initOnclick() {
+        top_refresh_btn.setOnClickListener(listener);
+        top_sliding_btn.setOnClickListener(listener);
+    }
+
+    private View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.top_title_refresh:
+
+                    break;
+                case R.id.top_title_sliding:
+
+                    break;
+            }
+        }
+    };
+
 
     List<BasePage> list = new ArrayList<BasePage>();
     @Override
@@ -58,11 +88,11 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                if (0 == position) {
-                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-                } else {
-                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-                }
+//                if (0 == position) {
+//                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+//                } else {
+//                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+//                }
                 BasePage page = list.get(position);
                 if (!flag) {
                     page.initData();
