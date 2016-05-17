@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/news_viewpager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/droidtools_default_pic">
+        android:layout_height="200dp">
 
-    </android.support.v4.view.ViewPager>
-</LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/news_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            >
+        </android.support.v4.view.ViewPager>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="#33000000"
+            android:gravity="center_vertical"
+            android:layout_alignBottom="@id/news_viewpager"
+            android:layout_height="30dp">
+
+            <TextView
+                android:id="@+id/news_viewpager_text"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/white"
+                android:text="111111111111111111111"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/point_group"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

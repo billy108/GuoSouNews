@@ -41,6 +41,8 @@ public class HomeFragment extends BaseFragment {
     private RadioGroup main_radio;
     private View view;
 
+    FunctionPage hot_serach;
+
     @Override
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.frag_home2, null);
@@ -72,7 +74,8 @@ public class HomeFragment extends BaseFragment {
     List<BasePage> list = new ArrayList<BasePage>();
     @Override
     public void initData(Bundle savedInstanceState) {
-        list.add(new FunctionPage(ct));
+        hot_serach = new FunctionPage(ct);
+        list.add(hot_serach);
         list.add(new NewsCenterPage(ct));
         list.add(new SmartServicePage(ct));
         list.add(new GovAffairsPage(ct));
@@ -156,6 +159,7 @@ public class HomeFragment extends BaseFragment {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             ((LazyViewPager) container).removeView(list.get(position).getRootView());
+            hot_serach.isRuning = false;
         }
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
