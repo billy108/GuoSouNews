@@ -30,7 +30,7 @@
             android:layout_height="wrap_content" />
 
         <ImageButton
-            android:id="@+id/top_title_refresh"
+            android:id="@+id/top_title_sliding2"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
@@ -45,7 +45,23 @@
         android:layout_height="0dip"
         android:layout_weight="1.0" />
     -->
+    <HorizontalScrollView
+        android:id="@+id/scrollView"
+        android:scrollbars="none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:id="@+id/news_categories_ll"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_height="40dp">
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
     <view
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

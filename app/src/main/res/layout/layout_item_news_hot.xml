@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+     >
+    <ImageView
+        android:id="@+id/item_news_image"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/dark_dot"/>
+
+    <RelativeLayout
+
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/item_news_title"
+            android:textSize="18sp"
+            android:text="11111111111111111"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/item_news_from"
+            android:textSize="10sp"
+            android:text="11111111111111111"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_toRightOf="@id/item_news_from"
+            android:id="@+id/item_news_time"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="5dp"
+            android:text="11111111111111111"
+            android:layout_width="wrap_content"
+            android:textSize="10sp"
+            android:layout_height="10dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

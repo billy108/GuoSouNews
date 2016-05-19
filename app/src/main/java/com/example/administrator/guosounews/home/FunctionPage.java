@@ -1,16 +1,19 @@
 package com.example.administrator.guosounews.home;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
@@ -35,7 +38,7 @@ public class FunctionPage extends BasePage {
 	private List<ImageView> imageList;
 	private int lastPointPostion;
 	public boolean isRuning = false;
-
+	
 	public FunctionPage(Context ct) {
 		super(ct);
 	}
@@ -53,6 +56,17 @@ public class FunctionPage extends BasePage {
 
 		return view;
 	}
+
+	@Override
+	public void initData() {
+		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+		if (TextUtils.isEmpty(vaule)) {
+			processData(vaule);
+		}
+		TestPost();
+	}
+
+
 
 	private void initViewPager() {
 		 int[] imageIds = {R.drawable.comments_avatars, R.drawable.dark_dot,
@@ -122,6 +136,7 @@ public class FunctionPage extends BasePage {
 	};
 
 	private class MyPagerAdapter extends PagerAdapter{
+
 		@Override
 		public int getCount() {
 			return Integer.MAX_VALUE;
@@ -137,21 +152,12 @@ public class FunctionPage extends BasePage {
 			container.addView(imageList.get(position%imageList.size()));
 			return imageList.get(position%imageList.size());
 		}
-
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			container.removeView(imageList.get(position%imageList.size()));
 			object = null;
 		}
-	}
 
-	@Override
-	public void initData() {
-		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
-		if (TextUtils.isEmpty(vaule)) {
-			processData(vaule);
-		}
-		TestPost();
 	}
 
 	private void TestPost() {

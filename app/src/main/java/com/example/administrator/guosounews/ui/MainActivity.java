@@ -43,6 +43,7 @@ public class MainActivity extends SlidingFragmentActivity {
         homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
                 homeFragment, "Home").commit();
+
     }
 
     private void initMenuData() {
@@ -55,6 +56,8 @@ public class MainActivity extends SlidingFragmentActivity {
         slidingMenu.setSecondaryMenu(R.layout.right_menu);
         getSupportFragmentManager().beginTransaction().replace(R.id.right_menu_frame,
                 rightMenuFragment).commit();
+
+        homeFragment.toggleMenu(slidingMenu);
     }
 
     public void switchFragment(Fragment fragment){
