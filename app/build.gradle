@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.1'
     compile project(':SlidingMenu-master')
     compile files('libs/gson-2.3.1.jar')
+    compile files('libs/pulltorefresh-3.2.2.jar')
 }

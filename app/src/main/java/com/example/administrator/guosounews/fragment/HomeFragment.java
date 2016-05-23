@@ -2,11 +2,16 @@ package com.example.administrator.guosounews.fragment;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -23,6 +28,9 @@ import com.example.administrator.guosounews.home.NewsCenterPage;
 import com.example.administrator.guosounews.home.SettingPage;
 import com.example.administrator.guosounews.home.SmartServicePage;
 import com.example.administrator.guosounews.ui.LazyViewPager;
+import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -43,6 +51,12 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.news_categories_ll)
     private LinearLayout news_categories_ll;
 
+    @ViewInject(R.id.swipe_container)
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    @ViewInject(R.id.textView1)
+    private TextView tv;
+
     private RadioGroup main_radio;
     private View view;
 
@@ -54,8 +68,32 @@ public class HomeFragment extends BaseFragment {
         view = inflater.inflate(R.layout.frag_home2, null);
         ViewUtils.inject(this, view);
         initOnclick();
+        initRefresh();
         return view;
     }
+
+    private void initRefresh() {
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                tv.setText("正在刷新~~");
+                // TODO Auto-generated method stub
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        tv.setText("刷新完成");
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 6000);
+            }
+
+        });
+    }
+
 
     private void initOnclick() {
         top_title_sliding2.setOnClickListener(listener);
@@ -91,6 +129,7 @@ public class HomeFragment extends BaseFragment {
 
 
     List<BasePage> list = new ArrayList<BasePage>();
+
     @Override
     public void initData(Bundle savedInstanceState) {
         showNewsCategory();
@@ -159,6 +198,7 @@ public class HomeFragment extends BaseFragment {
 
     private ArrayList<String> categoryList = new ArrayList<String>();
     private String[] newsCategoryList = {"热搜", "时政", "互联网", "财经", "法治", "美食", "娱乐", "国际"};
+
     private void showNewsCategory() {
         if (categoryList.size() == 0) {
             for (String item : newsCategoryList) {
@@ -205,9 +245,10 @@ public class HomeFragment extends BaseFragment {
             ((LazyViewPager) container).removeView(list.get(position).getRootView());
             hot_serach.isRuning = false;
         }
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            if(position == 0){
+            if (position == 0) {
                 list.get(0).initData();
             }
             ((LazyViewPager) container).addView(list.get(position).getRootView(), 0);
