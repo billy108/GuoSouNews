@@ -19,9 +19,17 @@ import android.widget.TextView;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.base.BasePage;
+import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.fragment.MenuFragment2;
 import com.example.administrator.guosounews.ui.MainActivity;
+import com.example.administrator.guosounews.utils.GsonUtils;
 import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
+import com.lidroid.xutils.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,30 +169,29 @@ public class FunctionPage extends BasePage {
 	}
 
 	private void TestPost() {
-//		HttpUtils http = new HttpUtils();
-//		http.send(HttpRequest.HttpMethod.GET,
-//				"http://appa.cncnews.cn/cnc/recommend/subject_new",
-//				new RequestCallBack<String>(){
-//
-//					@Override
-//					public void onSuccess(ResponseInfo<String> responseInfo) {
-////						textView.setText(responseInfo.result);
-//						LogUtils.d(responseInfo.result);
-//						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
-//						ProcessData(responseInfo.result);
-//					}
-//
-//
-//					@Override
-//					public void onFailure(HttpException error, String msg) {
-//					}
-//				});
-		processData("ok");
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.GET,
+				"http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1001&page=1&location=xxxxxx",
+				new RequestCallBack<String>(){
+
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+//						textView.setText(responseInfo.result);
+						LogUtils.d(responseInfo.result);
+						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
+						processData(responseInfo.result);
+					}
+
+					@Override
+					public void onFailure(HttpException error, String msg) {
+					}
+				});
 	}
+
 
 	private List<String> menuNewCenterList = new ArrayList<>();
 	private void processData(String result) {
-//		NewsCenterCategory category = GsonUtils.jsonToBean(result, NewsCenterCategory.class);
+		NewsCenterCategory category = GsonUtils.jsonToBean(result, NewsCenterCategory.class);
 		if (menuNewCenterList.size() == 0 && result != null) {
 			BaseFragment.flag = true;
 			menuNewCenterList.add("新闻");
