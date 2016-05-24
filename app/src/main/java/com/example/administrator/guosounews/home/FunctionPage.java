@@ -55,14 +55,34 @@ public class FunctionPage extends BasePage {
 	public View initView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.layout_hot, null);
 
-
 		news_viewpager_text = (TextView) view.findViewById(R.id.news_viewpager_text);
 		news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
 		point_group = (LinearLayout) view.findViewById(R.id.point_group);
 
+		TestPost();
 		initViewPager();
 
 		return view;
+	}
+
+	private void TestPost() {
+		HttpUtils http = new HttpUtils();
+		http.send(HttpRequest.HttpMethod.GET,
+				"http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1001&page=1&location=xxxxxx",
+				new RequestCallBack<String>(){
+
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+//						textView.setText(responseInfo.result);
+						LogUtils.d(responseInfo.result);
+						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
+						processData(responseInfo.result);
+					}
+
+					@Override
+					public void onFailure(HttpException error, String msg) {
+					}
+				});
 	}
 
 	@Override
@@ -71,7 +91,7 @@ public class FunctionPage extends BasePage {
 		if (TextUtils.isEmpty(vaule)) {
 			processData(vaule);
 		}
-		TestPost();
+
 	}
 
 
@@ -167,27 +187,6 @@ public class FunctionPage extends BasePage {
 		}
 
 	}
-
-	private void TestPost() {
-		HttpUtils http = new HttpUtils();
-		http.send(HttpRequest.HttpMethod.GET,
-				"http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1001&page=1&location=xxxxxx",
-				new RequestCallBack<String>(){
-
-					@Override
-					public void onSuccess(ResponseInfo<String> responseInfo) {
-//						textView.setText(responseInfo.result);
-						LogUtils.d(responseInfo.result);
-						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
-						processData(responseInfo.result);
-					}
-
-					@Override
-					public void onFailure(HttpException error, String msg) {
-					}
-				});
-	}
-
 
 	private List<String> menuNewCenterList = new ArrayList<>();
 	private void processData(String result) {
