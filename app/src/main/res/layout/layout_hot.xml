@@ -57,6 +57,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="7dp"
         android:layout_below="@id/news_rl"
+        android:fadeScrollbars="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
