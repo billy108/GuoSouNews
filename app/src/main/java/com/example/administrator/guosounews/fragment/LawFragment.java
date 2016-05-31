@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
-import com.example.administrator.guosounews.ui.MainActivity;
 import com.example.administrator.guosounews.utils.APIs;
 import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -36,8 +35,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PoliticsFragment extends BaseFragment {
-	private static final String NEWSCENTERPAGE = "PoliticsFragment";
+public class LawFragment extends BaseFragment {
+	private static final String NEWSCENTERPAGE = "LawFragment";
 
 	private ViewPager news_viewPager;
 
@@ -48,7 +47,6 @@ public class PoliticsFragment extends BaseFragment {
 	private LinearLayout point_group;
 	private List<ImageView> imageList;
 	private List<ImageView> imageNewsList;
-	private HomeFragment homeFragment = new HomeFragment();
 	private int lastPointPostion;
 	public boolean isRuning = false;
 
@@ -57,26 +55,7 @@ public class PoliticsFragment extends BaseFragment {
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
 		if (TextUtils.isEmpty(vaule)) {
-			processData();
 		}
-	}
-
-	private List<String> menuNewCenterList = new ArrayList<>();
-
-	public void processData() {
-
-		if (menuNewCenterList.size() == 0) {
-			BaseFragment.flag = true;
-			menuNewCenterList.add("新闻");
-			menuNewCenterList.add("订阅");
-			menuNewCenterList.add("投票");
-		}
-
-		MenuFragment2 menuFragment2 = ((MainActivity)ct).getMenuFragment2();
-		menuFragment2.initMenu(menuNewCenterList);
-
-//		initViewPager(); //阻塞？
-
 	}
 
 	@Override
@@ -90,8 +69,6 @@ public class PoliticsFragment extends BaseFragment {
 
 		getJson();
 		initViewPager();
-
-//		initList(category);
 
 		return view;
 	}
@@ -112,7 +89,7 @@ public class PoliticsFragment extends BaseFragment {
 	private void getJson() {
 		HttpUtils http = new HttpUtils();
 		http.send(HttpRequest.HttpMethod.GET,
-				APIs.POLITICS_NEWS,
+				APIs.LAW_NEWS,
 				new RequestCallBack<String>(){
 
 					@Override
@@ -124,7 +101,6 @@ public class PoliticsFragment extends BaseFragment {
 						showImage(category.slide.size(), imageList);
 						initList(category);
 						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
-						processData();
 					}
 
 					@Override

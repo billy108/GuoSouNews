@@ -26,6 +26,7 @@
             android:id="@+id/item2_news_image1"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
             android:layout_height="match_parent" />
 
         <ImageView
@@ -33,6 +34,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
             android:layout_height="match_parent" />
 
         <ImageView
@@ -40,6 +42,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
             android:layout_height="match_parent" />
     </LinearLayout>
 

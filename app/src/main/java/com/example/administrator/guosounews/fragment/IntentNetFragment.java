@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PoliticsFragment extends BaseFragment {
-	private static final String NEWSCENTERPAGE = "PoliticsFragment";
+public class IntentNetFragment extends BaseFragment {
+	private static final String NEWSCENTERPAGE = "IntentNetFragment";
 
 	private ViewPager news_viewPager;
 
@@ -112,7 +112,7 @@ public class PoliticsFragment extends BaseFragment {
 	private void getJson() {
 		HttpUtils http = new HttpUtils();
 		http.send(HttpRequest.HttpMethod.GET,
-				APIs.POLITICS_NEWS,
+				APIs.INTENTNET_NEWS,
 				new RequestCallBack<String>(){
 
 					@Override

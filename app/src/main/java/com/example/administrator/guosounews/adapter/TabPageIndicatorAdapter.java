@@ -36,6 +36,6 @@ public class TabPageIndicatorAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return HomeFragment.TITLE.length;
+        return list.size();
     }
 }

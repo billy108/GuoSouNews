@@ -46,35 +46,17 @@
         android:layout_weight="1.0" />
     -->
 
-    <com.example.administrator.guosounews.pagerindicator.TabPageIndicator
+    <com.viewpagerindicator.TabPageIndicator
         android:id="@+id/tabs"
         android:layout_width="wrap_content"
-        android:layout_height="18dp">
+        android:layout_height="25dp">
 
-    </com.example.administrator.guosounews.pagerindicator.TabPageIndicator>
+    </com.viewpagerindicator.TabPageIndicator>
 
     <View
         android:background="#00f"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
-
-    <!--<HorizontalScrollView-->
-        <!--android:id="@+id/scrollView"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:scrollbars="none">-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/news_categories_ll"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:orientation="horizontal">-->
-
-        <!--</LinearLayout>-->
-
-    <!--</HorizontalScrollView>-->
 
     <android.support.v4.widget.SwipeRefreshLayout
          android:id="@+id/swipe_container"

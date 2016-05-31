@@ -92,8 +92,6 @@ public class HotFragment extends BaseFragment {
 		getJson();
 		initViewPager();
 
-//		initList(category);
-
 		return view;
 	}
 
@@ -152,6 +150,7 @@ public class HotFragment extends BaseFragment {
 
 		for (int i = 0; i < 4; i++) {
 			ImageView im = new ImageView(ct);
+			im.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			im.setImageResource(R.drawable.dark_dot);
 			imageList.add(im);
 

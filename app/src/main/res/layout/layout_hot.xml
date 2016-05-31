@@ -7,14 +7,13 @@
 
     <RelativeLayout
         android:id="@+id/news_rl"
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="230dp">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/news_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="match_parent"
             >
         </android.support.v4.view.ViewPager>
 
