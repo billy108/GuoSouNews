@@ -30,4 +30,5 @@ dependencies {
     compile files('libs/gson-2.3.1.jar')
     compile files('libs/pulltorefresh-3.2.2.jar')
     compile files('libs/picasso-2.5.2.jar')
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
 }

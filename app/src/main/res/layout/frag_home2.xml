@@ -45,23 +45,36 @@
         android:layout_height="0dip"
         android:layout_weight="1.0" />
     -->
-    <HorizontalScrollView
-        android:id="@+id/scrollView"
+
+    <com.example.administrator.guosounews.pagerindicator.TabPageIndicator
+        android:id="@+id/tabs"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_height="18dp">
 
-        <LinearLayout
-            android:id="@+id/news_categories_ll"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+    </com.example.administrator.guosounews.pagerindicator.TabPageIndicator>
 
-        </LinearLayout>
+    <View
+        android:background="#00f"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
-    </HorizontalScrollView>
+    <!--<HorizontalScrollView-->
+        <!--android:id="@+id/scrollView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scrollbars="none">-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/news_categories_ll"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
+
+        <!--</LinearLayout>-->
+
+    <!--</HorizontalScrollView>-->
 
     <android.support.v4.widget.SwipeRefreshLayout
          android:id="@+id/swipe_container"
@@ -69,9 +82,8 @@
         android:layout_height="0dip"
         android:layout_weight="1.0">
 
-        <view
+        <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
-            class="com.example.administrator.guosounews.ui.LazyViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView

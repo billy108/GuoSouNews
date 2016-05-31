@@ -3,16 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:layout_below="@id/scrollView"
-        android:background="#00f"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+
 
     <RelativeLayout
         android:id="@+id/news_rl"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="230dp">
 
@@ -25,7 +20,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="#33000000"
+            android:background="#8BFF0000"
             android:gravity="center_vertical"
             android:layout_alignBottom="@id/news_viewpager"
             android:layout_height="40dp">
@@ -55,7 +50,6 @@
         android:id="@+id/news_list"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="7dp"
         android:layout_below="@id/news_rl"
         android:fadeScrollbars="true"
         android:layout_width="match_parent"

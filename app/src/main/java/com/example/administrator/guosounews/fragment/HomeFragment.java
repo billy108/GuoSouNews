@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,14 +22,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.base.BasePage;
+import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.home.FunctionPage;
 import com.example.administrator.guosounews.home.GovAffairsPage;
 import com.example.administrator.guosounews.home.NewsCenterPage;
 import com.example.administrator.guosounews.home.SettingPage;
 import com.example.administrator.guosounews.home.SmartServicePage;
+import com.example.administrator.guosounews.pagerindicator.TabPageIndicator;
 import com.example.administrator.guosounews.ui.LazyViewPager;
+import com.example.administrator.guosounews.ui.MainActivity;
 import com.handmark.pulltorefresh.extras.viewpager.PullToRefreshViewPager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -40,7 +46,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.viewpager)
-    private LazyViewPager viewPager;
+    private ViewPager viewPager;
 
     @ViewInject(R.id.top_title_sliding)
     private ImageButton top_sliding_btn;
@@ -48,14 +54,17 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.top_title_sliding2)
     private ImageButton top_title_sliding2;
 
-    @ViewInject(R.id.news_categories_ll)
-    private LinearLayout news_categories_ll;
+//    @ViewInject(R.id.news_categories_ll)
+//    private LinearLayout news_categories_ll;
 
     @ViewInject(R.id.swipe_container)
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @ViewInject(R.id.textView1)
     private TextView tv;
+
+    @ViewInject(R.id.tabs)
+    private TabPageIndicator tabPageIndicator;
 
     private RadioGroup main_radio;
     private View view;
@@ -128,21 +137,28 @@ public class HomeFragment extends BaseFragment {
     };
 
 
-    List<BasePage> list = new ArrayList<BasePage>();
+//    List<BasePage> list = new ArrayList<BasePage>();
+    List<Fragment> list = new ArrayList<Fragment>();
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        showNewsCategory();
-        hot_serach = new FunctionPage(ct);
-        list.add(hot_serach);
-        list.add(new NewsCenterPage(ct));
-        list.add(new SmartServicePage(ct));
-        list.add(new GovAffairsPage(ct));
-        list.add(new SettingPage(ct));
+//        hot_serach = new FunctionPage(ct);
+//        list.add(hot_serach);
+//        list.add(new NewsCenterPage(ct));
+//        list.add(new SmartServicePage(ct));
+//        list.add(new GovAffairsPage(ct));
+//        list.add(new SettingPage(ct));
+//        HomePageAdapter adapter = new HomePageAdapter(ct, list);
 
-        HomePageAdapter adapter = new HomePageAdapter(ct, list);
+        list.add(new HotFragment());
+        list.add(new PoliticsFragment());
+
+        FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getActivity().getSupportFragmentManager(), list);
         viewPager.setAdapter(adapter);
-        viewPager.setOnPageChangeListener(new LazyViewPager.OnPageChangeListener() {
+
+        showNewsCategory();
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -155,9 +171,10 @@ public class HomeFragment extends BaseFragment {
 //                } else {
 //                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 //                }
-                BasePage page = list.get(position);
+//                BasePage page = list.get(position);
+                BaseFragment fragment = (BaseFragment) list.get(position);
                 if (!flag) {
-                    page.initData();
+                    fragment.initData(null);
                 }
             }
 
@@ -197,64 +214,84 @@ public class HomeFragment extends BaseFragment {
     }
 
     private ArrayList<String> categoryList = new ArrayList<String>();
-    private String[] newsCategoryList = {"热搜", "时政", "互联网", "财经", "法治", "美食", "娱乐", "国际"};
+    public static final String[] TITLE = {"热搜", "时政", "互联网", "财经", "法治", "美食", "娱乐", "国际"};
 
     private void showNewsCategory() {
-        if (categoryList.size() == 0) {
-            for (String item : newsCategoryList) {
-                categoryList.add(item);
-                TextView tx = new TextView(ct);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.rightMargin = 50;
-                tx.setLayoutParams(params);
-                tx.setText(item);
-                tx.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-                news_categories_ll.addView(tx);
+        tabPageIndicator.setViewPager(viewPager);
+
+        tabPageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
-        }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+//        if (categoryList.size() == 0) {
+//            for (String item : newsCategoryList) {
+//                categoryList.add(item);
+//                TextView tx = new TextView(ct);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT);
+//                params.rightMargin = 50;
+//                tx.setLayoutParams(params);
+//                tx.setText(item);
+//                tx.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+//                news_categories_ll.addView(tx);
+//            }
+//        }
     }
 
     public void toggleMenu(SlidingMenu slidingMenu) {
         slidingMenu.toggle();
     }
 
-    class HomePageAdapter extends PagerAdapter {
-        private Context ct;
+//    class HomePageAdapter extends PagerAdapter {
+//        private Context ct;
+//
+//        private List<BasePage> list;
+//
+//        public HomePageAdapter(Context ct, List<BasePage> list) {
+//            this.ct = ct;
+//            this.list = list;
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return list.size();
+//        }
+//
+//        @Override
+//        public boolean isViewFromObject(View view, Object object) {
+//            return view == object;
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+//            ((ViewPager) container).removeView(list.get(position).getRootView());
+//            hot_serach.isRuning = false;
+//        }
+//
+//        @Override
+//        public Object instantiateItem(ViewGroup container, int position) {
+//            if (position == 0) {
+//                list.get(0).initData();
+//            }
+//            ((ViewPager) container).addView(list.get(position).getRootView(), 0);
+//            return list.get(position).getRootView();
+//        }
+//
+//    }
 
-        private List<BasePage> list;
 
-        public HomePageAdapter(Context ct, List<BasePage> list) {
-            this.ct = ct;
-            this.list = list;
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            ((LazyViewPager) container).removeView(list.get(position).getRootView());
-            hot_serach.isRuning = false;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            if (position == 0) {
-                list.get(0).initData();
-            }
-            ((LazyViewPager) container).addView(list.get(position).getRootView(), 0);
-            return list.get(position).getRootView();
-        }
-
-    }
 }
 

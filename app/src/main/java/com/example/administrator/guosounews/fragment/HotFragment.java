@@ -1,7 +1,7 @@
-package com.example.administrator.guosounews.home;
+package com.example.administrator.guosounews.fragment;
 
-import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -18,15 +18,11 @@ import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
-import com.example.administrator.guosounews.base.BasePage;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
-import com.example.administrator.guosounews.fragment.MenuFragment2;
 import com.example.administrator.guosounews.ui.MainActivity;
 import com.example.administrator.guosounews.utils.APIs;
 import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
-
 import com.google.gson.Gson;
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -41,8 +37,8 @@ import java.util.Date;
 import java.util.List;
 
 
-public class FunctionPage extends BasePage {
-	private static final String NEWSCENTERPAGE = "NewsCenterPage";
+public class HotFragment extends BaseFragment {
+	private static final String NEWSCENTERPAGE = "HotFragment";
 
 	private ViewPager news_viewPager;
 
@@ -53,11 +49,35 @@ public class FunctionPage extends BasePage {
 	private LinearLayout point_group;
 	private List<ImageView> imageList;
 	private List<ImageView> imageNewsList;
+	private HomeFragment homeFragment = new HomeFragment();
 	private int lastPointPostion;
 	public boolean isRuning = false;
-	
-	public FunctionPage(Context ct) {
-		super(ct);
+
+
+	@Override
+	public void initData(Bundle savedInstanceState) {
+		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+		if (TextUtils.isEmpty(vaule)) {
+			processData();
+		}
+	}
+
+	private List<String> menuNewCenterList = new ArrayList<>();
+
+	public void processData() {
+
+		if (menuNewCenterList.size() == 0) {
+			BaseFragment.flag = true;
+			menuNewCenterList.add("新闻");
+			menuNewCenterList.add("订阅");
+			menuNewCenterList.add("投票");
+		}
+
+		MenuFragment2 menuFragment2 = ((MainActivity)ct).getMenuFragment2();
+		menuFragment2.initMenu(menuNewCenterList);
+
+//		initViewPager(); //阻塞？
+
 	}
 
 	@Override
@@ -105,7 +125,7 @@ public class FunctionPage extends BasePage {
 						showImage(category.slide.size(), imageList);
 						initList(category);
 						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
-						processData(responseInfo.result);
+						processData();
 					}
 
 					@Override
@@ -115,6 +135,8 @@ public class FunctionPage extends BasePage {
 				});
 	}
 
+	private NewsCenterCategory category;
+
 	private void showImage(int size, List<ImageView> image) {
 		for (int i = 0; i < size; i++) {
 			Picasso.with(ct).load(category.slide.get(i).picture)
@@ -122,37 +144,6 @@ public class FunctionPage extends BasePage {
 					.into(image.get(i));
 		}
 	}
-
-
-	private List<String> menuNewCenterList = new ArrayList<>();
-	private NewsCenterCategory category;
-
-	private void processData(String result) {
-
-		if (menuNewCenterList.size() == 0) {
-			BaseFragment.flag = true;
-			menuNewCenterList.add("新闻");
-			menuNewCenterList.add("订阅");
-			menuNewCenterList.add("投票");
-		}
-
-		MenuFragment2 menuFragment2 = ((MainActivity)ct).getMenuFragment2();
-		menuFragment2.initMenu(menuNewCenterList);
-
-//		initViewPager(); //阻塞？
-
-	}
-
-
-	@Override
-	public void initData() {
-		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
-		if (TextUtils.isEmpty(vaule)) {
-			processData(vaule);
-		}
-
-	}
-
 
 
 	private void initViewPager() {
