@@ -4,23 +4,21 @@ package com.example.administrator.guosounews.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
-import com.example.administrator.guosounews.adapter.TabPageIndicatorAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
-import com.example.administrator.guosounews.home.FunctionPage;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.viewpagerindicator.TabPageIndicator;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +33,8 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.top_title_sliding2)
     private ImageButton top_title_sliding2;
 
-//    @ViewInject(R.id.news_categories_ll)
-//    private LinearLayout news_categories_ll;
+    @ViewInject(R.id.viewpagertab)
+    private SmartTabLayout viewPagerTab;
 
     @ViewInject(R.id.swipe_container)
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -44,8 +42,8 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.textView1)
     private TextView tv;
 
-    @ViewInject(R.id.tabs)
-    private TabPageIndicator tabPageIndicator;
+//    @ViewInject(R.id.tabs)
+//    private TabPageIndicator tabPageIndicator;
 
     private View view;
 
@@ -128,12 +126,21 @@ public class HomeFragment extends BaseFragment {
         list.add(new IntentNetFragment());
         list.add(new LawFragment());
 
-        FragmentPagerAdapter adapter = new TabPageIndicatorAdapter(getActivity().getSupportFragmentManager(), list);
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getActivity().getSupportFragmentManager(), FragmentPagerItems.with(ct)
+                .add("热搜", HotFragment.class)
+                .add("时政", PoliticsFragment.class)
+                .add("互联网", IntentNetFragment.class)
+                .add("财经", FinanceFragment.class)
+                .add("法治", LawFragment.class)
+                .create());
+
         viewPager.setAdapter(adapter);
 
-        showNewsCategory();
+        viewPagerTab.setViewPager(viewPager);
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -159,29 +166,6 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-    }
-
-    public static final String[] TITLE = {"热搜", "时政", "互联网", "财经", "法治", "美食", "娱乐", "国际"};
-
-    private void showNewsCategory() {
-        tabPageIndicator.setViewPager(viewPager);
-
-        tabPageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     public void toggleMenu(SlidingMenu slidingMenu) {

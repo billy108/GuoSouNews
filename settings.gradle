@@ -1,1 +1,1 @@
-include ':app','SlidingMenu-master','PullToRefresh'
+include ':app','SlidingMenu-master'
