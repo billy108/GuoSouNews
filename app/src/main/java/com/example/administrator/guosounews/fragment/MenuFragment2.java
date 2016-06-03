@@ -10,21 +10,17 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.MyBaseAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MenuFragment2 extends BaseFragment {
     private View view;
-    @ViewInject(R.id.lv_menu_news_center)
     private ListView lv_menu_news_center;
     private MenuAdapter adapter;
 
@@ -37,6 +33,7 @@ public class MenuFragment2 extends BaseFragment {
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.layout_left_menu, null);
         ViewUtils.inject(this, view);
+        lv_menu_news_center = (ListView) view.findViewById(R.id.lv_menu_news_center);
         lv_menu_news_center.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -36,14 +35,11 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.viewpagertab)
     private SmartTabLayout viewPagerTab;
 
-    @ViewInject(R.id.swipe_container)
-    private SwipeRefreshLayout swipeRefreshLayout;
+//    @ViewInject(R.id.swipe_container)
+//    private SwipeRefreshLayout swipeRefreshLayout;
 
     @ViewInject(R.id.textView1)
     private TextView tv;
-
-//    @ViewInject(R.id.tabs)
-//    private TabPageIndicator tabPageIndicator;
 
     private View view;
 
@@ -54,31 +50,31 @@ public class HomeFragment extends BaseFragment {
         view = inflater.inflate(R.layout.frag_home2, null);
         ViewUtils.inject(this, view);
         initOnclick();
-        initRefresh();
+//        initRefresh();
         return view;
     }
 
-    private void initRefresh() {
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                tv.setText("正在刷新~~");
-                // TODO Auto-generated method stub
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        tv.setText("刷新完成");
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 6000);
-            }
-
-        });
-    }
+//    private void initRefresh() {
+//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//
+//            @Override
+//            public void onRefresh() {
+//                tv.setText("正在刷新~~");
+//                // TODO Auto-generated method stub
+//                new Handler().postDelayed(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        // TODO Auto-generated method stub
+//                        tv.setText("刷新完成");
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }, 3000);
+//            }
+//
+//        });
+//    }
 
 
     private void initOnclick() {
@@ -114,7 +110,6 @@ public class HomeFragment extends BaseFragment {
     };
 
 
-//    List<BasePage> list = new ArrayList<BasePage>();
     List<Fragment> list = new ArrayList<Fragment>();
 
     @Override
@@ -171,44 +166,6 @@ public class HomeFragment extends BaseFragment {
     public void toggleMenu(SlidingMenu slidingMenu) {
         slidingMenu.toggle();
     }
-
-//    class HomePageAdapter extends PagerAdapter {
-//        private Context ct;
-//
-//        private List<BasePage> list;
-//
-//        public HomePageAdapter(Context ct, List<BasePage> list) {
-//            this.ct = ct;
-//            this.list = list;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return list.size();
-//        }
-//
-//        @Override
-//        public boolean isViewFromObject(View view, Object object) {
-//            return view == object;
-//        }
-//
-//        @Override
-//        public void destroyItem(ViewGroup container, int position, Object object) {
-//            ((ViewPager) container).removeView(list.get(position).getRootView());
-//            hot_serach.isRuning = false;
-//        }
-//
-//        @Override
-//        public Object instantiateItem(ViewGroup container, int position) {
-//            if (position == 0) {
-//                list.get(0).initData();
-//            }
-//            ((ViewPager) container).addView(list.get(position).getRootView(), 0);
-//            return list.get(position).getRootView();
-//        }
-//
-//    }
-
 
 }
 

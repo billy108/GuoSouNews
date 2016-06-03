@@ -6,21 +6,24 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.ui.MainActivity;
 import com.example.administrator.guosounews.utils.APIs;
+import com.example.administrator.guosounews.utils.RefreshLayout;
 import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -37,7 +40,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class HotFragment extends BaseFragment {
+public class HotFragment extends BaseFragment{
 	private static final String NEWSCENTERPAGE = "HotFragment";
 
 	private ViewPager news_viewPager;
@@ -47,24 +50,26 @@ public class HotFragment extends BaseFragment {
 	private ListView news_list;
 
 	private LinearLayout point_group;
+
+	protected RefreshLayout myRefreshListView;
+
 	private List<ImageView> imageList;
 	private List<ImageView> imageNewsList;
-	private HomeFragment homeFragment = new HomeFragment();
 	private int lastPointPostion;
 	public boolean isRuning = false;
+	private MyNewsListAdapter myNewsListAdapter;
+	private MyPagerAdapter myPagerAdapter;
 
+	private boolean isLastItem;
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
-		if (TextUtils.isEmpty(vaule)) {
-			processData();
-		}
 	}
 
 	private List<String> menuNewCenterList = new ArrayList<>();
 
-	public void processData() {
+	public void initMenu2() {
 
 		if (menuNewCenterList.size() == 0) {
 			BaseFragment.flag = true;
@@ -76,23 +81,100 @@ public class HotFragment extends BaseFragment {
 		MenuFragment2 menuFragment2 = ((MainActivity)ct).getMenuFragment2();
 		menuFragment2.initMenu(menuNewCenterList);
 
-//		initViewPager(); //阻塞？
-
 	}
 
 	@Override
 	public View initView(LayoutInflater inflater) {
-		View view = inflater.inflate(R.layout.layout_hot, null);
+		View view = inflater.inflate(R.layout.copy_of_layout_hot, null);
 
 		news_viewpager_text = (TextView) view.findViewById(R.id.news_viewpager_text);
 		news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
 		point_group = (LinearLayout) view.findViewById(R.id.point_group);
 		news_list = (ListView) view.findViewById(R.id.news_list);
+		myRefreshListView = (RefreshLayout)view.findViewById(R.id.swipe_layout);
 
+		initRefreshListView();
+		initMenu2();
 		getJson();
 		initViewPager();
+		initListView();
 
 		return view;
+	}
+
+	private void initListView() {
+		news_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+				if (firstVisibleItem > 0) {
+					myRefreshListView.setEnabled(false);
+				}else {
+					myRefreshListView.setEnabled(true);
+				}
+				if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+					isLastItem = true;
+				}else{
+					isLastItem = false;
+				}
+			}
+		});
+	}
+
+	private void initRefreshListView() {
+		// 设置下拉刷新时的颜色值,颜色值需要定义在xml中
+		myRefreshListView.setColorSchemeResources(android.R.color.holo_blue_light,
+				android.R.color.holo_red_light, android.R.color.holo_orange_light,
+				android.R.color.holo_green_light);
+		// 设置下拉刷新监听器
+		myRefreshListView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+
+				Toast.makeText(ct, "refresh", Toast.LENGTH_SHORT).show();
+
+				myRefreshListView.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						// 更新数据
+//						getJson();
+//						initViewPager();
+						myNewsListAdapter.notifyDataSetChanged();
+						// 更新完后调用该方法结束刷新
+						myRefreshListView.setRefreshing(false);
+					}
+				}, 1000);
+			}
+		});
+
+		// 加载监听器
+		myRefreshListView.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+
+			@Override
+			public void onLoad() {
+
+				Toast.makeText(ct, "load", Toast.LENGTH_SHORT).show();
+				myRefreshListView.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						getJson();
+						myNewsListAdapter.notifyDataSetChanged();
+						myPagerAdapter.notifyDataSetChanged();
+						// 加载完后调用该方法
+						myRefreshListView.setLoading(false);
+					}
+				}, 1500);
+
+			}
+		});
 	}
 
 	private void initList(NewsCenterCategory category) {
@@ -102,8 +184,8 @@ public class HotFragment extends BaseFragment {
 			ImageView im = new ImageView(ct);
 			im.setImageResource(R.drawable.dark_dot);
 			imageNewsList.add(im);
-
-			news_list.setAdapter(new MyNewsListAdapter(category));
+			myNewsListAdapter = new MyNewsListAdapter(category);
+			news_list.setAdapter(myNewsListAdapter);
 
 		}
 	}
@@ -123,7 +205,6 @@ public class HotFragment extends BaseFragment {
 						showImage(category.slide.size(), imageList);
 						initList(category);
 						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
-						processData();
 					}
 
 					@Override
@@ -171,7 +252,8 @@ public class HotFragment extends BaseFragment {
 			point_group.addView(point);
 		}
 
-		news_viewPager.setAdapter(new MyPagerAdapter());
+		myPagerAdapter = new MyPagerAdapter();
+		news_viewPager.setAdapter(myPagerAdapter);
 		news_viewPager.setCurrentItem(Integer.MAX_VALUE/2 - (Integer.MAX_VALUE/2%imageList.size()));
 		news_viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -258,7 +340,7 @@ public class HotFragment extends BaseFragment {
 
 		@Override
 		public int getCount() {
-			return 20;
+			return ca.list.size();
 		}
 
 		@Override
@@ -370,6 +452,5 @@ public class HotFragment extends BaseFragment {
 			public TextView item_news_time;
 		}
 	}
-
 
 }
