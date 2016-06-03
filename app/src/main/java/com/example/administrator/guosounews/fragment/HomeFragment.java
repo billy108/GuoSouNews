@@ -35,9 +35,6 @@ public class HomeFragment extends BaseFragment {
     @ViewInject(R.id.viewpagertab)
     private SmartTabLayout viewPagerTab;
 
-//    @ViewInject(R.id.swipe_container)
-//    private SwipeRefreshLayout swipeRefreshLayout;
-
     @ViewInject(R.id.textView1)
     private TextView tv;
 

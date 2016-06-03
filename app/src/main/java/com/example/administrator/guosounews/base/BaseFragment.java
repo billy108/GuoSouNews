@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.administrator.guosounews.ui.MainActivity;
+import com.example.administrator.guosounews.activity.MainActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public abstract class BaseFragment extends Fragment {

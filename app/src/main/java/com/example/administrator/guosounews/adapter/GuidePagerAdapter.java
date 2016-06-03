@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.example.administrator.guosounews.R;
-import com.example.administrator.guosounews.ui.MainActivity;
+import com.example.administrator.guosounews.activity.MainActivity;
 
 public class GuidePagerAdapter extends PagerAdapter {
 

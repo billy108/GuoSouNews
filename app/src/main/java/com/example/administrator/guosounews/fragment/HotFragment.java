@@ -1,6 +1,8 @@
 package com.example.administrator.guosounews.fragment;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,20 +12,20 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.activity.MainActivity;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
-import com.example.administrator.guosounews.ui.MainActivity;
+import com.example.administrator.guosounews.ui.ListViewForScrollView;
+import com.example.administrator.guosounews.ui.RefreshLayout;
 import com.example.administrator.guosounews.utils.APIs;
-import com.example.administrator.guosounews.utils.RefreshLayout;
 import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -47,11 +49,13 @@ public class HotFragment extends BaseFragment{
 
 	private TextView news_viewpager_text;
 
-	private ListView news_list;
+	private ListViewForScrollView news_list;
 
 	private LinearLayout point_group;
 
 	protected RefreshLayout myRefreshListView;
+
+	private ScrollView scrollView;
 
 	private List<ImageView> imageList;
 	private List<ImageView> imageNewsList;
@@ -65,6 +69,7 @@ public class HotFragment extends BaseFragment{
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+		scrollView.smoothScrollTo(0, 0);
 	}
 
 	private List<String> menuNewCenterList = new ArrayList<>();
@@ -85,13 +90,14 @@ public class HotFragment extends BaseFragment{
 
 	@Override
 	public View initView(LayoutInflater inflater) {
-		View view = inflater.inflate(R.layout.copy_of_layout_hot, null);
+		View view = inflater.inflate(R.layout.layout_hot, null);
 
 		news_viewpager_text = (TextView) view.findViewById(R.id.news_viewpager_text);
 		news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
 		point_group = (LinearLayout) view.findViewById(R.id.point_group);
-		news_list = (ListView) view.findViewById(R.id.news_list);
+		news_list = (ListViewForScrollView) view.findViewById(R.id.news_list);
 		myRefreshListView = (RefreshLayout)view.findViewById(R.id.swipe_layout);
+		scrollView = (ScrollView) view.findViewById(R.id.scroll);
 
 		initRefreshListView();
 		initMenu2();
@@ -102,24 +108,33 @@ public class HotFragment extends BaseFragment{
 		return view;
 	}
 
+	@TargetApi(Build.VERSION_CODES.M)
 	private void initListView() {
-		news_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+		scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
 			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+				int heigh = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+				LogUtils.d("scrollY is " + scrollY);
+				LogUtils.d("heigh is " + heigh);
 
-			}
-
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-				if (firstVisibleItem > 0) {
-					myRefreshListView.setEnabled(false);
-				}else {
+				if (scrollY == 0) {
 					myRefreshListView.setEnabled(true);
+				} else {
+					myRefreshListView.setEnabled(false);
 				}
-				if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+
+				if (scrollY == 5745) {
 					isLastItem = true;
-				}else{
+					myRefreshListView.postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							// 加载完后调用该方法
+							LogUtils.d("load done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+						}
+					}, 1500);
+				} else {
 					isLastItem = false;
 				}
 			}
@@ -165,9 +180,6 @@ public class HotFragment extends BaseFragment{
 
 					@Override
 					public void run() {
-						getJson();
-						myNewsListAdapter.notifyDataSetChanged();
-						myPagerAdapter.notifyDataSetChanged();
 						// 加载完后调用该方法
 						myRefreshListView.setLoading(false);
 					}

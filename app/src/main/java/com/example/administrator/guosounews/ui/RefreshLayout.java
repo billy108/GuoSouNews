@@ -1,4 +1,4 @@
-package com.example.administrator.guosounews.utils;
+package com.example.administrator.guosounews.ui;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -142,13 +142,13 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     /**
      * 判断是否到了最底部
      */
-//    private boolean isBottom() {
-//
-//        if (mListView != null && mListView.getAdapter() != null) {
-//            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
-//        }
-//        return false;
-//    }
+    private boolean isBottom() {
+
+        if (mListView != null && mListView.getAdapter() != null) {
+            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
+        }
+        return false;
+    }
 
     /**
      * 是否是上拉操作

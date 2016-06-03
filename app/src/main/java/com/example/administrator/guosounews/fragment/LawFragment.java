@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
@@ -43,6 +44,7 @@ public class LawFragment extends BaseFragment {
 	private TextView news_viewpager_text;
 
 	private ListView news_list;
+	private ScrollView scrollView;
 
 	private LinearLayout point_group;
 	private List<ImageView> imageList;
@@ -54,6 +56,7 @@ public class LawFragment extends BaseFragment {
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+		scrollView.smoothScrollTo(0, 0);
 		if (TextUtils.isEmpty(vaule)) {
 		}
 	}
@@ -66,6 +69,8 @@ public class LawFragment extends BaseFragment {
 		news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
 		point_group = (LinearLayout) view.findViewById(R.id.point_group);
 		news_list = (ListView) view.findViewById(R.id.news_list);
+		scrollView = (ScrollView) view.findViewById(R.id.scroll);
+		scrollView.smoothScrollTo(0, 0);
 
 		getJson();
 		initViewPager();
@@ -235,7 +240,7 @@ public class LawFragment extends BaseFragment {
 
 		@Override
 		public int getCount() {
-			return 20;
+			return ca.list.size();
 		}
 
 		@Override

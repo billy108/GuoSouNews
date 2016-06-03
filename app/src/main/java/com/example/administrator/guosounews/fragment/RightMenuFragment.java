@@ -13,9 +13,8 @@ import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.base.BaseFragment;
-import com.example.administrator.guosounews.ui.CollectActivity;
-import com.example.administrator.guosounews.ui.MainActivity;
-import com.lidroid.xutils.view.annotation.ViewInject;
+import com.example.administrator.guosounews.activity.CollectActivity;
+import com.example.administrator.guosounews.activity.MainActivity;
 
 public class RightMenuFragment extends BaseFragment implements View.OnClickListener{
     private TextView download_for_offline;

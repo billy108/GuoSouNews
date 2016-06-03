@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/StyledIndicators">
         <activity
-            android:name=".ui.AppStart"
+            android:name=".activity.AppStart"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/ColorTranslucentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +25,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GuideActivity"
+            android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity android:name=".ui.CollectActivity"></activity>
+        <activity android:name=".activity.CollectActivity"></activity>
     </application>
 
 </manifest>

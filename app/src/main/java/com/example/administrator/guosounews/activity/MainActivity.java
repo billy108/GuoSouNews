@@ -1,4 +1,4 @@
-package com.example.administrator.guosounews.ui;
+package com.example.administrator.guosounews.activity;
 
 import android.os.Build;
 import android.os.Bundle;

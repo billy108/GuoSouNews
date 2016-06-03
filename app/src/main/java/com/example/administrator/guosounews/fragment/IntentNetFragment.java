@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.activity.MainActivity;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
-import com.example.administrator.guosounews.ui.MainActivity;
+import com.example.administrator.guosounews.ui.ListViewForScrollView;
 import com.example.administrator.guosounews.utils.APIs;
 import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -43,12 +44,12 @@ public class IntentNetFragment extends BaseFragment {
 
 	private TextView news_viewpager_text;
 
-	private ListView news_list;
+	private ListViewForScrollView news_list;
+	private ScrollView scrollView;
 
 	private LinearLayout point_group;
 	private List<ImageView> imageList;
 	private List<ImageView> imageNewsList;
-	private HomeFragment homeFragment = new HomeFragment();
 	private int lastPointPostion;
 	public boolean isRuning = false;
 
@@ -56,6 +57,7 @@ public class IntentNetFragment extends BaseFragment {
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+		scrollView.smoothScrollTo(0, 0);
 		if (TextUtils.isEmpty(vaule)) {
 			processData();
 		}
@@ -86,7 +88,9 @@ public class IntentNetFragment extends BaseFragment {
 		news_viewpager_text = (TextView) view.findViewById(R.id.news_viewpager_text);
 		news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
 		point_group = (LinearLayout) view.findViewById(R.id.point_group);
-		news_list = (ListView) view.findViewById(R.id.news_list);
+		news_list = (ListViewForScrollView) view.findViewById(R.id.news_list);
+		scrollView = (ScrollView) view.findViewById(R.id.scroll);
+		scrollView.smoothScrollTo(0, 0);
 
 		getJson();
 		initViewPager();
@@ -259,7 +263,7 @@ public class IntentNetFragment extends BaseFragment {
 
 		@Override
 		public int getCount() {
-			return 20;
+			return ca.list.size();
 		}
 
 		@Override
