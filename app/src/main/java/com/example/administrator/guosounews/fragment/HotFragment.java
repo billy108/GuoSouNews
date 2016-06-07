@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HotFragment extends BaseFragment{
+public class HotFragment extends BaseFragment {
 	private static final String NEWSCENTERPAGE = "HotFragment";
 
 	private ViewPager news_viewPager;
@@ -63,7 +63,7 @@ public class HotFragment extends BaseFragment{
 	private NewsCenterCategory category;
 	private List<String> menuNewCenterList = new ArrayList<>();
 
-	private boolean isLastItem;
+	public static boolean isLastItem;
 
 	/**
 	 * 初始化控件
@@ -80,19 +80,19 @@ public class HotFragment extends BaseFragment{
 		news_list = (ListViewForScrollView) view.findViewById(R.id.news_list);
 		myRefreshListView = (RefreshLayout)view.findViewById(R.id.swipe_layout);
 		scrollView = (ScrollView) view.findViewById(R.id.scroll);
+		scrollView.smoothScrollTo(0, 0);
 
 		initRefreshListView();
 		initMenu2();
 		getJson();
 		initViewPager();
 		initListView();
-		scrollView.smoothScrollTo(0, 0);
 
 		return view;
 	}
 
 	/**
-	 * 判断位置执行下拉和下拉刷新
+	 * 判断位置执行下拉和加载更多
 	 */
 	@TargetApi(Build.VERSION_CODES.M)
 	private void initListView() {
@@ -102,30 +102,25 @@ public class HotFragment extends BaseFragment{
 			public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 				int heigh = getActivity().getWindowManager().getDefaultDisplay().getHeight();
 				LogUtils.d("scrollY is " + scrollY);
-				LogUtils.d("heigh is " + heigh);
+
 
 				if (scrollY == 0) {
 					myRefreshListView.setEnabled(true);
 				} else {
 					myRefreshListView.setEnabled(false);
 				}
-
-				if (scrollY == 5745) {
+				if (scrollY > 6000) {
 					isLastItem = true;
-					myRefreshListView.postDelayed(new Runnable() {
-
-						@Override
-						public void run() {
-							// 加载完后调用该方法
-							LogUtils.d("load done~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-						}
-					}, 1500);
+					LogUtils.d("bottom!!!!!!!!!!!!!!");
+					return;
 				} else {
 					isLastItem = false;
 				}
 			}
 		});
 	}
+
+
 
 	/**
 	 * 下拉刷新
@@ -141,7 +136,7 @@ public class HotFragment extends BaseFragment{
 			@Override
 			public void onRefresh() {
 
-				Toast.makeText(ct, "refresh", Toast.LENGTH_SHORT).show();
+				Toast.makeText(ct, "刷新中...", Toast.LENGTH_SHORT).show();
 
 				myRefreshListView.postDelayed(new Runnable() {
 
@@ -151,10 +146,11 @@ public class HotFragment extends BaseFragment{
 						category = null;
 						getJson();
 						myNewsListAdapter.notifyDataSetChanged();
+						myAdvPagerAdapter.notifyDataSetChanged();
 						// 更新完后调用该方法结束刷新
 						myRefreshListView.setRefreshing(false);
 					}
-				}, 1000);
+				}, 3000);
 			}
 		});
 
@@ -318,6 +314,6 @@ public class HotFragment extends BaseFragment{
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
-
 	}
+
 }

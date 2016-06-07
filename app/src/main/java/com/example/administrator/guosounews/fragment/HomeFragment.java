@@ -40,45 +40,22 @@ public class HomeFragment extends BaseFragment {
 
     private View view;
 
-
     @Override
-
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.frag_home2, null);
         ViewUtils.inject(this, view);
         initOnclick();
-//        initRefresh();
         return view;
     }
-
-//    private void initRefresh() {
-//        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//
-//            @Override
-//            public void onRefresh() {
-//                tv.setText("正在刷新~~");
-//                // TODO Auto-generated method stub
-//                new Handler().postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        // TODO Auto-generated method stub
-//                        tv.setText("刷新完成");
-//                        swipeRefreshLayout.setRefreshing(false);
-//                    }
-//                }, 3000);
-//            }
-//
-//        });
-//    }
-
 
     private void initOnclick() {
         top_title_sliding2.setOnClickListener(listener);
         top_sliding_btn.setOnClickListener(listener);
     }
 
+    /**
+     * 标题栏点击
+     */
     Handler handler = new Handler();
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
@@ -109,6 +86,10 @@ public class HomeFragment extends BaseFragment {
 
     List<Fragment> list = new ArrayList<Fragment>();
 
+    /**
+     * 初始化viewPagerTab
+     * @param savedInstanceState
+     */
     @Override
     public void initData(Bundle savedInstanceState) {
 
@@ -140,12 +121,6 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-//                if (0 == position) {
-//                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-//                } else {
-//                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-//                }
-//                BasePage page = list.get(position);
                 BaseFragment fragment = (BaseFragment) list.get(position);
                 if (!flag) {
                     fragment.initData(null);

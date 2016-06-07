@@ -38,10 +38,6 @@ public abstract class BaseFragment extends Fragment {
         initData(savedInstanceState);
     }
 
-    public View getRootView(){
-        return view;
-    }
-
     public abstract void initData(Bundle savedInstanceState);
 
     public abstract View initView(LayoutInflater inflater);
