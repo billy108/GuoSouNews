@@ -1,6 +1,7 @@
 package com.example.administrator.guosounews.fragment;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.activity.MainActivity;
+import com.example.administrator.guosounews.activity.NewsActivity;
 import com.example.administrator.guosounews.adapter.MyAdvPagerAdapter;
 import com.example.administrator.guosounews.adapter.MyNewsListAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
@@ -62,6 +64,8 @@ public class HotFragment extends BaseFragment {
 
 	private NewsCenterCategory category;
 	private List<String> menuNewCenterList = new ArrayList<>();
+
+	private List<String> slide_url_list = new ArrayList<String>();
 
 	public static boolean isLastItem;
 
@@ -109,18 +113,16 @@ public class HotFragment extends BaseFragment {
 				} else {
 					myRefreshListView.setEnabled(false);
 				}
-				if (scrollY > 6000) {
-					isLastItem = true;
-					LogUtils.d("bottom!!!!!!!!!!!!!!");
-					return;
-				} else {
-					isLastItem = false;
-				}
+//				if (scrollY > 6000) {
+//					isLastItem = true;
+//					LogUtils.d("bottom!!!!!!!!!!!!!!");
+//					return;
+//				} else {
+//					isLastItem = false;
+//				}
 			}
 		});
 	}
-
-
 
 	/**
 	 * 下拉刷新
@@ -178,7 +180,7 @@ public class HotFragment extends BaseFragment {
 	 * 填充List新闻的数据
 	 * @param category json实例
      */
-	private void initList(NewsCenterCategory category) {
+	private void initNewsList(NewsCenterCategory category) {
 		imageNewsList = new ArrayList<ImageView>();
 
 		for (int i = 0; i < category.list.size(); i++) {
@@ -206,8 +208,10 @@ public class HotFragment extends BaseFragment {
 
 						category = new Gson().fromJson(responseInfo.result, NewsCenterCategory.class);
 						news_viewpager_text.setText(category.slide.get(0).title);
-						showImage(category.slide.size(), imageList);
-						initList(category);
+						//初始化adv
+						initSlideList(category.slide.size(), imageList);
+						//初始化newsList
+						initNewsList(category);
 						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
 					}
 
@@ -223,11 +227,13 @@ public class HotFragment extends BaseFragment {
 	 * @param size 数量
 	 * @param image 图片
      */
-	private void showImage(int size, List<ImageView> image) {
+	private void initSlideList(int size, List<ImageView> image) {
 		for (int i = 0; i < size; i++) {
 			Picasso.with(ct).load(category.slide.get(i).picture)
 					.config(Bitmap.Config.RGB_565).error(R.drawable.dot)
 					.into(image.get(i));
+
+			slide_url_list.add(category.slide.get(i).url);
 		}
 	}
 
@@ -242,7 +248,15 @@ public class HotFragment extends BaseFragment {
 			ImageView im = new ImageView(ct);
 			im.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			im.setImageResource(R.drawable.dark_dot);
+			im.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					intentTo();
+				}
+			});
 			imageList.add(im);
+
+
 
 
 		//加载圆点
@@ -287,7 +301,12 @@ public class HotFragment extends BaseFragment {
 		});
 
 		isRuning = true;
+		//adv的item点击事件
+	}
 
+	private void intentTo() {
+		Intent i = new Intent(getActivity(), NewsActivity.class);
+		startActivity(i);
 	}
 
 	/**

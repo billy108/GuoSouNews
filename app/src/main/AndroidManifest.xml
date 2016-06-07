@@ -14,7 +14,7 @@
         <activity
             android:name=".activity.AppStart"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/ColorTranslucentTheme">
@@ -27,7 +27,8 @@
         <activity
             android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity android:name=".activity.CollectActivity"></activity>
+        <activity android:name=".activity.CollectActivity" />
+        <activity android:name=".activity.NewsActivity"></activity>
     </application>
 
 </manifest>
