@@ -64,32 +64,6 @@ public class HotFragment extends BaseFragment{
 	private List<String> menuNewCenterList = new ArrayList<>();
 
 	private boolean isLastItem;
-	/**
-	 * 初始化数据
-	 * @param savedInstanceState
-     */
-	@Override
-	public void initData(Bundle savedInstanceState) {
-		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
-
-	}
-
-	/**
-	 * 初始化左右滑动菜单
-	 */
-	public void initMenu2() {
-
-		if (menuNewCenterList.size() == 0) {
-			BaseFragment.flag = true;
-			menuNewCenterList.add("新闻");
-			menuNewCenterList.add("订阅");
-			menuNewCenterList.add("投票");
-		}
-
-		MenuFragment2 menuFragment2 = ((MainActivity)ct).getMenuFragment2();
-		menuFragment2.initMenu(menuNewCenterList);
-
-	}
 
 	/**
 	 * 初始化控件
@@ -106,13 +80,13 @@ public class HotFragment extends BaseFragment{
 		news_list = (ListViewForScrollView) view.findViewById(R.id.news_list);
 		myRefreshListView = (RefreshLayout)view.findViewById(R.id.swipe_layout);
 		scrollView = (ScrollView) view.findViewById(R.id.scroll);
-		scrollView.smoothScrollTo(0, 0);
 
 		initRefreshListView();
 		initMenu2();
 		getJson();
 		initViewPager();
 		initListView();
+		scrollView.smoothScrollTo(0, 0);
 
 		return view;
 	}
@@ -174,8 +148,8 @@ public class HotFragment extends BaseFragment{
 					@Override
 					public void run() {
 						// 更新数据
-//						getJson();
-//						initViewPager();
+						category = null;
+						getJson();
 						myNewsListAdapter.notifyDataSetChanged();
 						// 更新完后调用该方法结束刷新
 						myRefreshListView.setRefreshing(false);
@@ -185,23 +159,23 @@ public class HotFragment extends BaseFragment{
 		});
 
 		// 加载监听器
-		myRefreshListView.setOnLoadListener(new RefreshLayout.OnLoadListener() {
-
-			@Override
-			public void onLoad() {
-
-				Toast.makeText(ct, "load", Toast.LENGTH_SHORT).show();
-				myRefreshListView.postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						// 加载完后调用该方法
-						myRefreshListView.setLoading(false);
-					}
-				}, 1500);
-
-			}
-		});
+//		myRefreshListView.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+//
+//			@Override
+//			public void onLoad() {
+//
+//				Toast.makeText(ct, "load", Toast.LENGTH_SHORT).show();
+//				myRefreshListView.postDelayed(new Runnable() {
+//
+//					@Override
+//					public void run() {
+//						// 加载完后调用该方法
+//						myRefreshListView.setLoading(false);
+//					}
+//				}, 1500);
+//
+//			}
+//		});
 	}
 
 	/**
@@ -320,4 +294,30 @@ public class HotFragment extends BaseFragment{
 
 	}
 
+	/**
+	 * 初始化左右滑动菜单
+	 */
+	public void initMenu2() {
+
+		if (menuNewCenterList.size() == 0) {
+			BaseFragment.flag = true;
+			menuNewCenterList.add("新闻");
+			menuNewCenterList.add("订阅");
+			menuNewCenterList.add("投票");
+		}
+
+		MenuFragment2 menuFragment2 = ((MainActivity)ct).getMenuFragment2();
+		menuFragment2.initMenu(menuNewCenterList);
+
+	}
+
+	/**
+	 * 初始化数据
+	 * @param savedInstanceState
+	 */
+	@Override
+	public void initData(Bundle savedInstanceState) {
+		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+
+	}
 }
