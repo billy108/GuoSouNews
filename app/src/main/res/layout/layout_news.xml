@@ -1,10 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我我我我多我我"/>
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/news_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/red"
+                >
+
+                <ImageView
+                    android:background="@drawable/umeng_back_btn"
+                    android:id="@+id/news_back"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/news_collect"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/detail_fav_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/news_shared"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/detail_share_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_below="@id/news_header"
+                android:text="111"
+                android:textSize="22sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:id="@+id/news_RL"
+                android:layout_below="@id/news_title"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/news_time"
+                    android:text="1111"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/news_from"
+                    android:layout_toRightOf="@id/news_time"
+                    android:text="222"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/news_details_ll"
+                android:orientation="vertical"
+                android:layout_below="@id/news_RL"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/see_original"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textStyle="italic"
+                android:text="@string/see_original"
+                android:textSize="18sp"
+                android:layout_below="@id/news_details_ll"
+                android:layout_alignEnd="@id/news_details_ll"
+                android:textColor="@android:color/holo_blue_bright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
