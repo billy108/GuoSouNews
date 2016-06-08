@@ -12,5 +12,6 @@ public class APIs {
     public static final String ADV_BASE = "http://mobapp.chinaso.com/1/category/newsDetailHtml?version=version%3D2.67.7&cid=1001&tid=&devid=00000000-56bd-2770-ffff-ffff89d87fe7&nid=";
     public static final String ADV_END = "&extra=norecmd";
 
+    //
 
 }

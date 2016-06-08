@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -42,6 +43,9 @@ import java.util.List;
 
 public class HotFragment extends BaseFragment {
     public static final String HOTFRAGMENT = "HotFragment";
+    public static final String NEWS_TYPE = "news_type";
+    public static final int ADV_NEWS = 1;
+    public static final int LIST_NEWS = 2;
 
     ViewPager news_viewPager;
     TextView news_viewpager_text;
@@ -61,6 +65,7 @@ public class HotFragment extends BaseFragment {
     private List<String> menuNewCenterList = new ArrayList<>();
 
     private List<String> slide_url_list = new ArrayList<String>();
+    private List<String> list_url_list = new ArrayList<String>();
 
     public static boolean isLastItem;
     View view;
@@ -183,10 +188,18 @@ public class HotFragment extends BaseFragment {
         for (int i = 0; i < category.list.size(); i++) {
             ImageView im = new ImageView(ct);
             im.setImageResource(R.drawable.dark_dot);
+            list_url_list.add(APIs.ADV_BASE + category.list.get(i).nid + APIs.ADV_END);
             imageNewsList.add(im);
+
             myNewsListAdapter = new MyNewsListAdapter(category, ct);
             news_list.setAdapter(myNewsListAdapter);
-
+            final int finalI = i;
+            news_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    intentToNews(list_url_list.get(position), LIST_NEWS);
+                }
+            });
         }
     }
 
@@ -250,7 +263,7 @@ public class HotFragment extends BaseFragment {
             im.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intentToNews(slide_url_list.get(finalI));
+                    intentToNews(slide_url_list.get(finalI), ADV_NEWS);
                 }
             });
             imageList.add(im);
@@ -304,7 +317,7 @@ public class HotFragment extends BaseFragment {
     /**
      * 跳转到新闻页面
      */
-    private void intentToNews(String url) {
+    private void intentToNews(String url, final int type) {
         //获取adv的json
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET,
@@ -317,6 +330,7 @@ public class HotFragment extends BaseFragment {
                         //跳转并传递json
                         Intent i = new Intent(getActivity(), NewsActivity.class);
                         i.putExtra(HOTFRAGMENT, responseInfo.result);
+                        i.putExtra(NEWS_TYPE, type);
                         startActivity(i);
                     }
 

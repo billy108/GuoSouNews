@@ -2,7 +2,7 @@ package com.example.administrator.guosounews.bean;
 
 import java.util.List;
 
-public class News {
+public class NewsAdv {
 
     /**
      * ad_pic : http://cmsfile06.chinaso.com/group2/M00/23/C6/Cgqg2lY4VQaAWzBLAADwAMmw0TU7604001
