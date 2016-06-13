@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.activity.MainActivity;
 import com.example.administrator.guosounews.activity.NewsActivity;
+import com.example.administrator.guosounews.activity.SpecialActivity;
 import com.example.administrator.guosounews.adapter.MyAdvPagerAdapter;
 import com.example.administrator.guosounews.adapter.MyNewsListAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
@@ -44,8 +45,6 @@ import java.util.List;
 public class HotFragment extends BaseFragment {
     public static final String HOTFRAGMENT = "HotFragment";
     public static final String NEWS_TYPE = "news_type";
-    public static final int ADV_NEWS = 1;
-    public static final int LIST_NEWS = 2;
 
     ViewPager news_viewPager;
     TextView news_viewpager_text;
@@ -197,7 +196,12 @@ public class HotFragment extends BaseFragment {
             news_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    intentToNews(list_url_list.get(position), LIST_NEWS);
+                    if (position == 0) {
+                        Intent i = new Intent(getActivity(), SpecialActivity.class);
+                        startActivity(i);
+                    } else {
+                        intentToNews(list_url_list.get(position), APIs.LIST_NEWS);
+                    }
                 }
             });
         }
@@ -263,7 +267,7 @@ public class HotFragment extends BaseFragment {
             im.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intentToNews(slide_url_list.get(finalI), ADV_NEWS);
+                    intentToNews(slide_url_list.get(finalI), APIs.ADV_NEWS);
                 }
             });
             imageList.add(im);
@@ -271,12 +275,12 @@ public class HotFragment extends BaseFragment {
 
             //加载圆点
             ImageView point = new ImageView(ct);
+
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             params.rightMargin = 20;
             point.setLayoutParams(params);
-
             point.setEnabled(false);
             if (i == 0) {
                 point.setEnabled(true);

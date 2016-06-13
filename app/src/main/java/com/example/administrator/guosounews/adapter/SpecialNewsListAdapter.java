@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
-import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.bean.NewsSpecial;
 import com.squareup.picasso.Picasso;
 
@@ -20,21 +19,15 @@ import java.util.Date;
 /**
  * 新闻List的adapter
  */
-public class MyNewsListAdapter extends BaseAdapter {
+public class SpecialNewsListAdapter extends BaseAdapter {
     private Context ct;
 
-    NewsCenterCategory ca;
-    NewsSpecial sp;
+    NewsSpecial ca;
     final int TYPE_1 = 0;
     final int TYPE_2 = 1;
 
-    public MyNewsListAdapter(NewsCenterCategory category, Context ct) {
+    public SpecialNewsListAdapter(NewsSpecial category, Context ct) {
         this.ca = category;
-        this.ct = ct;
-    }
-
-    public MyNewsListAdapter(NewsSpecial category, Context ct) {
-        this.sp = category;
         this.ct = ct;
     }
 

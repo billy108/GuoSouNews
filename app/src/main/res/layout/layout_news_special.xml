@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/red"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:background="@drawable/umeng_back_btn"
+            android:id="@+id/special_back"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/special_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:text="@string/special_title"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <com.example.administrator.guosounews.ui.RefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/special_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/special_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/special_news_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/special_news_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                >
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/spelcial_silde"
+                android:layout_width="match_parent"
+                android:background="#8BFF0000"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@id/special_news_viewpager"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/special_news_viewpager_text"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/white"
+                    android:text="111111111111111111111"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/special_point_group"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.example.administrator.guosounews.ui.ListViewForScrollView
+                android:id="@+id/special_news_list"
+                android:layout_below="@id/spelcial_silde"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:fadeScrollbars="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </RelativeLayout>
+    </ScrollView>
+
+    </com.example.administrator.guosounews.ui.RefreshLayout>
+</LinearLayout>
+
+

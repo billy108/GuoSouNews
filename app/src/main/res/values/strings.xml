@@ -6,4 +6,5 @@
     <string name="contentDes">图片</string>
     <string name="load">加载中...</string>
     <string name="see_original">查看原文</string>
+    <string name="special_title">专题</string>
 </resources>

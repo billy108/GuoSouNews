@@ -3,8 +3,8 @@ package com.example.administrator.guosounews.activity;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +14,7 @@ import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.bean.NewsAdv;
 import com.example.administrator.guosounews.bean.NewsList;
 import com.example.administrator.guosounews.fragment.HotFragment;
+import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +57,10 @@ public class NewsActivity extends Activity {
 
     }
 
+    /**
+     * 点击事件处理
+     * @param view 组件
+     */
     @OnClick({R.id.news_back, R.id.news_collect, R.id.news_shared, R.id.see_original})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -70,18 +75,20 @@ public class NewsActivity extends Activity {
         }
     }
 
+    /**
+     * 获取json，跳转到新闻详情页
+     */
     public void getNews() {
         String json = getIntent().getStringExtra(HotFragment.HOTFRAGMENT);
         int type = getIntent().getIntExtra(HotFragment.NEWS_TYPE, -1);
 
-        if (type == HotFragment.ADV_NEWS) {
+        if (type == APIs.ADV_NEWS) {
             newsCategory = new Gson().fromJson(json, NewsAdv.class);
             initAdvNewsDetail(newsCategory);
-        } else if (type == HotFragment.LIST_NEWS) {
+        } else if (type == APIs.LIST_NEWS || type == APIs.SPE_LIST_NEWS) {
             newsCaty = new Gson().fromJson(json, NewsList.class);
             initListNewsDetail(newsCaty);
         }
-
 
     }
 
@@ -103,14 +110,8 @@ public class NewsActivity extends Activity {
                                 .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
                                 .into(im);
 
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.rightMargin = 20;
-                        im.setLayoutParams(params);
-
                         TextView tv = new TextView(NewsActivity.this);
-                        tv.setTextSize(R.dimen.newsDetailstextSize);
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
                         tv.setText(newsCategory.content.get(i).title);
 
                         newsDetailsLl.addView(im);
@@ -130,7 +131,6 @@ public class NewsActivity extends Activity {
      * 初始化List新闻详情页
      */
     private void initListNewsDetail(NewsList newsCaty) {
-
         newsTitle.setText(newsCaty.title);
         newsTime.setText(newsCaty.timeString);
         newsFrom.setText(newsCaty.mname);
@@ -138,7 +138,6 @@ public class NewsActivity extends Activity {
         for (int i = 0; i < newsCaty.content.size(); i++) {
             if (Objects.equals(newsCaty.content.get(i).type, "image")) {
                 ImageView im = new ImageView(NewsActivity.this);
-                im.setMaxHeight(100);
                 im.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Picasso.with(NewsActivity.this).load(newsCaty.content.get(i).value)
                         .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
@@ -150,7 +149,7 @@ public class NewsActivity extends Activity {
             if (Objects.equals(newsCaty.content.get(i).type, "text")) {
                 TextView tv = new TextView(NewsActivity.this);
                 tv.setText(newsCaty.content.get(i).value);
-
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
                 newsDetailsLl.addView(tv);
             }
 

@@ -28,7 +28,8 @@
             android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity android:name=".activity.CollectActivity" />
-        <activity android:name=".activity.NewsActivity"></activity>
+        <activity android:name=".activity.NewsActivity"/>
+        <activity android:name=".activity.SpecialActivity"/>
     </application>
 
 </manifest>
