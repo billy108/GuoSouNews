@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    android:layout_height="150dp"
+
+    >
+
+    <View
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/red"
+        />
+
+    <TextView
+        android:id="@+id/subscription_item_content"
+        android:text="content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/subscription_item_titel"
+        android:layout_below="@id/content"
+        android:textColor="@color/red"
+        android:text="title"
+        android:textSize="12dp"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/subscription_item_img"
+        android:layout_marginTop="20dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:background="@drawable/big_btn_normal_end"
+         />
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/subscription_bg"
+    >
+
+    <LinearLayout
+        android:id="@+id/subscription_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/red"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/subscription_bar_sliding"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/header_left_icon" />
+
+        <TextView
+            android:id="@+id/subscription_bar_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:text="@string/subscription_title"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/subscription_recyclerView"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@id/subscription_bar"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

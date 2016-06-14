@@ -2,6 +2,7 @@ package com.example.administrator.guosounews.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.activity.SubscriptionActivity;
 import com.example.administrator.guosounews.adapter.MyBaseAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.lidroid.xutils.ViewUtils;
@@ -38,6 +40,15 @@ public class MenuFragment2 extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapter.setCurPostion(position);
+                switch (position) {
+                    case 1:
+                        Intent i = new Intent(ct, SubscriptionActivity.class);
+                        startActivity(i);
+                        break;
+                    case 2:
+
+                        break;
+                }
                 sm.toggle();
             }
         });
