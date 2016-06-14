@@ -2,6 +2,7 @@ package com.example.administrator.guosounews.activity;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,14 +21,14 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SubscriptionActivity extends Activity {
-
+    public static final int SUBSCRIPTIONACTIVITY = 0;
 
     @InjectView(R.id.subscription_bar_sliding)
     ImageButton subscriptionBarSliding;
     @InjectView(R.id.subscription_recyclerView)
     RecyclerView subscriptionRecyclerView;
 
-    private RecyclerView.Adapter mAdapter;
+    private SubscriptionItemAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     View view;
 
@@ -45,8 +46,8 @@ public class SubscriptionActivity extends Activity {
     ArrayList<String> items = new ArrayList<String>();
 
     private void initRecyclerView() {
-        items.add("爱范儿");
-        items.add("新浪网-新闻要闻");
+//        items.add("爱范儿");
+//        items.add("新浪网-新闻要闻");
         items.add("");
 
         //设置固定大小
@@ -58,6 +59,15 @@ public class SubscriptionActivity extends Activity {
         //创建适配器，并且设置
         mAdapter = new SubscriptionItemAdapter(items, this);
         subscriptionRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new SubscriptionItemAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, String data) {
+                if (data.equals("添加频道")) {
+                    Intent i = new Intent(SubscriptionActivity.this, SubscripManagerActivity.class);
+                    startActivityForResult(i, SUBSCRIPTIONACTIVITY);
+                }
+            }
+        });
     }
 
     @Override
@@ -68,5 +78,10 @@ public class SubscriptionActivity extends Activity {
 
     @OnClick(R.id.subscription_bar_sliding)
     public void onClick() {
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

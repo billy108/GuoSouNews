@@ -30,7 +30,8 @@
         <activity android:name=".activity.CollectActivity" />
         <activity android:name=".activity.NewsActivity" />
         <activity android:name=".activity.SpecialActivity" />
-        <activity android:name=".activity.SubscriptionActivity"></activity>
+        <activity android:name=".activity.SubscriptionActivity"/>
+        <activity android:name=".activity.SubscripManagerActivity"/>
     </application>
 
 </manifest>

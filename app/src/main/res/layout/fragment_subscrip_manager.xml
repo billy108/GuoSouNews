@@ -4,48 +4,44 @@
     android:background="@drawable/subscription_bg"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/subscription_header"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="@color/red"
         >
 
         <ImageView
             android:background="@drawable/umeng_back_btn"
             android:id="@+id/subscription_back"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"/>
+            />
 
         <TextView
             android:text="@string/subscription"
             android:textSize="22sp"
-            android:gravity="center_horizontal"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
             android:textColor="@color/white"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <fragment
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/left_subscription"
-        android:name="com.example.administrator.guosounews.fragment.subscriptionManagerLeftFragment"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/subscription_header"/>
 
-    <fragment
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/right_subscription"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@id/subscription_header"
-        android:name="com.example.administrator.guosounews.fragment.subscriptionManagerRightFragment"
         android:layout_toRightOf="@id/left_subscription"
         android:layout_width="400dp"
         android:layout_height="wrap_content"/>

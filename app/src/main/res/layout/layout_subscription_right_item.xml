@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/subscription_right_item"
+    android:background="#51FF0000"
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+
+    <TextView
+        android:id="@+id/subscription_right_item_title"
+        android:textColor="@color/red"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="18sp"
+        android:text="11111"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/subscription_right_item_content"
+        android:layout_below="@id/subscription_right_item_title"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="111111111111"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/subscription_right_item_button"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/subscription_right_button"
+        android:layout_width="50dp"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
