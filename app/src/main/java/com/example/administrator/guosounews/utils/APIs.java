@@ -19,4 +19,32 @@ public class APIs {
     public static final int ADV_NEWS = 1;
     public static final int LIST_NEWS = 2;
     public static final int SPE_LIST_NEWS = 3;
+
+    //订阅频道URL
+    public static final String READING_TIGERSMELL = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=116";
+    public static final String READING_NEXTCAR = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=121";
+    public static final String READING_SINA = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=13";
+    public static final String ENTERTAINMENT_MAFADA = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=285";
+    public static final String ENTERTAINMENT_ATS = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=286";
+    public static final String ENTERTAINMENT_STAR = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=287";
+
+
+    /**
+     * 订阅频道条目
+     * 阅读频道索引 0~2
+     * 娱乐频道索引 3~5
+     */
+    public static final String[] reading_channel_title = {
+        "虎嗅","NextCar","新浪网-新闻要闻"
+    };
+    public static final String[] reading_channel_content = {
+         "商业资讯与观点交流平台","汽车在线问答网站","新浪焦点新闻"
+    };
+    public static final String[] entertainment_channel_title = {
+            "玛法达博客", "星译社ATS博客", "摘星工厂博客"
+    };
+    public static final String[] entertainment_channel_content = {
+            "玛法达看星座运程", "专业翻译占星资料", "全球最大的华文星座网站"
+    };
+
 }
