@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
 
+import java.util.ArrayList;
+
 /**
  * 为RecyclerView添加item的点击事件
  * http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0327/2647.html
@@ -16,18 +18,17 @@ import com.example.administrator.guosounews.R;
 
 public class SubscriptionLeftItemAdapter extends RecyclerView.Adapter implements View.OnClickListener{
     public OnRecyclerViewItemClickListener mOnItemClickListener = null;
-    String[] items;
+    ArrayList<String> items;
     Context ct;
     private int curPostion = 0;
 
-    public SubscriptionLeftItemAdapter(String[] items, Context ct) {
+    public SubscriptionLeftItemAdapter(ArrayList<String> items, Context ct) {
         this.items = items;
         this.ct = ct;
     }
 
     public void setCurPostion(int postion){
         this.curPostion = postion;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -41,28 +42,32 @@ public class SubscriptionLeftItemAdapter extends RecyclerView.Adapter implements
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        if (curPostion == position) {
-//            SubscriptionLeftItemAdapter.ViewHolder.item_content
-//                    .setTextColor(getResources().getColor(R.color.colorAccent));
-//            SubscriptionLeftItemAdapter.ViewHolder.item_content
-//                    .setBackgroundResource();
-//        } else {
-//            SubscriptionLeftItemAdapter.ViewHolder.item_content
-//                    .setTextColor(getResources().getColor(R.color.white));
-//        }??????????????????????????????
-        SubscriptionLeftItemAdapter.ViewHolder.item_content.setText(items[position]);
+        SubscriptionLeftItemAdapter.ViewHolder.item_content.setText(items.get(position));
+        if (curPostion == position) {
+            SubscriptionLeftItemAdapter.ViewHolder.item_content
+                .setTextColor(ct.getResources().getColor(R.color.red));
+            SubscriptionLeftItemAdapter.ViewHolder.item_content
+                .setBackgroundColor(ct.getResources().getColor(R.color.transparent_black));
+        } else {
+            SubscriptionLeftItemAdapter.ViewHolder.item_content
+                    .setTextColor(ct.getResources().getColor(R.color.white));
+            SubscriptionLeftItemAdapter.ViewHolder.item_content
+                    .setBackgroundColor(ct.getResources().getColor(R.color.black));
+        }
+        holder.itemView.setTag(position);
+
     }
 
     @Override
     public int getItemCount() {
-        return items.length;
+        return items.size();
     }
 
     @Override
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v,(String)v.getTag());
+            mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
     }
 
@@ -78,7 +83,7 @@ public class SubscriptionLeftItemAdapter extends RecyclerView.Adapter implements
 
     //define interface
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, String data);
+        void onItemClick(View view, int position);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
