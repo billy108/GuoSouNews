@@ -113,13 +113,6 @@ public class HotFragment extends BaseFragment {
                 } else {
                     myRefreshListView.setEnabled(false);
                 }
-//				if (scrollY > 6000) {
-//					isLastItem = true;
-//					LogUtils.d("bottom!!!!!!!!!!!!!!");
-//					return;
-//				} else {
-//					isLastItem = false;
-//				}
             }
         });
     }
@@ -156,24 +149,6 @@ public class HotFragment extends BaseFragment {
             }
         });
 
-        // 加载监听器
-//		myRefreshListView.setOnLoadListener(new RefreshLayout.OnLoadListener() {
-//
-//			@Override
-//			public void onLoad() {
-//
-//				Toast.makeText(ct, "load", Toast.LENGTH_SHORT).show();
-//				myRefreshListView.postDelayed(new Runnable() {
-//
-//					@Override
-//					public void run() {
-//						// 加载完后调用该方法
-//						myRefreshListView.setLoading(false);
-//					}
-//				}, 1500);
-//
-//			}
-//		});
     }
 
     /**

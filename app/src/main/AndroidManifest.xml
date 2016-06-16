@@ -18,11 +18,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/ColorTranslucentTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.GuideActivity"
@@ -31,7 +27,13 @@
         <activity android:name=".activity.NewsActivity" />
         <activity android:name=".activity.SpecialActivity" />
         <activity android:name=".activity.SubscriptionActivity"/>
-        <activity android:name=".activity.SubscripManagerActivity"/>
+        <activity android:name=".activity.SubscripManagerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

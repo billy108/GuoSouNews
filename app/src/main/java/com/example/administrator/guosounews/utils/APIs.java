@@ -35,10 +35,10 @@ public class APIs {
      * 娱乐频道索引 3~5
      */
     public static final String[] reading_channel_title = {
-        "虎嗅","NextCar","新浪网-新闻要闻"
+        "虎嗅","NextCar","新浪网-新闻要闻","新浪网-国内新闻"
     };
     public static final String[] reading_channel_content = {
-         "商业资讯与观点交流平台","汽车在线问答网站","新浪焦点新闻"
+         "商业资讯与观点交流平台","汽车在线问答网站","新浪焦点新闻","新浪国内重要新闻"
     };
     public static final String[] entertainment_channel_title = {
             "玛法达博客", "星译社ATS博客", "摘星工厂博客"

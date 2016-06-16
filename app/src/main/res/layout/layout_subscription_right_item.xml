@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/subscription_right_item"
-    android:background="#51FF0000"
+    android:background="#7AFFC3FF"
     android:layout_width="match_parent"
     android:layout_height="55dp">
 
@@ -24,10 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <ImageView
+    <ToggleButton
         android:id="@+id/subscription_right_item_button"
         android:layout_alignParentRight="true"
-        android:background="@drawable/subscription_right_button"
+        android:textOn=""
+        android:textOff=""
+        android:text=""
+        android:background="@drawable/subscription_button_selector"
         android:layout_width="50dp"
         android:layout_height="match_parent" />
 
