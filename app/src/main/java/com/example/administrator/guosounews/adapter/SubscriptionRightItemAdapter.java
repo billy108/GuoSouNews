@@ -12,7 +12,6 @@ import android.widget.ToggleButton;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.activity.SubscripManagerActivity;
 import com.example.administrator.guosounews.bean.SubscriptionChannel;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -20,10 +19,12 @@ import java.util.ArrayList;
 public class SubscriptionRightItemAdapter extends RecyclerView.Adapter {
     ArrayList<SubscriptionChannel> channels;
     Context ct;
+    SubscripManagerActivity activity;
 
-    public SubscriptionRightItemAdapter(ArrayList<SubscriptionChannel> channels, Context ct) {
+    public SubscriptionRightItemAdapter(ArrayList<SubscriptionChannel> channels, Context ct, SubscripManagerActivity activity) {
         this.channels = channels;
         this.ct = ct;
+        this.activity = activity;
     }
 
     @Override
@@ -38,13 +39,13 @@ public class SubscriptionRightItemAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder.item_title.setText(channels.get(position).title);
         ViewHolder.item_content.setText(channels.get(position).content);
-
+        ViewHolder.item_button.setChecked(channels.get(position).isChecked);
+        //添加或删除到我的订阅处理
         ViewHolder.item_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Logger.d(isChecked + "");
                 channels.get(position).isChecked = isChecked;
-                SubscripManagerActivity.addToMySubscription(isChecked, channels, position);
+                activity.addToMySubscription(isChecked, channels, position);
             }
         });
     }

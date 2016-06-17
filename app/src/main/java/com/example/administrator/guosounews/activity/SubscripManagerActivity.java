@@ -3,6 +3,7 @@ package com.example.administrator.guosounews.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -31,6 +32,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SubscripManagerActivity extends Activity {
+    public static final int SUBSRCIPMANAGERACTIVITY = 1;
 
     @InjectView(R.id.subscription_back)
     ImageView subscriptionBack;
@@ -43,12 +45,14 @@ public class SubscripManagerActivity extends Activity {
 
     SubscriptionLeftItemAdapter leftAdapter;
     SubscriptionRightItemAdapter rightAdapter;
-    static ArrayList<SubscriptionChannel> channels = new ArrayList<SubscriptionChannel>();
+    ArrayList<SubscriptionChannel> channels = new ArrayList<SubscriptionChannel>();
     ArrayList<SubscriptionChannel> reading_channels = new ArrayList<SubscriptionChannel>();
     ArrayList<SubscriptionChannel> ententainment_channels = new ArrayList<SubscriptionChannel>();
-    static ArrayList<SubscriptionChannel> myChannels = new ArrayList<SubscriptionChannel>();
+    ArrayList<SubscriptionChannel> myChannels = new ArrayList<SubscriptionChannel>();
     ArrayList<String> leftContents = new ArrayList<String>();
     SubscriptionChannel channel;
+    Bundle buten;
+    boolean isMyChannel = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +61,46 @@ public class SubscripManagerActivity extends Activity {
         setContentView(R.layout.fragment_subscrip_manager);
         ButterKnife.inject(this);
 
+
         initLeftView();
         initRightView();
     }
 
+    private void getSubscriptionIntent() {
+        buten = getIntent().getExtras();
+        if (buten != null) {
+            myChannels.addAll((ArrayList<SubscriptionChannel>)buten.getSerializable("data"));
+            channels.addAll(myChannels);
+        }
+    }
+
 
     private void initRightView() {
+        createChannel();
+
+
+        getSubscriptionIntent();
         rightSubscription.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
         //设置分割线
         rightSubscription.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.VERTICAL, 20, getResources().getColor(android.R.color.transparent)));
 
-        rightAdapter = new SubscriptionRightItemAdapter(channels, this);
+        rightAdapter = new SubscriptionRightItemAdapter(channels, this, SubscripManagerActivity.this);
         rightSubscription.setAdapter(rightAdapter);
+    }
+
+    /**
+     * 创建各频道对象
+     */
+    private void createChannel() {
+        for (int i = 0; i < APIs.reading_channel_title.length; i++) {
+            reading_channels.add(new SubscriptionChannel(APIs.reading_channel_title[i],
+                    APIs.reading_channel_content[i], false, SubscriptionActivity.readingURLs.get(i)));
+        }
+        for (int i = 0; i < APIs.entertainment_channel_title.length; i++) {
+            ententainment_channels.add(new SubscriptionChannel(APIs.entertainment_channel_title[i],
+                    APIs.entertainment_channel_content[i], false, SubscriptionActivity.entertainURLs.get(i)));
+        }
     }
 
 
@@ -92,25 +123,16 @@ public class SubscripManagerActivity extends Activity {
             public void onItemClick(View view, int postition) {
                 switch (postition) {
                     case 0:
+                        isMyChannel = true;
                         channels.clear();
                         channels.addAll(myChannels);
                         rightSubscription.setAdapter(rightAdapter);
                         break;
                     case 1:
-                        if (reading_channels.size() == 0) {
-                            setChannelList(APIs.reading_channel_title,
-                                    APIs.reading_channel_content,
-                                    reading_channels);
-                        }
-                        if (channels.size() == 0) {
-                            channels.addAll(reading_channels);
-                        }//???????????????????????????????????
-                        rightSubscription.setAdapter(rightAdapter);
+                        editMyChannel(reading_channels);
                         break;
                     case 2:
-                        setChannelList(APIs.entertainment_channel_title,
-                                APIs.entertainment_channel_content,
-                                ententainment_channels);
+                        editMyChannel(ententainment_channels);
                         break;
                 }
 
@@ -123,37 +145,56 @@ public class SubscripManagerActivity extends Activity {
 
     }
 
-    /**
-     * 添加channel数据
-     */
-    private void setChannelList(String[] title, String[] content, ArrayList<SubscriptionChannel> channel){
-        channels.clear();
-        if (channel.size() == 0) {
-            for (int i = 0; i < title.length; i++) {
-                channel.add(new SubscriptionChannel(title[i], content[i], false));
-            }
-        }
-        channels.addAll(channel);
-        rightSubscription.setAdapter(rightAdapter);
-//
-    }
 
-    @OnClick(R.id.subscription_back)
-    public void onClick() {
-    }
 
     /**
      * 添加、删除 我的订阅channel集合
      * @param ischecked 判断添加（true）或者删除(false)操作
      * @param channel 数据
      */
-    public static void addToMySubscription(boolean ischecked, ArrayList<SubscriptionChannel> channel, int position){
-        if (ischecked) {
-            channels.addAll(channel);
-            myChannels.add(channel.get(position));
+    public void addToMySubscription(boolean ischecked, ArrayList<SubscriptionChannel> channel, int position){
+
+        if (isMyChannel) {
+            channel.remove(channel.get(position));
+            myChannels.remove(position);
+            rightSubscription.setAdapter(rightAdapter);
         } else {
-//            myChannels.remove(channel);
+            if (ischecked) {
+                channels.addAll(channel);
+                myChannels.add(channel.get(position));
+            } else {
+                myChannels.remove(channel.get(position));
+            }
         }
+
+    }
+
+    /**
+     * 管理 我的订阅
+     * @param chanl
+     */
+    private void editMyChannel(ArrayList<SubscriptionChannel> chanl){
+        isMyChannel = false;
+        channels.clear();
+        if (channels.size() == 0) {
+            channels.addAll(chanl);
+        }
+        rightSubscription.setAdapter(rightAdapter);
+    }
+
+    /**
+     * 添加channel数据
+     */
+    private void setChannelList(ArrayList<SubscriptionChannel> channel){
+        channels.clear();
+//        if (channel.size() == 0) {
+//            for (int i = 0; i < title.length; i++) {
+//                channel.add(new SubscriptionChannel(title[i], content[i], false, SubscriptionActivity.readingURLs.get(i)));
+//            }
+//        }
+        channels.addAll(channel);
+        rightSubscription.setAdapter(rightAdapter);
+
     }
 
     /**
@@ -271,5 +312,19 @@ public class SubscripManagerActivity extends Activity {
                 }
             }
         }
+    }
+
+    /**
+     * 返回 我的订阅 信息
+     */
+    @OnClick(R.id.subscription_back)
+    public void onClick() {
+
+        Intent i = new Intent(this, SubscriptionActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", myChannels);
+        i.putExtras(bundle);
+        startActivity(i);
+        finish();
     }
 }

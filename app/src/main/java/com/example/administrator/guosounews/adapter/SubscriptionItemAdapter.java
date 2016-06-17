@@ -49,7 +49,7 @@ public class SubscriptionItemAdapter extends RecyclerView.Adapter implements Vie
         }
 
         //将数据保存在itemView的Tag中，以便点击时进行获取
-        holder.itemView.setTag("添加频道");
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SubscriptionItemAdapter extends RecyclerView.Adapter implements Vie
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v,(String)v.getTag());
+            mOnItemClickListener.onItemClick(v, (Integer) v.getTag());
         }
     }
 
@@ -80,7 +80,7 @@ public class SubscriptionItemAdapter extends RecyclerView.Adapter implements Vie
 
     //define interface
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view , String data);
+        void onItemClick(View view , int position);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {

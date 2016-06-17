@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.SubscriptionItemAdapter;
+import com.example.administrator.guosounews.bean.SubscriptionChannel;
+import com.example.administrator.guosounews.utils.APIs;
 
 import java.util.ArrayList;
 
@@ -21,7 +23,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SubscriptionActivity extends Activity {
-    public static final int SUBSCRIPTIONACTIVITY = 0;
 
     @InjectView(R.id.subscription_bar_sliding)
     ImageButton subscriptionBarSliding;
@@ -30,7 +31,12 @@ public class SubscriptionActivity extends Activity {
 
     private SubscriptionItemAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
+    ArrayList<SubscriptionChannel> subLIst;
+    ArrayList<SubscriptionChannel> mychannels = new ArrayList<SubscriptionChannel>();
+    static ArrayList<String> readingURLs = new ArrayList<String>();
+    static ArrayList<String> entertainURLs = new ArrayList<String>();
     View view;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +45,41 @@ public class SubscriptionActivity extends Activity {
         setContentView(R.layout.fragment_subscription);
         ButterKnife.inject(this);
 
+        setURL();
         initRecyclerView();
+    }
+
+    private void setURL() {
+        readingURLs.add(APIs.READING_TIGERSMELL);
+        readingURLs.add(APIs.READING_NEXTCAR);
+        readingURLs.add(APIs.READING_SINA);
+        readingURLs.add(APIs.READING_SINAINSIED);
+
+        entertainURLs.add(APIs.ENTERTAINMENT_MAFADA);
+        entertainURLs.add(APIs.ENTERTAINMENT_ATS);
+        entertainURLs.add(APIs.ENTERTAINMENT_STAR);
     }
 
 
     ArrayList<String> items = new ArrayList<String>();
 
     private void initRecyclerView() {
-//        items.add("爱范儿");
-//        items.add("新浪网-新闻要闻");
-        items.add("");
+        bundle = getIntent().getExtras();
+        if (bundle != null) {
+            subLIst = (ArrayList<SubscriptionChannel>) bundle.getSerializable("data");
+            for (int i =0; i < subLIst.size(); i++) {
+                if (!mychannels.contains(subLIst.get(i))) {
+                    mychannels.add(subLIst.get(i));
+                }
+            }
+        }
+        items.clear();
+        if (mychannels.size() > 0) {
+            for (int i = 0; i < mychannels.size(); i ++) {
+                items.add(mychannels.get(i).title);
+            }
+        }
+        items.add(" ");
 
         //设置固定大小
         subscriptionRecyclerView.setHasFixedSize(true);
@@ -61,11 +92,18 @@ public class SubscriptionActivity extends Activity {
         subscriptionRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new SubscriptionItemAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view, String data) {
-                if (data.equals("添加频道")) {
-                    Intent i = new Intent(SubscriptionActivity.this, SubscripManagerActivity.class);
-                    startActivityForResult(i, SUBSCRIPTIONACTIVITY);
+            public void onItemClick(View view, int postiton) {
+                Intent i;
+                if (postiton == (items.size() - 1)) {
+                    i = new Intent(SubscriptionActivity.this, SubscripManagerActivity.class);
+                    if (bundle != null) {
+                        i.putExtras(bundle);
+                    }
+                } else {
+                    i = new Intent(SubscriptionActivity.this, SubscriptionNewsActivity.class);
+
                 }
+                startActivity(i);
             }
         });
     }
@@ -80,8 +118,4 @@ public class SubscriptionActivity extends Activity {
     public void onClick() {
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

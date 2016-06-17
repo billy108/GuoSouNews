@@ -24,6 +24,7 @@ public class APIs {
     public static final String READING_TIGERSMELL = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=116";
     public static final String READING_NEXTCAR = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=121";
     public static final String READING_SINA = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=13";
+    public static final String READING_SINAINSIED = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=13";
     public static final String ENTERTAINMENT_MAFADA = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=285";
     public static final String ENTERTAINMENT_ATS = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=286";
     public static final String ENTERTAINMENT_STAR = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=287";

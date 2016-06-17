@@ -17,23 +17,22 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/ColorTranslucentTheme">
-
-        </activity>
+            android:theme="@style/ColorTranslucentTheme"></activity>
         <activity
             android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity android:name=".activity.CollectActivity" />
         <activity android:name=".activity.NewsActivity" />
         <activity android:name=".activity.SpecialActivity" />
-        <activity android:name=".activity.SubscriptionActivity"/>
-        <activity android:name=".activity.SubscripManagerActivity">
+        <activity android:name=".activity.SubscriptionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.SubscripManagerActivity"></activity>
+        <activity android:name=".activity.SubscriptionNewsActivity"></activity>
     </application>
 
 </manifest>
