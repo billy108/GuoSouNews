@@ -72,11 +72,13 @@ public class MenuFragment2 extends BaseFragment {
         private int curPostion = 0;
         Integer[] left_menu_item_icon = {R.drawable.left_menu_home,
                 R.drawable.left_menu_subscription,
-                R.drawable.left_menu_vote};
+                R.drawable.left_menu_vote
+        };
 
         Integer[] left_menu_item_icon_selected = {R.drawable.left_menu_home_selected,
                 R.drawable.left_menu_subscription_selected,
-                R.drawable.left_menu_vote_selected};
+                R.drawable.left_menu_vote_selected
+        };
 
         public MenuAdapter(List list, Context context) {
             super(list, context);

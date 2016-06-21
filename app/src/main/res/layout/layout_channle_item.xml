@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <TextView
+        android:id="@+id/channel_item_titel"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="11111111111111111111111111111"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/channel_item_img"
+        android:layout_below="@id/channel_item_titel"
+        android:src="@drawable/big_btn_normal_end"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/channel_item_content"
+        android:layout_below="@id/channel_item_titel"
+        android:layout_toEndOf="@id/channel_item_img"
+        android:layout_width="wrap_content"
+        android:text="222222222222222222222"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/channel_item_from"
+        android:layout_toEndOf="@id/channel_item_img"
+        android:layout_alignBottom="@id/channel_item_img"
+        android:text="333333333333"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/channel_item_time"
+        android:text="44444444444444444"
+        android:layout_toEndOf="@id/channel_item_from"
+        android:layout_alignBottom="@id/channel_item_img"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

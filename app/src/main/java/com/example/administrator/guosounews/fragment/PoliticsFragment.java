@@ -58,7 +58,7 @@ public class PoliticsFragment extends BaseFragment {
 	@Override
 	public void initData(Bundle savedInstanceState) {
 		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
-		scrollView.smoothScrollTo(0, 0);
+		scrollView.smoothScrollTo(1, 1);
 		if (TextUtils.isEmpty(vaule)) {
 			processData();
 		}

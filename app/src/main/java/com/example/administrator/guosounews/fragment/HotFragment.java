@@ -92,8 +92,11 @@ public class HotFragment extends BaseFragment {
         initAdvViewPager();
         initListView();
 
+        scrollView.smoothScrollTo(0, 0);
         return view;
     }
+
+
 
     /**
      * 判断位置执行下拉和加载更多
