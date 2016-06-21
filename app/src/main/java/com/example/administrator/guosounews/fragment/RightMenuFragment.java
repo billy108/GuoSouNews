@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.activity.SearchActivity;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.activity.CollectActivity;
 import com.example.administrator.guosounews.activity.MainActivity;
@@ -74,7 +75,8 @@ public class RightMenuFragment extends BaseFragment implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.right_menu_search:
-                Toast.makeText(ct, "3", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(ct, SearchActivity.class);
+                startActivity(in);
                 break;
             case R.id.right_menu_settings:
                 Toast.makeText(ct, "4", Toast.LENGTH_SHORT).show();
