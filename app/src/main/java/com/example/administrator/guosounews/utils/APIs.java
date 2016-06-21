@@ -29,6 +29,12 @@ public class APIs {
     public static final String ENTERTAINMENT_ATS = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=286";
     public static final String ENTERTAINMENT_STAR = "http://mobapp.chinaso.com/1/subscribe/newsList?version=version%3D2.67.7&mid=287";
 
+    //搜索URL
+    public static final String SEARCH_BASE = "http://mobapp.chinaso.com/1/search/mediaAndNews?version=version%3D2.67.7&keywords=";
+
+    //搜索自动补全URL
+    public static final String AUTO_BASE = "http://nssug.baidu.com/su?wd=";
+    public static final String AUTO_END = "&ie=utf-8&prod=news";
 
     /**
      * 订阅频道条目
