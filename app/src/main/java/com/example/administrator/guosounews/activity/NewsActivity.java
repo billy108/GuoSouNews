@@ -1,8 +1,8 @@
 package com.example.administrator.guosounews.activity;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.bean.NewsAdv;
 import com.example.administrator.guosounews.bean.NewsList;
 import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -106,12 +106,15 @@ public class NewsActivity extends Activity {
                     if (Objects.equals(newsCategory.content.get(i).type, "image")) {
                         ImageView im = new ImageView(NewsActivity.this);
                         im.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        Picasso.with(NewsActivity.this).load(newsCategory.content.get(i).value)
-                                .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
+                        Glide.with(NewsActivity.this).load(newsCategory.content.get(i).value)
                                 .into(im);
+//                        Picasso.with(NewsActivity.this).load(newsCategory.content.get(i).value)
+//                                .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
+//                                .into(im);
 
                         TextView tv = new TextView(NewsActivity.this);
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                        tv.setText(Html.fromHtml(newsCategory.content.get(i).title));
                         tv.setText(newsCategory.content.get(i).title);
 
                         newsDetailsLl.addView(im);
@@ -120,7 +123,7 @@ public class NewsActivity extends Activity {
 
                     if (Objects.equals(newsCategory.content.get(i).type, "text")) {
                         TextView tv = new TextView(NewsActivity.this);
-                        tv.setText(newsCategory.content.get(i).title);
+                        tv.setText(Html.fromHtml(newsCategory.content.get(i).title));
 
                         newsDetailsLl.addView(tv);
                     }
@@ -138,17 +141,18 @@ public class NewsActivity extends Activity {
         for (int i = 0; i < newsCaty.content.size(); i++) {
             if (Objects.equals(newsCaty.content.get(i).type, "image")) {
                 ImageView im = new ImageView(NewsActivity.this);
-                im.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Picasso.with(NewsActivity.this).load(newsCaty.content.get(i).value)
-                        .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
-                        .into(im);
+                Glide.with(NewsActivity.this).load(newsCaty.content.get(i)
+                        .value).into(im);
+//                Picasso.with(NewsActivity.this).load(newsCaty.content.get(i).value)
+//                        .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
+//                        .into(im);
 
                 newsDetailsLl.addView(im);
             }
 
             if (Objects.equals(newsCaty.content.get(i).type, "text")) {
                 TextView tv = new TextView(NewsActivity.this);
-                tv.setText(newsCaty.content.get(i).value);
+                tv.setText(Html.fromHtml(newsCaty.content.get(i).value));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
                 newsDetailsLl.addView(tv);
             }

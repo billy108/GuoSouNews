@@ -2,6 +2,7 @@ package com.example.administrator.guosounews.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter implements View.On
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ResultViewHolder.tv_reslut_title.setText(newsSearches.newsList.get(position).title);
+        ResultViewHolder.tv_reslut_title.setText(Html.fromHtml(newsSearches.newsList.get(position).title));
         ResultViewHolder.tv_reslut_from.setText(newsSearches.newsList.get(position).mname);
         ResultViewHolder.tv_reslut_time.setText(newsSearches.newsList.get(position).time + "");
 

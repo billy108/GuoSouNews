@@ -45,6 +45,8 @@ public class SettingsActivity extends Activity {
             case R.id.rl_settings_clean:
                 break;
             case R.id.rl_settings_help:
+                i = new Intent(SettingsActivity.this, HelpActivity.class);
+                startActivity(i);
                 break;
             case R.id.rl_settings_advice:
                 break;

@@ -2,7 +2,6 @@ package com.example.administrator.guosounews.fragment;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -17,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.activity.MainActivity;
 import com.example.administrator.guosounews.activity.NewsActivity;
@@ -36,7 +36,6 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -222,9 +221,10 @@ public class HotFragment extends BaseFragment {
      */
     private void initSlideList(int size, List<ImageView> image) {
         for (int i = 0; i < size; i++) {
-            Picasso.with(ct).load(category.slide.get(i).picture)
-                    .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
-                    .into(image.get(i));
+            Glide.with(ct).load(category.slide.get(i).picture).into(image.get(i));
+//            Picasso.with(ct).load(category.slide.get(i).picture)
+//                    .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
+//                    .into(image.get(i));
 
             slide_url_list.add(APIs.ADV_BASE + category.slide.get(i).url + APIs.ADV_END);
         }
