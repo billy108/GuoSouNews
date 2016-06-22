@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_shared_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:background="@color/red"
+        >
+
+        <ImageView
+            android:background="@drawable/umeng_back_btn"
+            android:id="@+id/iv_shared_back"
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:text="分享设置"
+            android:textSize="22sp"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@id/rl_shared_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <ImageView
+                android:id="@+id/iv_shared_qq"
+                android:background="@drawable/umeng_socialize_tx_off"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/tv_shared_name"
+                android:layout_toEndOf="@id/iv_shared_qq"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="未授权"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/tb_shared_accredit"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/umeng_socialize_switchimage_unchoose"
+                android:layout_width="40dp"
+                android:layout_height="25dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

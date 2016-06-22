@@ -9,13 +9,13 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
-import com.example.administrator.guosounews.activity.SearchActivity;
-import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.activity.CollectActivity;
 import com.example.administrator.guosounews.activity.MainActivity;
+import com.example.administrator.guosounews.activity.SearchActivity;
+import com.example.administrator.guosounews.activity.SettingsActivity;
+import com.example.administrator.guosounews.base.BaseFragment;
 
 public class RightMenuFragment extends BaseFragment implements View.OnClickListener{
     private TextView download_for_offline;
@@ -66,20 +66,22 @@ public class RightMenuFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Intent i;
         switch (v.getId()) {
             case R.id.download_for_offline:
                 downloadOfflineDilog();
                 break;
             case R.id.righit_menu_collect:
-                Intent i = new Intent(ct, CollectActivity.class);
+                i = new Intent(ct, CollectActivity.class);
                 startActivity(i);
                 break;
             case R.id.right_menu_search:
-                Intent in = new Intent(ct, SearchActivity.class);
-                startActivity(in);
+                i = new Intent(ct, SearchActivity.class);
+                startActivity(i);
                 break;
             case R.id.right_menu_settings:
-                Toast.makeText(ct, "4", Toast.LENGTH_SHORT).show();
+                i = new Intent(ct, SettingsActivity.class);
+                startActivity(i);
                 break;
         }
     }

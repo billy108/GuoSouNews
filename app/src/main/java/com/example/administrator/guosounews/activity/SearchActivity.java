@@ -27,10 +27,8 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.lidroid.xutils.util.LogUtils;
 import com.orhanobut.logger.Logger;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -53,6 +51,8 @@ public class SearchActivity extends Activity {
     RecyclerView rvSearchResult;
     @InjectView(R.id.rv_search_auto)
     RecyclerView rvSearchAuto;
+    @InjectView(R.id.iv_search_clean)
+    ImageView clean_iv;
 
     private ArrayList<String> histroyList = new ArrayList<String>();
     private ArrayList<String> autoList = new ArrayList<String>();
@@ -63,8 +63,6 @@ public class SearchActivity extends Activity {
     private SearchResultAdapter resultAdapter;
     private SearchAutoAdapter autoAdapter;
 
-    private StringBuffer auto_URL;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +70,24 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         ButterKnife.inject(this);
 
-       // textDate();//测试数据
-
         initEditText();
         initHistroy();
+
+        //清除历史记录
+        tvSearchClean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                histroyList.clear();
+                rvSearchHistroy.setAdapter(histroyAdapter);
+            }
+        });
+
+        clean_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etSearch.setText("");
+            }
+        });
     }
 
     private void initEditText() {
@@ -107,19 +119,6 @@ public class SearchActivity extends Activity {
     }
 
     /**
-     * 测试数据
-     */
-    private void textDate() {
-        histroyList = new ArrayList<String>();
-        histroyList.add("test1");
-        histroyList.add("test2");
-        histroyList.add("test3");
-
-        newsSearches = new NewsSearch();
-
-    }
-
-    /**
      * 获取json
      */
     private void getJson(String url, final String type) {
@@ -130,7 +129,7 @@ public class SearchActivity extends Activity {
 
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
-                        LogUtils.d(responseInfo.result);
+                        Logger.d(responseInfo.result);
                         switch (type) {
                             case AUTO:
                                 StringBuffer buf = new StringBuffer(responseInfo.result);
@@ -138,7 +137,7 @@ public class SearchActivity extends Activity {
                                 buf.delete(0, str.length());
                                 buf.delete(buf.length() - 2 , buf.length());
                                 newsAUTO = new Gson().fromJson(buf.toString(), NewsAUTO.class);
-                                Logger.d(newsAUTO.q);
+
                                 initAuto(newsAUTO);
                                 break;
                             case RESULT:
@@ -155,37 +154,59 @@ public class SearchActivity extends Activity {
                 });
     }
 
+    /**
+     * 初始化自动填充数据框
+     * @param newsAUTO
+     */
     private void initAuto(NewsAUTO newsAUTO) {
-        rvSearchHistroy.setVisibility(View.GONE);
-        rvSearchResult.setVisibility(View.GONE);
-        tvSearchClean.setVisibility(View.GONE);
-
         autoList.clear();
-        autoList.add(newsAUTO.q);
-        for (int i = 0; i < newsAUTO.s.size(); i++) {
-            autoList.add(newsAUTO.s.get(i));
+
+        if (newsAUTO.q.length() != 0) {
+            Logger.d("11111" + newsAUTO.q + "11111");
+            rvSearchHistroy.setVisibility(View.GONE);
+            rvSearchResult.setVisibility(View.GONE);
+            tvSearchClean.setVisibility(View.GONE);
+            rvSearchAuto.setVisibility(View.VISIBLE);
+
+            autoList.add(newsAUTO.q);
+            for (int i = 0; i < newsAUTO.s.size(); i++) {
+                autoList.add(newsAUTO.s.get(i));
+            }
+        } else {
+            rvSearchHistroy.setVisibility(View.VISIBLE);
+            tvSearchClean.setVisibility(View.VISIBLE);
+            rvSearchResult.setVisibility(View.GONE);
         }
 
-        rvSearchAuto.setLayoutManager(new LinearLayoutManager(this));
-        rvSearchAuto.addItemDecoration(new RecycleViewDivider(
-                this, LinearLayoutManager.VERTICAL));
+            rvSearchAuto.setLayoutManager(new LinearLayoutManager(this));
+            rvSearchAuto.addItemDecoration(new RecycleViewDivider(
+                    this, LinearLayoutManager.VERTICAL));
 
         autoAdapter = new SearchAutoAdapter(autoList, this);
         rvSearchAuto.setAdapter(autoAdapter);
         autoAdapter.setOnItemClickListener(new SearchAutoAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d(autoList.get(position));
+                etSearch.setText(autoList.get(position));
+                rvSearchAuto.setVisibility(View.GONE);
+                String url = APIs.SEARCH_BASE + autoList.get(position);
+                getJson(url, RESULT);
+                rvSearchResult.setVisibility(View.VISIBLE);
+
+                histroyList.add(autoList.get(position));
+                etSearch.setSelection(autoList.get(position).length());
             }
         });
     }
 
     private void initResult(NewsSearch news) {
+        rvSearchResult.setVisibility(View.VISIBLE);
         rvSearchResult.setLayoutManager(new LinearLayoutManager(this));
         rvSearchResult.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.VERTICAL));
 
         resultAdapter = new SearchResultAdapter(news, this);
+        rvSearchResult.setAdapter(resultAdapter);
         resultAdapter.setOnItemClickListener(new SearchResultAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -209,27 +230,15 @@ public class SearchActivity extends Activity {
         histroyAdapter.setOnItemClickListener(new SearchHistroyAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(SearchActivity.this, histroyList.get(position), Toast.LENGTH_SHORT).show();
                 tvSearchClean.setVisibility(View.GONE);
                 rvSearchHistroy.setVisibility(View.GONE);
                 rvSearchResult.setAdapter(resultAdapter);
+
+                String url = APIs.SEARCH_BASE + histroyList.get(position);
+                etSearch.setText(histroyList.get(position));
+                getJson(url, RESULT);
             }
         });
     }
 
-    /**
-     * String 类型转换成UTF-8格式
-     * @param str 要转换的参数
-     * @return 转换后的String
-     */
-    public static String toUtf8(String str) {
-        String result = null;
-        try {
-            result = new String(str.getBytes("UTF-8"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return result;
-    }
 }
