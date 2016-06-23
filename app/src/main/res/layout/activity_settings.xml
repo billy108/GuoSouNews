@@ -102,6 +102,7 @@
                 android:layout_height="wrap_content" />
 
             <ToggleButton
+                android:id="@+id/tb_settings_msg"
                 android:background="@drawable/settings_msg_selector"
                 android:checked="true"
                 android:textOff=""
@@ -132,7 +133,7 @@
                 android:layout_height="25dp" />
 
             <TextView
-                android:text="2G/3G网络不加载图片"
+                android:text="不加载网络图片"
                 android:textSize="18sp"
                 android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
@@ -142,6 +143,7 @@
                 android:layout_height="wrap_content" />
 
             <ToggleButton
+                android:id="@+id/tb_settings_2g3g"
                 android:background="@drawable/settings_msg_selector"
                 android:text=""
                 android:textOff=""

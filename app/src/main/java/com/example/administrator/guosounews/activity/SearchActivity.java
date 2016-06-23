@@ -22,6 +22,7 @@ import com.example.administrator.guosounews.bean.NewsSearch;
 import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
+import com.example.administrator.guosounews.utils.SPUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -72,6 +73,7 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         ButterKnife.inject(this);
 
+        initData();
         initEditText();
         initHistroy();
 
@@ -90,6 +92,15 @@ public class SearchActivity extends Activity {
                 etSearch.setText("");
             }
         });
+    }
+
+    private void initData() {
+        if (histroyList.size() != 0) {
+            Logger.d(histroyList.get(0));
+        }
+        rvSearchHistroy.setVisibility(View.VISIBLE);
+        histroyAdapter = new SearchHistroyAdapter((ArrayList)(SPUtils.get(this, "searchHistroy", histroyList)), this);
+        rvSearchHistroy.setAdapter(histroyAdapter);
     }
 
     private void initEditText() {
@@ -202,6 +213,7 @@ public class SearchActivity extends Activity {
 
                 histroyList.add(autoList.get(position));
                 etSearch.setSelection(autoList.get(position).length());
+                SPUtils.put(SearchActivity.this, "searchHistroy", histroyList);
             }
         });
     }
@@ -255,4 +267,9 @@ public class SearchActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
 }

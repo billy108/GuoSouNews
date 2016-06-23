@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.ui.ListViewForScrollView;
 import com.example.administrator.guosounews.utils.APIs;
-import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -57,11 +55,7 @@ public class PoliticsFragment extends BaseFragment {
 
 	@Override
 	public void initData(Bundle savedInstanceState) {
-		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
 		scrollView.smoothScrollTo(1, 1);
-		if (TextUtils.isEmpty(vaule)) {
-			processData();
-		}
 	}
 
 	private List<String> menuNewCenterList = new ArrayList<>();
@@ -128,7 +122,6 @@ public class PoliticsFragment extends BaseFragment {
 						news_viewpager_text.setText(category.slide.get(0).title);
 						showImage(category.slide.size(), imageList);
 						initList(category);
-						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
 						processData();
 					}
 

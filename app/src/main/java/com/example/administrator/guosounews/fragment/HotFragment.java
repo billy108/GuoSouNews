@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.activity.MainActivity;
 import com.example.administrator.guosounews.activity.NewsActivity;
+import com.example.administrator.guosounews.activity.SettingsActivity;
 import com.example.administrator.guosounews.activity.SpecialActivity;
 import com.example.administrator.guosounews.adapter.MyAdvPagerAdapter;
 import com.example.administrator.guosounews.adapter.MyNewsListAdapter;
@@ -28,7 +29,6 @@ import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.ui.ListViewForScrollView;
 import com.example.administrator.guosounews.ui.RefreshLayout;
 import com.example.administrator.guosounews.utils.APIs;
-import com.example.administrator.guosounews.utils.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -203,7 +203,6 @@ public class HotFragment extends BaseFragment {
                         initSlideList(category.slide.size(), imageList);
                         //初始化newsList
                         initNewsList(category);
-                        SharedPreferencesUtils.saveString(ct, HOTFRAGMENT, responseInfo.result);
                     }
 
                     @Override
@@ -221,10 +220,9 @@ public class HotFragment extends BaseFragment {
      */
     private void initSlideList(int size, List<ImageView> image) {
         for (int i = 0; i < size; i++) {
-            Glide.with(ct).load(category.slide.get(i).picture).into(image.get(i));
-//            Picasso.with(ct).load(category.slide.get(i).picture)
-//                    .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
-//                    .into(image.get(i));
+            if (!SettingsActivity.isLoadImage) {
+                Glide.with(ct).load(category.slide.get(i).picture).into(image.get(i));
+            }
 
             slide_url_list.add(APIs.ADV_BASE + category.slide.get(i).url + APIs.ADV_END);
         }
@@ -350,7 +348,6 @@ public class HotFragment extends BaseFragment {
      */
     @Override
     public void initData(Bundle savedInstanceState) {
-        String vaule = SharedPreferencesUtils.getString(ct, HOTFRAGMENT);
     }
 
 }

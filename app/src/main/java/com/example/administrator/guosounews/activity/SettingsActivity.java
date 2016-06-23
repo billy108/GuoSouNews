@@ -7,15 +7,19 @@ import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.utils.DataCleanManager;
+import com.example.administrator.guosounews.utils.SPUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SettingsActivity extends Activity {
+    public static boolean isLoadImage = false;
+    public static boolean isSendMsg = true;
 
     @InjectView(R.id.rl_settings_shared)
     RelativeLayout rlSettingsShared;
@@ -29,6 +33,10 @@ public class SettingsActivity extends Activity {
     RelativeLayout rlSettingsAbout;
     @InjectView(R.id.tv_settings_cache)
     TextView tvSettingsCache;
+    @InjectView(R.id.tb_settings_msg)
+    ToggleButton tbSettingsMsg;
+    @InjectView(R.id.tb_settings_2g3g)
+    ToggleButton tbSettings2g3g;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,15 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.activity_settings);
         ButterKnife.inject(this);
 
+        initData();
+
         calculateCache();
+
+    }
+
+    private void initData() {
+        tbSettings2g3g.setChecked((boolean)SPUtils.get(this, "isLoadImage", false));
+        tbSettingsMsg.setChecked((boolean)SPUtils.get(this, "isSendMsg", false));
     }
 
     private void calculateCache() {
@@ -50,7 +66,8 @@ public class SettingsActivity extends Activity {
         }
     }
 
-    @OnClick({R.id.rl_settings_shared, R.id.rl_settings_clean, R.id.rl_settings_help, R.id.rl_settings_advice, R.id.rl_settings_about})
+    @OnClick({R.id.rl_settings_shared, R.id.rl_settings_clean, R.id.rl_settings_help,
+            R.id.rl_settings_advice, R.id.rl_settings_about,R.id.tb_settings_msg, R.id.tb_settings_2g3g})
     public void onClick(View view) {
         Intent i;
         switch (view.getId()) {
@@ -69,6 +86,24 @@ public class SettingsActivity extends Activity {
             case R.id.rl_settings_advice:
                 break;
             case R.id.rl_settings_about:
+                break;
+            case R.id.tb_settings_msg:
+                if (tbSettingsMsg.isChecked()) {
+                    isSendMsg = true;
+                } else {
+                    isSendMsg = false;
+                }
+
+                SPUtils.put(this, "isSendMsg", isSendMsg);
+                break;
+            case R.id.tb_settings_2g3g:
+                if (tbSettings2g3g.isChecked()) {
+                    isLoadImage = true;
+                } else {
+                    isLoadImage = false;
+                }
+
+                SPUtils.put(this, "isLoadImage", isLoadImage);
                 break;
         }
     }
