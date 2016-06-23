@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.utils.DataCleanManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -25,6 +27,8 @@ public class SettingsActivity extends Activity {
     RelativeLayout rlSettingsAdvice;
     @InjectView(R.id.rl_settings_about)
     RelativeLayout rlSettingsAbout;
+    @InjectView(R.id.tv_settings_cache)
+    TextView tvSettingsCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +36,31 @@ public class SettingsActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_settings);
         ButterKnife.inject(this);
+
+        calculateCache();
+    }
+
+    private void calculateCache() {
+        try {
+            String cacheSize = DataCleanManager.getTotalCacheSize(this);
+            tvSettingsCache.setText(cacheSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick({R.id.rl_settings_shared, R.id.rl_settings_clean, R.id.rl_settings_help, R.id.rl_settings_advice, R.id.rl_settings_about})
     public void onClick(View view) {
-        Intent i ;
+        Intent i;
         switch (view.getId()) {
             case R.id.rl_settings_shared:
                 i = new Intent(SettingsActivity.this, SharedActivity.class);
                 startActivity(i);
                 break;
             case R.id.rl_settings_clean:
+                DataCleanManager.clearAllCache(this);
+                tvSettingsCache.setText("0B");
                 break;
             case R.id.rl_settings_help:
                 i = new Intent(SettingsActivity.this, HelpActivity.class);
@@ -54,4 +72,5 @@ public class SettingsActivity extends Activity {
                 break;
         }
     }
+
 }
