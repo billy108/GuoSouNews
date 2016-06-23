@@ -12,11 +12,11 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.NewsChannelAdapter;
 import com.example.administrator.guosounews.bean.NewsChannel;
+import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -47,6 +47,7 @@ public class SubscriptionNewsActivity extends Activity {
     private NewsChannel channel;
     private LinearLayoutManager manager;
     private Handler handler;
+    private String htmlStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class SubscriptionNewsActivity extends Activity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String htmlStr =  response.body().string();
+                htmlStr =  response.body().string();
                 Logger.d(htmlStr);
                 channel = new Gson().fromJson(htmlStr, NewsChannel.class);
                 Message msg = new Message();
@@ -99,7 +100,7 @@ public class SubscriptionNewsActivity extends Activity {
         });
     }
 
-    private void initData(NewsChannel channels) {
+    private void initData(final NewsChannel channels) {
         channelHeaderTitle.setText(channels.mname);
         //设置固定大小
         channelRecycler.setHasFixedSize(true);
@@ -119,9 +120,12 @@ public class SubscriptionNewsActivity extends Activity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent i = new Intent(SubscriptionNewsActivity.this, NewsActivity.class);
-//                i.putExtras("channel", channel);
+                Bundle bundle = new Bundle();
+                i.putExtra(HotFragment.HOTFRAGMENT, htmlStr);
+                i.putExtra("postiton", position);
+                i.putExtra(HotFragment.NEWS_TYPE, 22);
+
                 startActivity(i);
-                Toast.makeText(SubscriptionNewsActivity.this, position + "", Toast.LENGTH_SHORT).show();
             }
         });
     }

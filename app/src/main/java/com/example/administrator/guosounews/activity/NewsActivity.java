@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.bean.NewsAdv;
+import com.example.administrator.guosounews.bean.NewsChannel;
 import com.example.administrator.guosounews.bean.NewsList;
 import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
@@ -45,6 +46,7 @@ public class NewsActivity extends Activity {
 
     NewsAdv newsCategory;
     NewsList newsCaty;
+    NewsChannel channel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,11 @@ public class NewsActivity extends Activity {
         if (type == APIs.ADV_NEWS) {
             newsCategory = new Gson().fromJson(json, NewsAdv.class);
             initAdvNewsDetail(newsCategory);
-        } else if (type == APIs.LIST_NEWS || type == APIs.SPE_LIST_NEWS) {
+        } else if (type == 22) {
+            int postiton = getIntent().getIntExtra("postiton", -1);
+            channel = new Gson().fromJson(json, NewsChannel.class);
+            initNewsDetail(channel, postiton);
+        } else {
             newsCaty = new Gson().fromJson(json, NewsList.class);
             initListNewsDetail(newsCaty);
         }
@@ -108,9 +114,6 @@ public class NewsActivity extends Activity {
                         im.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(NewsActivity.this).load(newsCategory.content.get(i).value)
                                 .into(im);
-//                        Picasso.with(NewsActivity.this).load(newsCategory.content.get(i).value)
-//                                .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
-//                                .into(im);
 
                         TextView tv = new TextView(NewsActivity.this);
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
@@ -143,9 +146,6 @@ public class NewsActivity extends Activity {
                 ImageView im = new ImageView(NewsActivity.this);
                 Glide.with(NewsActivity.this).load(newsCaty.content.get(i)
                         .value).into(im);
-//                Picasso.with(NewsActivity.this).load(newsCaty.content.get(i).value)
-//                        .config(Bitmap.Config.RGB_565).error(R.drawable.dot)
-//                        .into(im);
 
                 newsDetailsLl.addView(im);
             }
@@ -153,6 +153,31 @@ public class NewsActivity extends Activity {
             if (Objects.equals(newsCaty.content.get(i).type, "text")) {
                 TextView tv = new TextView(NewsActivity.this);
                 tv.setText(Html.fromHtml(newsCaty.content.get(i).value));
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                newsDetailsLl.addView(tv);
+            }
+
+        }
+    }
+
+
+    private void initNewsDetail(NewsChannel channel, int postiton) {
+        newsTitle.setText(channel.articleList.get(postiton).title);
+        newsTime.setText(channel.articleList.get(postiton).time);
+        newsFrom.setText(channel.mname);
+
+        for (int i = 0; i < channel.articleList.get(postiton).content.size(); i++) {
+            if (Objects.equals(channel.articleList.get(postiton).content.get(i).type, "image")) {
+                ImageView im = new ImageView(NewsActivity.this);
+                Glide.with(NewsActivity.this).load(channel.articleList.get(postiton).content.get(i)
+                        .value).into(im);
+
+                newsDetailsLl.addView(im);
+            }
+
+            if (Objects.equals(channel.articleList.get(postiton).content.get(i).type, "text")) {
+                TextView tv = new TextView(NewsActivity.this);
+                tv.setText(Html.fromHtml(channel.articleList.get(postiton).content.get(i).value));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
                 newsDetailsLl.addView(tv);
             }

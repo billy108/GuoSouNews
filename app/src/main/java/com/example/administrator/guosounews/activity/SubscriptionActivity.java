@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.SubscriptionItemAdapter;
@@ -115,20 +113,15 @@ public class SubscriptionActivity extends Activity {
 
     @OnClick(R.id.subscription_bar_sliding)
     public void onClick() {
-        Toast.makeText(this, "11111", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (event.getAction() == KeyEvent.KEYCODE_BACK) {
-//            Toast.makeText(this, "11111", Toast.LENGTH_SHORT).show();
-//            Intent i = new Intent(this, MainActivity.class);
-//            startActivity(i);
-//            finish();
-//        }
-        return true;
+    public void onBackPressed() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 }

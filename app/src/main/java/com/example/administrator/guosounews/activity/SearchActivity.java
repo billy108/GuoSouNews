@@ -1,6 +1,7 @@
 package com.example.administrator.guosounews.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.SearchAutoAdapter;
@@ -19,6 +19,7 @@ import com.example.administrator.guosounews.adapter.SearchHistroyAdapter;
 import com.example.administrator.guosounews.adapter.SearchResultAdapter;
 import com.example.administrator.guosounews.bean.NewsAUTO;
 import com.example.administrator.guosounews.bean.NewsSearch;
+import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
 import com.google.gson.Gson;
@@ -38,6 +39,7 @@ public class SearchActivity extends Activity {
 
     public static final String AUTO = "auto";
     public static final String RESULT = "result";
+    public static final String NEWS = "news";
 
     @InjectView(R.id.iv_search_back)
     ImageView ivSearchBack;
@@ -144,6 +146,11 @@ public class SearchActivity extends Activity {
                                 newsSearches = new Gson().fromJson(responseInfo.result, NewsSearch.class);
                                 initResult(newsSearches);
                                 break;
+                            case NEWS:
+                                Intent i = new Intent(SearchActivity.this, NewsActivity.class);
+                                i.putExtra(HotFragment.HOTFRAGMENT, responseInfo.result);
+                                startActivity(i);
+                                break;
                         }
 
                     }
@@ -199,7 +206,11 @@ public class SearchActivity extends Activity {
         });
     }
 
-    private void initResult(NewsSearch news) {
+    /**
+     * 搜索结果
+     * @param news
+     */
+    private void initResult(final NewsSearch news) {
         rvSearchResult.setVisibility(View.VISIBLE);
         rvSearchResult.setLayoutManager(new LinearLayoutManager(this));
         rvSearchResult.addItemDecoration(new RecycleViewDivider(
@@ -210,7 +221,10 @@ public class SearchActivity extends Activity {
         resultAdapter.setOnItemClickListener(new SearchResultAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(SearchActivity.this, newsSearches.newsList.get(position).title, Toast.LENGTH_SHORT).show();
+                String nid = news.newsList.get(position).nid;
+                String resultURL = APIs.RESULT_BASE + nid + APIs.RESULT_END;
+
+                getJson(resultURL, NEWS);
             }
         });
     }

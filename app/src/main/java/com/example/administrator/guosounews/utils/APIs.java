@@ -36,6 +36,10 @@ public class APIs {
     public static final String AUTO_BASE = "http://nssug.baidu.com/su?wd=";
     public static final String AUTO_END = "&ie=utf-8&prod=news";
 
+    //搜索结果URL
+    public static final String RESULT_BASE = "http://mobapp.chinaso.com/1/category/newsDetailHtml?version=version%3D2.67.7&cid=&tid=&devid=00000000-56bd-2770-ffff-ffff89d87fe7&nid=";
+    public static final String RESULT_END = "&extra=norecmd";
+
     /**
      * 订阅频道条目
      * 阅读频道索引 0~2

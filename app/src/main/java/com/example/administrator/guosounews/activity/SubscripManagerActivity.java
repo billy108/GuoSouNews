@@ -11,7 +11,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.SubscriptionLeftItemAdapter;
@@ -176,21 +175,6 @@ public class SubscripManagerActivity extends Activity {
     }
 
     /**
-     * 添加channel数据
-     */
-    private void setChannelList(ArrayList<SubscriptionChannel> channel) {
-        channels.clear();
-//        if (channel.size() == 0) {
-//            for (int i = 0; i < title.length; i++) {
-//                channel.add(new SubscriptionChannel(title[i], content[i], false, SubscriptionActivity.readingURLs.get(i)));
-//            }
-//        }
-        channels.addAll(channel);
-        rightSubscription.setAdapter(rightAdapter);
-
-    }
-
-    /**
      * 返回 我的订阅 信息
      */
     @OnClick(R.id.subscription_back)
@@ -220,8 +204,6 @@ public class SubscripManagerActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Toast.makeText(this, "12121", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, SubscriptionActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("data", myChannels);
