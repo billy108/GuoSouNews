@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class SearchActivity extends Activity {
+    public static final String SEARCHACTIVITY = "searchActivity";
 
     public static final String AUTO = "auto";
     public static final String RESULT = "result";
@@ -94,12 +95,13 @@ public class SearchActivity extends Activity {
         });
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
-        if (histroyList.size() != 0) {
-            Logger.d(histroyList.get(0));
-        }
+        SPUtils.loadArray(this,histroyList);
         rvSearchHistroy.setVisibility(View.VISIBLE);
-        histroyAdapter = new SearchHistroyAdapter((ArrayList)(SPUtils.get(this, "searchHistroy", histroyList)), this);
+        histroyAdapter = new SearchHistroyAdapter(histroyList, this);
         rvSearchHistroy.setAdapter(histroyAdapter);
     }
 
@@ -213,7 +215,7 @@ public class SearchActivity extends Activity {
 
                 histroyList.add(autoList.get(position));
                 etSearch.setSelection(autoList.get(position).length());
-                SPUtils.put(SearchActivity.this, "searchHistroy", histroyList);
+
             }
         });
     }
@@ -270,6 +272,6 @@ public class SearchActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        SPUtils.saveArray(this, histroyList);
     }
 }

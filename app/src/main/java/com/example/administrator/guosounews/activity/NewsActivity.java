@@ -69,6 +69,7 @@ public class NewsActivity extends Activity {
             case R.id.news_back:
                 break;
             case R.id.news_collect:
+                CollectActivity.collectNews.add(newsCaty);
                 break;
             case R.id.news_shared:
                 break;

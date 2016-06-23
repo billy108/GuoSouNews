@@ -1,9 +1,11 @@
 package com.example.administrator.guosounews.utils;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class SPUtils
@@ -190,4 +192,40 @@ public class SPUtils
         }
     }
 
+    /**
+     * 保存 ArrayList<String>
+     * @param context
+     * @param sKey
+     * @return
+     */
+    public static boolean saveArray(Context context, ArrayList<String> sKey) {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("Status_size",sKey.size()); /*sKey is an array*/
+
+        for(int i=0;i<sKey.size();i++) {
+            editor.remove("Status_" + i);
+            editor.putString("Status_" + i, sKey.get(i));
+        }
+
+        return editor.commit();
+    }
+
+    /**
+     * 取值 ArrayList<String>
+     * @param mContext
+     * @param sKey
+     */
+    public static void loadArray(Context mContext, ArrayList<String> sKey) {
+        SharedPreferences sp = mContext.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        sKey.clear();
+        int size = sp.getInt("Status_size", 0);
+
+        for(int i=0;i<size;i++) {
+            sKey.add(sp.getString("Status_" + i, null));
+
+        }
+    }
 }
