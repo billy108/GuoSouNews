@@ -27,8 +27,9 @@
         <activity
             android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity android:name=".activity.CollectActivity"
-            android:theme="@style/Theme.AppCompat"/>
+        <activity
+            android:name=".activity.CollectActivity"
+            android:theme="@style/Theme.AppCompat" />
         <activity android:name=".activity.NewsActivity" />
         <activity android:name=".activity.SpecialActivity" />
         <activity android:name=".activity.SubscriptionActivity" />
@@ -45,7 +46,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SharedActivity" />
-        <activity android:name=".activity.HelpActivity"></activity>
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.TestActivity"></activity>
     </application>
 
 </manifest>

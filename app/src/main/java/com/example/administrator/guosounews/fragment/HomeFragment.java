@@ -1,16 +1,19 @@
 package com.example.administrator.guosounews.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.activity.TestActivity;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
@@ -22,7 +25,13 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class HomeFragment extends BaseFragment {
+    @InjectView(R.id.top_title_text)
+    TextView topTitleText;
     @ViewInject(R.id.viewpager)
     private ViewPager viewPager;
 
@@ -88,6 +97,7 @@ public class HomeFragment extends BaseFragment {
 
     /**
      * 初始化viewPagerTab
+     *
      * @param savedInstanceState
      */
     @Override
@@ -139,5 +149,24 @@ public class HomeFragment extends BaseFragment {
         slidingMenu.toggle();
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    @OnClick(R.id.top_title_text)
+    public void onClick() {
+        Intent i = new Intent(ct, TestActivity.class);
+        startActivity(i);
+    }
 }
 

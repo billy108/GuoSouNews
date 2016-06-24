@@ -1,36 +1,42 @@
 package com.example.administrator.guosounews.activity;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.bean.NewsList;
-import com.example.administrator.guosounews.fragment.CollectFragment;
-import com.example.administrator.guosounews.fragment.HistroyFragment;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class CollectActivity extends Activity {
-    public static ArrayList<NewsList> collectNews;
-    public static ArrayList<NewsList> histroyNews;
+public class CollectActivity extends FragmentActivity {
+    public static ArrayList<NewsList> collectNews = new ArrayList<>();
+    public static ArrayList<NewsList> histroyNews = new ArrayList<>();;
 
-    private FragmentTransaction fragmentTransaction;
-    Fragment collectFragment = new CollectFragment();
-    Fragment histroyFragment = new HistroyFragment();
+    private FragmentManager fm;
+    private View collectView, histroyView;
+    private List<View> mViewList = new ArrayList<>();
+    private LayoutInflater inflater;
+    private List<String> mTitleList = new ArrayList<>();//页卡标题集合
 
+    @InjectView(R.id.vp_collect)
+    ViewPager vpCollect;
     @InjectView(R.id.collect_back)
     ImageView collectBack;
     @InjectView(R.id.edit)
@@ -47,23 +53,29 @@ public class CollectActivity extends Activity {
         setContentView(R.layout.activity_collect);
         ButterKnife.inject(this);
 
-        initTab();
         initContent();
+        initTab();
     }
 
     private void initContent() {
+        inflater = LayoutInflater.from(this);
 
-        FragmentManager fm = getFragmentManager();
-        fragmentTransaction = fm.beginTransaction();
+        collectView = inflater.inflate(R.layout.fragment_collection, null);
+        histroyView = inflater.inflate(R.layout.fragment_histroy, null);
 
+        mTitleList.add("收藏");
+        mTitleList.add("历史");
+
+        mViewList.add(collectView);
+        mViewList.add(histroyView);
+
+        CollectAdapter adapter = new CollectAdapter(mViewList, mTitleList);
+
+        vpCollect.setAdapter(adapter);
+        tlCollect.setupWithViewPager(vpCollect);//将TabLayout和ViewPager关联起来。
     }
 
     private void initTab() {
-        TabLayout.Tab tab1 = tlCollect.newTab().setText("收藏");
-        tlCollect.addTab(tab1);
-        TabLayout.Tab tab2 = tlCollect.newTab().setText("历史");
-        tlCollect.addTab(tab2);
-
         tlCollect.setTabTextColors(Color.GRAY, Color.RED);
 
         tlCollect.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -74,16 +86,13 @@ public class CollectActivity extends Activity {
                     case 0:
                         tvCollectTitle.setText("收藏");
                         edit.setBackground(getResources().getDrawable(R.drawable.header_right_icon_edit_selected));
-                        fragmentTransaction.replace(R.id.fl_collect, collectFragment);
                         break;
                     case 1:
                         tvCollectTitle.setText("历史");
                         edit.setBackground(getResources().getDrawable(R.drawable.header_right_icon_del_selected));
-                        fragmentTransaction.replace(R.id.fl_collect, histroyFragment);
                         break;
                 }
 
-                fragmentTransaction.commit();
             }
 
             @Override
@@ -109,4 +118,41 @@ public class CollectActivity extends Activity {
         }
     }
 
+    class CollectAdapter extends PagerAdapter{
+        private List<View> mVList;
+        private List<String> mTList;
+
+        public CollectAdapter(List<View> mViewList, List<String> mTitleList) {
+            this.mVList = mViewList;
+            this.mTList = mTitleList;
+        }
+
+        @Override
+        public int getCount() {
+            return mVList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            container.addView(mVList.get(position));
+            Logger.d("create");
+            return mVList.get(position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            Logger.d("remove");
+            container.removeView(mVList.get(position));
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTList.get(position);
+        }
+    }
 }
