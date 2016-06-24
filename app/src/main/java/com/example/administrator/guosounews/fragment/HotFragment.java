@@ -158,7 +158,7 @@ public class HotFragment extends BaseFragment {
      *
      * @param category json实例
      */
-    private void initNewsList(NewsCenterCategory category) {
+    private void initNewsList(final NewsCenterCategory category) {
         imageNewsList = new ArrayList<ImageView>();
 
         for (int i = 0; i < category.list.size(); i++) {
@@ -177,7 +177,7 @@ public class HotFragment extends BaseFragment {
                         Intent i = new Intent(getActivity(), SpecialActivity.class);
                         startActivity(i);
                     } else {
-                        intentToNews(list_url_list.get(position), APIs.LIST_NEWS);
+                        intentToNews(list_url_list.get(position), APIs.LIST_NEWS, category.list.get(position).picture);
                     }
                 }
             });
@@ -243,7 +243,7 @@ public class HotFragment extends BaseFragment {
             im.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intentToNews(slide_url_list.get(finalI), APIs.ADV_NEWS);
+                    intentToNews(slide_url_list.get(finalI), APIs.ADV_NEWS, category.slide.get(finalI).picture);
                 }
             });
             imageList.add(im);
@@ -297,7 +297,7 @@ public class HotFragment extends BaseFragment {
     /**
      * 跳转到新闻页面
      */
-    private void intentToNews(String url, final int type) {
+    private void intentToNews(String url, final int type, final String picUrll) {
         //获取adv的json
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET,
@@ -311,6 +311,7 @@ public class HotFragment extends BaseFragment {
                         Intent i = new Intent(getActivity(), NewsActivity.class);
                         i.putExtra(HOTFRAGMENT, responseInfo.result);
                         i.putExtra(NEWS_TYPE, type);
+                        i.putExtra("url", picUrll);
                         startActivity(i);
                     }
 

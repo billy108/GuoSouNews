@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp">
+
+    <TextView
+        android:id="@+id/tv_collect_item_title"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:text="111111111111111111"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_collect_item_title"
+        android:src="@drawable/dark_dot"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/tv_collect_item_title"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="海外网"
+        android:textColor="@color/red"
+        android:textSize="10sp"
+        android:id="@+id/tv_collect_item_from"
+        android:layout_alignTop="@+id/iv_collect_item_title"
+        android:layout_toEndOf="@+id/iv_collect_item_title"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="05年31日"
+        android:textSize="10sp"
+        android:id="@+id/tv_collect_item_time"
+        android:layout_alignTop="@+id/tv_collect_item_from"
+        android:layout_toEndOf="@+id/tv_collect_item_from"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="2222222222222222222222222222222222222222"
+        android:id="@+id/tv_collect_item_content"
+        android:layout_below="@+id/tv_collect_item_from"
+        android:layout_alignStart="@+id/tv_collect_item_from" />
+
+
+</RelativeLayout>

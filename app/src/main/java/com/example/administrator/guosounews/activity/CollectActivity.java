@@ -7,15 +7,20 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.adapter.CollectItemAdapter;
 import com.example.administrator.guosounews.bean.NewsList;
+import com.example.administrator.guosounews.utils.RecycleViewDivider;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -26,12 +31,12 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class CollectActivity extends FragmentActivity {
-    public static ArrayList<NewsList> collectNews = new ArrayList<>();
+
     public static ArrayList<NewsList> histroyNews = new ArrayList<>();;
 
     private FragmentManager fm;
     private View collectView, histroyView;
-    private List<View> mViewList = new ArrayList<>();
+    private ArrayList<View> mViewList = new ArrayList<>();
     private LayoutInflater inflater;
     private List<String> mTitleList = new ArrayList<>();//页卡标题集合
 
@@ -46,6 +51,11 @@ public class CollectActivity extends FragmentActivity {
     @InjectView(R.id.tv_collect_title)
     TextView tvCollectTitle;
 
+    private RecyclerView revCollect;
+    private RecyclerView revHistroy;
+
+    private CollectItemAdapter collectAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +65,29 @@ public class CollectActivity extends FragmentActivity {
 
         initContent();
         initTab();
+        initCollcetion();
+    }
+
+    private void initCollcetion() {
+        revCollect = (RecyclerView) collectView.findViewById(R.id.rev_collcet);
+        histroyView = (RecyclerView) collectView.findViewById(R.id.rev_histroy);
+
+        revCollect.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
+        //设置分割线
+        revCollect.addItemDecoration(new RecycleViewDivider(
+                this, LinearLayoutManager.VERTICAL));
+        if (NewsActivity.collectNews.size() != 0) {
+            collectAdapter = new CollectItemAdapter(NewsActivity.collectNews, this, NewsActivity.picUrls);
+            revCollect.setAdapter(collectAdapter);
+        }
     }
 
     private void initContent() {
-        inflater = LayoutInflater.from(this);
-
-        collectView = inflater.inflate(R.layout.fragment_collection, null);
-        histroyView = inflater.inflate(R.layout.fragment_histroy, null);
-
         mTitleList.add("收藏");
         mTitleList.add("历史");
+        inflater = LayoutInflater.from(this);
+        collectView = inflater.inflate(R.layout.fragment_collection, null);
+        histroyView = inflater.inflate(R.layout.fragment_histroy, null);
 
         mViewList.add(collectView);
         mViewList.add(histroyView);
@@ -118,6 +141,9 @@ public class CollectActivity extends FragmentActivity {
         }
     }
 
+    /**
+     *
+     */
     class CollectAdapter extends PagerAdapter{
         private List<View> mVList;
         private List<String> mTList;
@@ -130,6 +156,7 @@ public class CollectActivity extends FragmentActivity {
         @Override
         public int getCount() {
             return mVList.size();
+
         }
 
         @Override
@@ -140,7 +167,6 @@ public class CollectActivity extends FragmentActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             container.addView(mVList.get(position));
-            Logger.d("create");
             return mVList.get(position);
         }
 

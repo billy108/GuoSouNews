@@ -19,6 +19,7 @@ import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
@@ -47,6 +48,10 @@ public class NewsActivity extends Activity {
     NewsAdv newsCategory;
     NewsList newsCaty;
     NewsChannel channel;
+    String picUrl;
+
+    public static ArrayList<NewsList> collectNews = new ArrayList<>();
+    public static ArrayList<String> picUrls = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class NewsActivity extends Activity {
         setContentView(R.layout.layout_news);
         ButterKnife.inject(this);
 
+        picUrl = getIntent().getStringExtra("url");
         getNews();
 
     }
@@ -69,7 +75,9 @@ public class NewsActivity extends Activity {
             case R.id.news_back:
                 break;
             case R.id.news_collect:
-                CollectActivity.collectNews.add(newsCaty);
+                newsCollect.setImageDrawable(getResources().getDrawable(R.drawable.detail_fav_btn_selected));
+                collectNews.add(newsCaty);
+                picUrls.add(picUrl);
                 break;
             case R.id.news_shared:
                 break;
