@@ -176,7 +176,7 @@ public class HotFragment extends BaseFragment {
                     if (position == 0) {
                         Intent i = new Intent(getActivity(), SpecialActivity.class);
                         startActivity(i);
-                    } else {
+                    } else {//???????????
                         intentToNews(list_url_list.get(position), APIs.LIST_NEWS, category.list.get(position).picture);
                     }
                 }

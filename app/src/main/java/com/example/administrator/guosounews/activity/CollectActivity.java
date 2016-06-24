@@ -21,6 +21,7 @@ import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.CollectItemAdapter;
 import com.example.administrator.guosounews.bean.NewsList;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
+import com.example.administrator.guosounews.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class CollectActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_collect);
         ButterKnife.inject(this);
+        ToastUtil.showShort(this, "222222");
 
         initContent();
         initTab();

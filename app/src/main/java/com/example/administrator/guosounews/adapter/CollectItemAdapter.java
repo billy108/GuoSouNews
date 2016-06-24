@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.bean.NewsList;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -40,8 +41,11 @@ public class CollectItemAdapter extends RecyclerView.Adapter {
         CollectViewHolder.item_content.setText(channels.get(position).description);
         CollectViewHolder.item_time.setText(channels.get(position).timeString);
         CollectViewHolder.item_from.setText(channels.get(position).mname);
+        Logger.d(channels.get(position).description);
 
-        Glide.with(ct).load(picUrls.get(position)).into(CollectViewHolder.item_img);
+        if (picUrls.size() != 0) {
+            Glide.with(ct).load(picUrls.get(position)).into(CollectViewHolder.item_img);
+        }
     }
 
     @Override

@@ -75,7 +75,7 @@ public class NewsActivity extends Activity {
             case R.id.news_back:
                 break;
             case R.id.news_collect:
-                newsCollect.setImageDrawable(getResources().getDrawable(R.drawable.detail_fav_btn_selected));
+                newsCollect.setBackgroundResource(R.drawable.detail_fav_btn_selected);
                 collectNews.add(newsCaty);
                 picUrls.add(picUrl);
                 break;
