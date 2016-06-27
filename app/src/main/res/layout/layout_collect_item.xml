@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_collect_item"
     android:layout_width="match_parent"
-    android:layout_height="85dp">
+    android:layout_height="100dp">
 
     <TextView
         android:id="@+id/tv_collect_item_title"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/iv_collect_item_title"
+        android:id="@+id/iv_collect_item_img"
         android:src="@drawable/dark_dot"
         android:layout_marginTop="5dp"
         android:layout_below="@id/tv_collect_item_title"
@@ -27,8 +28,8 @@
         android:textColor="@color/red"
         android:textSize="10sp"
         android:id="@+id/tv_collect_item_from"
-        android:layout_alignTop="@+id/iv_collect_item_title"
-        android:layout_toEndOf="@+id/iv_collect_item_title"
+        android:layout_alignTop="@+id/iv_collect_item_img"
+        android:layout_toEndOf="@+id/iv_collect_item_img"
         android:layout_marginStart="20dp" />
 
     <TextView
@@ -51,6 +52,15 @@
         android:id="@+id/tv_collect_item_content"
         android:layout_below="@+id/tv_collect_item_from"
         android:layout_alignStart="@+id/tv_collect_item_from" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_collect_item_delete"
+        android:background="@drawable/x_pic"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

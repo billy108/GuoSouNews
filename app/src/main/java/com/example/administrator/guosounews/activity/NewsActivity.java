@@ -18,6 +18,7 @@ import com.example.administrator.guosounews.bean.NewsList;
 import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -51,7 +52,10 @@ public class NewsActivity extends Activity {
     String picUrl;
 
     public static ArrayList<NewsList> collectNews = new ArrayList<>();
-    public static ArrayList<String> picUrls = new ArrayList<>();
+    public static ArrayList<NewsList> histroyNews = new ArrayList<>();
+    public static ArrayList<String> collectedNews = new ArrayList<>();
+    public static ArrayList<String> collcetpicUrls = new ArrayList<>();
+    public static ArrayList<String> histroypicUrls = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +64,25 @@ public class NewsActivity extends Activity {
         setContentView(R.layout.layout_news);
         ButterKnife.inject(this);
 
-        picUrl = getIntent().getStringExtra("url");
         getNews();
+        addHistroy();
 
+    }
+
+    /**
+     * 只要打开新闻详情页，就添加到histroyNews
+     */
+    ArrayList<String> histroyItem = new ArrayList<>();
+    private void addHistroy() {
+        for (int i = 0; i < histroyNews.size(); i ++) {
+            histroyItem.add(histroyNews.get(i).nid);
+        }
+
+        if (!histroyItem.contains(newsCaty.nid)) {
+            picUrl = getIntent().getStringExtra("url");
+            histroyNews.add(newsCaty);
+            histroypicUrls.add(picUrl);
+        }
     }
 
     /**
@@ -75,9 +95,18 @@ public class NewsActivity extends Activity {
             case R.id.news_back:
                 break;
             case R.id.news_collect:
-                newsCollect.setBackgroundResource(R.drawable.detail_fav_btn_selected);
-                collectNews.add(newsCaty);
-                picUrls.add(picUrl);
+
+                if (!newsCollect.isSelected()) {
+                    collectNews.add(newsCaty);
+                    collcetpicUrls.add(picUrl);
+                    collectedNews.add(newsCaty.nid);
+                    newsCollect.setSelected(true);
+                } else {
+                    collectedNews.remove(newsCaty.nid);
+                    collectNews.remove(newsCaty);
+                    collcetpicUrls.remove(picUrl);//?????
+                    newsCollect.setSelected(false);
+                }
                 break;
             case R.id.news_shared:
                 break;
@@ -90,6 +119,7 @@ public class NewsActivity extends Activity {
      * 获取json，跳转到新闻详情页
      */
     public void getNews() {
+
         String json = getIntent().getStringExtra(HotFragment.HOTFRAGMENT);
         int type = getIntent().getIntExtra(HotFragment.NEWS_TYPE, -1);
 
@@ -105,6 +135,11 @@ public class NewsActivity extends Activity {
             initListNewsDetail(newsCaty);
         }
 
+        if (collectedNews.contains(newsCaty.nid)) {
+            newsCollect.setSelected(true);
+        }
+
+        Logger.d(newsCaty.toString());
     }
 
     /**
@@ -192,5 +227,10 @@ public class NewsActivity extends Activity {
             }
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

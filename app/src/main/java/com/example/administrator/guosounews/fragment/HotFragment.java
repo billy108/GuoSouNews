@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
@@ -133,8 +132,6 @@ public class HotFragment extends BaseFragment {
             @Override
             public void onRefresh() {
 
-                Toast.makeText(ct, "刷新中...", Toast.LENGTH_SHORT).show();
-
                 myRefreshListView.postDelayed(new Runnable() {
 
                     @Override
@@ -142,8 +139,8 @@ public class HotFragment extends BaseFragment {
                         // 更新数据
                         category = null;
                         getJson();
-                        myNewsListAdapter.notifyDataSetChanged();
-                        myAdvPagerAdapter.notifyDataSetChanged();
+                        news_list.setAdapter(myNewsListAdapter);
+                        news_viewPager.setAdapter(myAdvPagerAdapter);
                         // 更新完后调用该方法结束刷新
                         myRefreshListView.setRefreshing(false);
                     }
@@ -176,8 +173,8 @@ public class HotFragment extends BaseFragment {
                     if (position == 0) {
                         Intent i = new Intent(getActivity(), SpecialActivity.class);
                         startActivity(i);
-                    } else {//???????????
-                        intentToNews(list_url_list.get(position), APIs.LIST_NEWS, category.list.get(position).picture);
+                    } else {
+                        intentToNews(list_url_list.get(position), APIs.LIST_NEWS, position);
                     }
                 }
             });
@@ -243,7 +240,7 @@ public class HotFragment extends BaseFragment {
             im.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intentToNews(slide_url_list.get(finalI), APIs.ADV_NEWS, category.slide.get(finalI).picture);
+                    intentToNews(slide_url_list.get(finalI), APIs.ADV_NEWS, finalI);
                 }
             });
             imageList.add(im);
@@ -297,7 +294,7 @@ public class HotFragment extends BaseFragment {
     /**
      * 跳转到新闻页面
      */
-    private void intentToNews(String url, final int type, final String picUrll) {
+    private void intentToNews(String url, final int type, final int position) {
         //获取adv的json
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET,
@@ -311,7 +308,11 @@ public class HotFragment extends BaseFragment {
                         Intent i = new Intent(getActivity(), NewsActivity.class);
                         i.putExtra(HOTFRAGMENT, responseInfo.result);
                         i.putExtra(NEWS_TYPE, type);
-                        i.putExtra("url", picUrll);
+                        if (category.list.get(position).pictures == null) {
+                            i.putExtra("url", category.list.get(position).picture);
+                        } else {
+                            i.putExtra("url", category.list.get(position).pictures.get(0));
+                        }
                         startActivity(i);
                     }
 

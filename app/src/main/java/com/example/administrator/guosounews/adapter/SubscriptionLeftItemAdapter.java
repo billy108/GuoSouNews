@@ -79,6 +79,7 @@ public class SubscriptionLeftItemAdapter extends RecyclerView.Adapter implements
             super(view);
             item_content = (TextView)view.findViewById(R.id.left_subscription_content);
         }
+
     }
 
     //define interface
