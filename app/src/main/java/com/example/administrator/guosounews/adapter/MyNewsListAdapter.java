@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.activity.NewsActivity;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.bean.NewsSpecial;
 import com.squareup.picasso.Picasso;
@@ -111,6 +112,7 @@ public class MyNewsListAdapter extends BaseAdapter {
         }
 
         switch (type) {
+
             case TYPE_1:
                 //Picasso 加载网络图片
                 Picasso.with(ct).load(ca.list.get(position).picture)
@@ -119,7 +121,9 @@ public class MyNewsListAdapter extends BaseAdapter {
                 //BitmapUtils 加载网络图片
 //					BitmapUtils bitmapUtils = new BitmapUtils(ct);
 //					bitmapUtils.display(holder.item_news_image, ca.list.get(position).picture);
-
+                if (NewsActivity.histroyItem.contains(ca.list.get(position).nid)) {
+                    holder.item_news_title.setTextColor(ct.getResources().getColor(android.R.color.darker_gray));
+                }
                 holder.item_news_title.setText(ca.list.get(position).title);
                 holder.item_news_title.getPaint().setFakeBoldText(true);
                 holder.item_news_from.setText(ca.list.get(position).mname);
@@ -128,6 +132,9 @@ public class MyNewsListAdapter extends BaseAdapter {
                 holder.item_news_time.setText(fromTime);
                 break;
             case TYPE_2:
+                if (NewsActivity.histroyItem.contains(ca.list.get(position).nid)) {
+                    holder2.item_news_title.setTextColor(ct.getResources().getColor(android.R.color.darker_gray));
+                }
                 ImageView[] images = {holder2.item2_news_image1,
                         holder2.item2_news_image2,
                         holder2.item2_news_image3};

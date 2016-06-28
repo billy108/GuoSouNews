@@ -104,6 +104,7 @@ public class HomeFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 
         list.add(new HotFragment());
+        list.add(new CopyOfHotFragment());
         list.add(new PoliticsFragment());
         list.add(new FinanceFragment());
         list.add(new IntentNetFragment());
@@ -113,6 +114,7 @@ public class HomeFragment extends BaseFragment {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getActivity().getSupportFragmentManager(), FragmentPagerItems.with(ct)
                 .add("热搜", HotFragment.class)
+                .add("CopyHot", CopyOfHotFragment.class)
                 .add("时政", PoliticsFragment.class)
                 .add("互联网", IntentNetFragment.class)
                 .add("财经", FinanceFragment.class)

@@ -1,15 +1,11 @@
 package com.example.administrator.guosounews.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,12 +18,11 @@ import com.example.administrator.guosounews.activity.NewsActivity;
 import com.example.administrator.guosounews.activity.SettingsActivity;
 import com.example.administrator.guosounews.activity.SpecialActivity;
 import com.example.administrator.guosounews.adapter.MyAdvPagerAdapter;
-import com.example.administrator.guosounews.adapter.MyNewsListAdapter;
+import com.example.administrator.guosounews.adapter.RecyclerViewAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
-import com.example.administrator.guosounews.ui.ListViewForScrollView;
-import com.example.administrator.guosounews.ui.RefreshLayout;
 import com.example.administrator.guosounews.utils.APIs;
+import com.example.administrator.guosounews.utils.ToastUtil;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -35,27 +30,27 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HotFragment extends BaseFragment {
+public class CopyOfHotFragment extends BaseFragment {
     public static final String HOTFRAGMENT = "HotFragment";
     public static final String NEWS_TYPE = "news_type";
 
     ViewPager news_viewPager;
     TextView news_viewpager_text;
     LinearLayout point_group;
-    ListViewForScrollView news_list;
+    PullLoadMoreRecyclerView news_list;
     ScrollView scrollView;
-    RefreshLayout myRefreshListView;
 
     private List<ImageView> imageList;
     private List<ImageView> imageNewsList;
     private int lastPointPostion;
     public boolean isRuning = false;
-    private MyNewsListAdapter myNewsListAdapter;
+    private RecyclerViewAdapter myNewsListAdapter;
     private MyAdvPagerAdapter myAdvPagerAdapter;
 
     private NewsCenterCategory category;
@@ -64,8 +59,8 @@ public class HotFragment extends BaseFragment {
     private List<String> slide_url_list = new ArrayList<String>();
     private List<String> list_url_list = new ArrayList<String>();
 
-    public static boolean isLastItem;
     View view;
+    private int tpye;
 
     /**
      * 初始化控件
@@ -75,79 +70,20 @@ public class HotFragment extends BaseFragment {
      */
     @Override
     public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.layout_hot, null);
+        view = inflater.inflate(R.layout.copy_of_layout_hot, null);
 
         news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
         news_viewpager_text = (TextView) view.findViewById(R.id.news_viewpager_text);
         point_group = (LinearLayout) view.findViewById(R.id.point_group);
-        news_list = (ListViewForScrollView) view.findViewById(R.id.news_list);
+        news_list = (PullLoadMoreRecyclerView) view.findViewById(R.id.news_pullLoadMoreRecyclerView);
+        news_list.setLinearLayout();
         scrollView = (ScrollView) view.findViewById(R.id.scroll);
-        myRefreshListView = (RefreshLayout) view.findViewById(R.id.swipe_layout);
 
-        initRefreshListView();
         initMenu2();
         getJson();
         initAdvViewPager();
-        initListView();
 
-        scrollView.smoothScrollTo(0, 0);
         return view;
-    }
-
-
-
-    /**
-     * 判断位置执行下拉和加载更多
-     */
-    @TargetApi(Build.VERSION_CODES.M)
-    private void initListView() {
-
-        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                int heigh = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-                LogUtils.d("scrollY is " + scrollY);
-
-
-                if (scrollY == 0) {
-                    myRefreshListView.setEnabled(true);
-                } else {
-                    myRefreshListView.setEnabled(false);
-                }
-            }
-        });
-    }
-
-    /**
-     * 下拉刷新
-     */
-    private void initRefreshListView() {
-        // 设置下拉刷新时的颜色值,颜色值需要定义在xml中
-        myRefreshListView.setColorSchemeResources(android.R.color.holo_blue_light,
-                android.R.color.holo_red_light, android.R.color.holo_orange_light,
-                android.R.color.holo_green_light);
-        // 设置下拉刷新监听器
-        myRefreshListView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-
-                myRefreshListView.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        // 更新数据
-                        category = null;
-                        getJson();
-                        news_list.setAdapter(myNewsListAdapter);
-                        news_viewPager.setAdapter(myAdvPagerAdapter);
-                        // 更新完后调用该方法结束刷新
-                        myRefreshListView.setRefreshing(false);
-                    }
-                }, 3000);
-            }
-        });
-
     }
 
     /**
@@ -161,17 +97,47 @@ public class HotFragment extends BaseFragment {
             list_url_list.add(APIs.ADV_BASE + category.list.get(i).nid + APIs.ADV_END);
         }
 
-        myNewsListAdapter = new MyNewsListAdapter(category, ct);
+        myNewsListAdapter = new RecyclerViewAdapter(category, ct);
         news_list.setAdapter(myNewsListAdapter);
-        news_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        news_list.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onRefresh() {
+                news_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 更新数据
+                        getJson();
+                        myNewsListAdapter.notifyDataSetChanged();
+                        myAdvPagerAdapter.notifyDataSetChanged();
+                        // 更新完后调用该方法结束刷新
+                        news_list.setPullLoadMoreCompleted();
+                    }
+                }, 3000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                news_list.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        news_list.setPullLoadMoreCompleted();
+                    }
+                }, 3000);
+            }
+        });
+        news_list.setFooterViewText("加载更多...");
+
+        myNewsListAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ToastUtil.showShort(ct, position);
                 if (position == 0) {
-                    Intent i = new Intent(getActivity(), SpecialActivity.class);
-                    startActivity(i);
-                } else {
-                    intentToNews(list_url_list.get(position), APIs.LIST_NEWS, position);
-                }
+                        Intent i = new Intent(getActivity(), SpecialActivity.class);
+                        startActivity(i);
+                    } else {
+                        intentToNews(list_url_list.get(position), APIs.LIST_NEWS, position);
+                    }
             }
         });
     }
@@ -199,7 +165,6 @@ public class HotFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(HttpException error, String msg) {
-                        LogUtils.d("1111111111111111111111111111");
                     }
                 });
     }
@@ -283,7 +248,6 @@ public class HotFragment extends BaseFragment {
         });
 
         isRuning = true;
-        //adv的item点击事件
     }
 
     /**
@@ -335,7 +299,6 @@ public class HotFragment extends BaseFragment {
 
         MenuFragment2 menuFragment2 = ((MainActivity) ct).getMenuFragment2();
         menuFragment2.initMenu(menuNewCenterList);
-
     }
 
     /**

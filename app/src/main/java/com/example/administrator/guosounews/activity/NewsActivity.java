@@ -18,7 +18,6 @@ import com.example.administrator.guosounews.bean.NewsList;
 import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -72,16 +71,15 @@ public class NewsActivity extends Activity {
     /**
      * 只要打开新闻详情页，就添加到histroyNews
      */
-    ArrayList<String> histroyItem = new ArrayList<>();
+    public static ArrayList<String> histroyItem = new ArrayList<>();
     private void addHistroy() {
         for (int i = 0; i < histroyNews.size(); i ++) {
             histroyItem.add(histroyNews.get(i).nid);
         }
-
-        if (!histroyItem.contains(newsCaty.nid)) {
-            picUrl = getIntent().getStringExtra("url");
-            histroyNews.add(newsCaty);
-            histroypicUrls.add(picUrl);
+            if (newsCaty != null &&!histroyItem.contains(newsCaty.nid)) {
+                picUrl = getIntent().getStringExtra("url");
+                histroyNews.add(newsCaty);
+                histroypicUrls.add(picUrl);
         }
     }
 
@@ -126,6 +124,9 @@ public class NewsActivity extends Activity {
         if (type == APIs.ADV_NEWS) {
             newsCategory = new Gson().fromJson(json, NewsAdv.class);
             initAdvNewsDetail(newsCategory);
+            if (collectedNews.contains(newsCategory.nid)) {
+                newsCollect.setSelected(true);
+            }
         } else if (type == 22) {
             int postiton = getIntent().getIntExtra("postiton", -1);
             channel = new Gson().fromJson(json, NewsChannel.class);
@@ -133,13 +134,10 @@ public class NewsActivity extends Activity {
         } else {
             newsCaty = new Gson().fromJson(json, NewsList.class);
             initListNewsDetail(newsCaty);
+            if (collectedNews.contains(newsCaty.nid)) {
+                newsCollect.setSelected(true);
+            }
         }
-
-        if (collectedNews.contains(newsCaty.nid)) {
-            newsCollect.setSelected(true);
-        }
-
-        Logger.d(newsCaty.toString());
     }
 
     /**
