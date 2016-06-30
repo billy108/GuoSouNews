@@ -2,22 +2,14 @@ package com.example.administrator.guosounews.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.activity.MainActivity;
 import com.example.administrator.guosounews.activity.NewsActivity;
-import com.example.administrator.guosounews.activity.SettingsActivity;
 import com.example.administrator.guosounews.activity.SpecialActivity;
-import com.example.administrator.guosounews.adapter.MyAdvPagerAdapter;
 import com.example.administrator.guosounews.adapter.RecyclerViewAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
@@ -40,18 +32,10 @@ public class CopyOfHotFragment extends BaseFragment {
     public static final String HOTFRAGMENT = "HotFragment";
     public static final String NEWS_TYPE = "news_type";
 
-    ViewPager news_viewPager;
-    TextView news_viewpager_text;
-    LinearLayout point_group;
     PullLoadMoreRecyclerView news_list;
     ScrollView scrollView;
 
-    private List<ImageView> imageList;
-    private List<ImageView> imageNewsList;
-    private int lastPointPostion;
-    public boolean isRuning = false;
     private RecyclerViewAdapter myNewsListAdapter;
-    private MyAdvPagerAdapter myAdvPagerAdapter;
 
     private NewsCenterCategory category;
     private List<String> menuNewCenterList = new ArrayList<>();
@@ -60,7 +44,6 @@ public class CopyOfHotFragment extends BaseFragment {
     private List<String> list_url_list = new ArrayList<String>();
 
     View view;
-    private int tpye;
 
     /**
      * 初始化控件
@@ -72,22 +55,18 @@ public class CopyOfHotFragment extends BaseFragment {
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.copy_of_layout_hot, null);
 
-        news_viewPager = (ViewPager) view.findViewById(R.id.news_viewpager);
-        news_viewpager_text = (TextView) view.findViewById(R.id.news_viewpager_text);
-        point_group = (LinearLayout) view.findViewById(R.id.point_group);
         news_list = (PullLoadMoreRecyclerView) view.findViewById(R.id.news_pullLoadMoreRecyclerView);
         news_list.setLinearLayout();
         scrollView = (ScrollView) view.findViewById(R.id.scroll);
 
         initMenu2();
         getJson();
-        initAdvViewPager();
 
         return view;
     }
 
     /**
-     * 填充List新闻的数据
+     * 初始化List新闻
      *
      * @param category json实例
      */
@@ -98,6 +77,7 @@ public class CopyOfHotFragment extends BaseFragment {
         }
 
         myNewsListAdapter = new RecyclerViewAdapter(category, ct);
+        setHeader(news_list);
         news_list.setAdapter(myNewsListAdapter);
 
         news_list.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
@@ -109,7 +89,6 @@ public class CopyOfHotFragment extends BaseFragment {
                         // 更新数据
                         getJson();
                         myNewsListAdapter.notifyDataSetChanged();
-                        myAdvPagerAdapter.notifyDataSetChanged();
                         // 更新完后调用该方法结束刷新
                         news_list.setPullLoadMoreCompleted();
                     }
@@ -143,6 +122,15 @@ public class CopyOfHotFragment extends BaseFragment {
     }
 
     /**
+     * 设置headerView
+     * @param view
+     */
+    private void setHeader(PullLoadMoreRecyclerView view) {
+        View header = LayoutInflater.from(ct).inflate(R.layout.layout_recycler_header, view, false);
+        myNewsListAdapter.setHeaderView(header);
+    }
+
+    /**
      * 获取json
      */
     private void getJson() {
@@ -153,12 +141,11 @@ public class CopyOfHotFragment extends BaseFragment {
 
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
-                        LogUtils.d(responseInfo.result);
 
                         category = new Gson().fromJson(responseInfo.result, NewsCenterCategory.class);
-                        news_viewpager_text.setText(category.slide.get(0).title);
-                        //初始化adv
-                        initSlideList(category.slide.size(), imageList);
+
+                        //添加滚动图片的url
+                        initSlideList();
                         //初始化newsList
                         initNewsList(category);
                     }
@@ -170,84 +157,16 @@ public class CopyOfHotFragment extends BaseFragment {
     }
 
     /**
-     * 加载图片
-     *
-     * @param size  数量
-     * @param image 图片
+     * 添加滚动图片的url
      */
-    private void initSlideList(int size, List<ImageView> image) {
-        for (int i = 0; i < size; i++) {
-            if (!SettingsActivity.isLoadImage) {
-                Glide.with(ct).load(category.slide.get(i).picture).into(image.get(i));
-            }
-
+    private void initSlideList() {
+        for (int i = 0; i < category.slide.size(); i++) {
             slide_url_list.add(APIs.ADV_BASE + category.slide.get(i).url + APIs.ADV_END);
         }
-    }
 
-    /**
-     * 初始化adv
-     */
-    private void initAdvViewPager() {
-        //加载图片
-        imageList = new ArrayList<ImageView>();
+        for (int j = 0; j < category.list.size(); j++) {
 
-        for (int i = 0; i < 4; i++) {
-            ImageView im = new ImageView(ct);
-            im.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            im.setImageResource(R.drawable.dark_dot);
-            final int finalI = i;
-            im.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    intentToNews(slide_url_list.get(finalI), APIs.ADV_NEWS, finalI);
-                }
-            });
-            imageList.add(im);
-
-
-            //加载圆点
-            ImageView point = new ImageView(ct);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.rightMargin = 20;
-            point.setLayoutParams(params);
-            point.setEnabled(false);
-            if (i == 0) {
-                point.setEnabled(true);
-            }
-            point.setBackgroundResource(R.drawable.point_bg);
-            point_group.addView(point);
         }
-
-        myAdvPagerAdapter = new MyAdvPagerAdapter(imageList);
-        news_viewPager.setAdapter(myAdvPagerAdapter);
-        news_viewPager.setCurrentItem(Integer.MAX_VALUE / 2 - (Integer.MAX_VALUE / 2 % imageList.size()));
-        news_viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                position = position % imageList.size();
-                news_viewpager_text.setText(category.slide.get(position).title);
-                point_group.getChildAt(position).setEnabled(true);
-                point_group.getChildAt(lastPointPostion).setEnabled(false);
-                lastPointPostion = position;
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        isRuning = true;
     }
 
     /**
