@@ -14,7 +14,6 @@ import com.example.administrator.guosounews.adapter.RecyclerViewAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
 import com.example.administrator.guosounews.utils.APIs;
-import com.example.administrator.guosounews.utils.ToastUtil;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -22,6 +21,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
+import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -77,8 +77,8 @@ public class CopyOfHotFragment extends BaseFragment {
         }
 
         myNewsListAdapter = new RecyclerViewAdapter(category, ct);
-        setHeader(news_list);
         news_list.setAdapter(myNewsListAdapter);
+//        setHeader(news_list);
 
         news_list.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
@@ -107,16 +107,22 @@ public class CopyOfHotFragment extends BaseFragment {
         });
         news_list.setFooterViewText("加载更多...");
 
-        myNewsListAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+
+        myNewsListAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                ToastUtil.showShort(ct, position);
+            public void onItemClick(int position) {
+                Logger.d("position = " + position);
                 if (position == 0) {
                         Intent i = new Intent(getActivity(), SpecialActivity.class);
                         startActivity(i);
                     } else {
                         intentToNews(list_url_list.get(position), APIs.LIST_NEWS, position);
                     }
+            }
+
+            @Override
+            public void onADVItemClick(int position) {
+                intentToNews(slide_url_list.get(position), APIs.ADV_NEWS, position);
             }
         });
     }
