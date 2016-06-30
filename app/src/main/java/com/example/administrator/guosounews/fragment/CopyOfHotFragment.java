@@ -13,6 +13,7 @@ import com.example.administrator.guosounews.activity.SpecialActivity;
 import com.example.administrator.guosounews.adapter.RecyclerViewAdapter;
 import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.bean.NewsCenterCategory;
+import com.example.administrator.guosounews.bean.NewsMore;
 import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -21,7 +22,6 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.util.LogUtils;
-import com.orhanobut.logger.Logger;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -38,10 +38,12 @@ public class CopyOfHotFragment extends BaseFragment {
     private RecyclerViewAdapter myNewsListAdapter;
 
     private NewsCenterCategory category;
+    private NewsMore newsMore;
     private List<String> menuNewCenterList = new ArrayList<>();
 
     private List<String> slide_url_list = new ArrayList<String>();
     private List<String> list_url_list = new ArrayList<String>();
+    private ArrayList<NewsCenterCategory.Body1> listNews = new ArrayList();
 
     View view;
 
@@ -60,7 +62,8 @@ public class CopyOfHotFragment extends BaseFragment {
         scrollView = (ScrollView) view.findViewById(R.id.scroll);
 
         initMenu2();
-        getJson();
+        getJson(APIs.HOT_NEWS);
+
 
         return view;
     }
@@ -68,17 +71,15 @@ public class CopyOfHotFragment extends BaseFragment {
     /**
      * 初始化List新闻
      *
-     * @param category json实例
      */
-    private void initNewsList(final NewsCenterCategory category) {
+    private void initNewsList() {
 
         for (int i = 0; i < category.list.size(); i++) {
             list_url_list.add(APIs.ADV_BASE + category.list.get(i).nid + APIs.ADV_END);
         }
 
-        myNewsListAdapter = new RecyclerViewAdapter(category, ct);
+        myNewsListAdapter = new RecyclerViewAdapter(category, ct, listNews);
         news_list.setAdapter(myNewsListAdapter);
-//        setHeader(news_list);
 
         news_list.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
@@ -87,7 +88,7 @@ public class CopyOfHotFragment extends BaseFragment {
                     @Override
                     public void run() {
                         // 更新数据
-                        getJson();
+                        getJson(APIs.HOT_NEWS);
                         myNewsListAdapter.notifyDataSetChanged();
                         // 更新完后调用该方法结束刷新
                         news_list.setPullLoadMoreCompleted();
@@ -100,7 +101,24 @@ public class CopyOfHotFragment extends BaseFragment {
                 news_list.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        news_list.setPullLoadMoreCompleted();
+                        category = null;
+                        HttpUtils http = new HttpUtils();
+                        http.send(HttpRequest.HttpMethod.GET,
+                                APIs.HOT2,
+                                new RequestCallBack<String>() {
+
+                                    @Override
+                                    public void onSuccess(ResponseInfo<String> responseInfo) {
+                                        newsMore = new Gson().fromJson(responseInfo.result, NewsMore.class);
+                                        listNews.addAll(newsMore.list);
+                                        news_list.setPullLoadMoreCompleted();
+                                        myNewsListAdapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onFailure(HttpException error, String msg) {
+                                    }
+                                });
                     }
                 }, 3000);
             }
@@ -111,7 +129,6 @@ public class CopyOfHotFragment extends BaseFragment {
         myNewsListAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Logger.d("position = " + position);
                 if (position == 0) {
                         Intent i = new Intent(getActivity(), SpecialActivity.class);
                         startActivity(i);
@@ -128,32 +145,25 @@ public class CopyOfHotFragment extends BaseFragment {
     }
 
     /**
-     * 设置headerView
-     * @param view
-     */
-    private void setHeader(PullLoadMoreRecyclerView view) {
-        View header = LayoutInflater.from(ct).inflate(R.layout.layout_recycler_header, view, false);
-        myNewsListAdapter.setHeaderView(header);
-    }
-
-    /**
      * 获取json
      */
-    private void getJson() {
+    private void getJson(String url) {
         HttpUtils http = new HttpUtils();
         http.send(HttpRequest.HttpMethod.GET,
-                APIs.HOT_NEWS,
+                url,
                 new RequestCallBack<String>() {
 
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
 
                         category = new Gson().fromJson(responseInfo.result, NewsCenterCategory.class);
-
-                        //添加滚动图片的url
-                        initSlideList();
-                        //初始化newsList
-                        initNewsList(category);
+                        listNews.addAll(category.list);
+                        if (category.slide != null) {
+                            //添加滚动图片的url
+                            initSlideList();
+                            //初始化newsList
+                            initNewsList();
+                        }
                     }
 
                     @Override
@@ -170,9 +180,6 @@ public class CopyOfHotFragment extends BaseFragment {
             slide_url_list.add(APIs.ADV_BASE + category.slide.get(i).url + APIs.ADV_END);
         }
 
-        for (int j = 0; j < category.list.size(); j++) {
-
-        }
     }
 
     /**

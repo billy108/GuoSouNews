@@ -58,4 +58,6 @@ public class APIs {
             "玛法达看星座运程", "专业翻译占星资料", "全球最大的华文星座网站"
     };
 
+    //加载更多URL
+    public static final String HOT2 = "http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.7&cid=1001&page=2&location=xxxxxx";
 }
