@@ -145,7 +145,6 @@ public class NewsActivity extends Activity {
      */
     private void initAdvNewsDetail(NewsAdv newsCategory) {
 
-
                 newsTitle.setText(newsCategory.title);
                 newsTime.setText(newsCategory.timeString);
                 newsFrom.setText(newsCategory.mname);
@@ -167,7 +166,9 @@ public class NewsActivity extends Activity {
 
                     if (Objects.equals(newsCategory.content.get(i).type, "text")) {
                         TextView tv = new TextView(NewsActivity.this);
-                        tv.setText(Html.fromHtml(newsCategory.content.get(i).title));
+                        if (newsCategory.content.get(i).title != null) {
+                            tv.setText(Html.fromHtml(newsCategory.content.get(i).title));
+                        }
 
                         newsDetailsLl.addView(tv);
                     }

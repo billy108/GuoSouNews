@@ -182,7 +182,6 @@ public class SearchActivity extends Activity {
         autoList.clear();
 
         if (newsAUTO.q.length() != 0) {
-            Logger.d("11111" + newsAUTO.q + "11111");
             rvSearchHistroy.setVisibility(View.GONE);
             rvSearchResult.setVisibility(View.GONE);
             tvSearchClean.setVisibility(View.GONE);

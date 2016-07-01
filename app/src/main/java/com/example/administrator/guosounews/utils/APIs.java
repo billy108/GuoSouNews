@@ -60,4 +60,8 @@ public class APIs {
 
     //加载更多URL
     public static final String HOT2 = "http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.7&cid=1001&page=2&location=xxxxxx";
+    public static final String POLITICS2 = "http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1035&page=2&location=xxxxxx";
+    public static final String FINANCE2 = "http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1010&page=2&location=xxxxxx";
+    public static final String INTENTNET2 = "http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1015&page=2&location=xxxxxx";
+    public static final String LAW2 = "http://mobapp.chinaso.com/1/category/main?version=version%3D2.67.5&cid=1007&page=2&location=xxxxxx";
 }
