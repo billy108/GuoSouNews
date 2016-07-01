@@ -12,7 +12,6 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.example.administrator.guosounews.R;
-import com.example.administrator.guosounews.fragment.HotFragment;
 import com.lidroid.xutils.util.LogUtils;
 
 /**
@@ -138,17 +137,6 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
      */
     private boolean canLoad() {
         return isBottom && !isLoading && isPullUp();
-    }
-
-    /**
-     * 判断是否到了最底部
-     */
-    private boolean isBottom() {
-
-//        if (mListView != null && mListView.getAdapter() != null) {
-//            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
-//        }
-        return HotFragment.isLastItem;
     }
 
     /**

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.NewsChannelAdapter;
 import com.example.administrator.guosounews.bean.NewsChannel;
-import com.example.administrator.guosounews.fragment.HotFragment;
+import com.example.administrator.guosounews.fragment.CopyOfHotFragment;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -121,9 +121,9 @@ public class SubscriptionNewsActivity extends Activity {
             public void onItemClick(View view, int position) {
                 Intent i = new Intent(SubscriptionNewsActivity.this, NewsActivity.class);
                 Bundle bundle = new Bundle();
-                i.putExtra(HotFragment.HOTFRAGMENT, htmlStr);
+                i.putExtra(CopyOfHotFragment.HOTFRAGMENT, htmlStr);
                 i.putExtra("postiton", position);
-                i.putExtra(HotFragment.NEWS_TYPE, 22);
+                i.putExtra(CopyOfHotFragment.NEWS_TYPE, 22);
 
                 startActivity(i);
             }

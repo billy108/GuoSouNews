@@ -23,7 +23,6 @@ public class AppStart extends Activity {
 
         SharedPreferences preferences = getSharedPreferences(SHAREDPREFERENCES_NAME, MODE_PRIVATE);
         isFirstIn = preferences.getBoolean("isFirstIn", true);
-
         // 渐变展示启动屏
         AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
         aa.setDuration(2000);

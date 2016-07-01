@@ -19,7 +19,7 @@ import com.example.administrator.guosounews.adapter.SearchHistroyAdapter;
 import com.example.administrator.guosounews.adapter.SearchResultAdapter;
 import com.example.administrator.guosounews.bean.NewsAUTO;
 import com.example.administrator.guosounews.bean.NewsSearch;
-import com.example.administrator.guosounews.fragment.HotFragment;
+import com.example.administrator.guosounews.fragment.CopyOfHotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
 import com.example.administrator.guosounews.utils.SPUtils;
@@ -161,7 +161,7 @@ public class SearchActivity extends Activity {
                                 break;
                             case NEWS:
                                 Intent i = new Intent(SearchActivity.this, NewsActivity.class);
-                                i.putExtra(HotFragment.HOTFRAGMENT, responseInfo.result);
+                                i.putExtra(CopyOfHotFragment.HOTFRAGMENT, responseInfo.result);
                                 startActivity(i);
                                 break;
                         }

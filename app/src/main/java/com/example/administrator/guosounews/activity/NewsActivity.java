@@ -15,7 +15,7 @@ import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.bean.NewsAdv;
 import com.example.administrator.guosounews.bean.NewsChannel;
 import com.example.administrator.guosounews.bean.NewsList;
-import com.example.administrator.guosounews.fragment.HotFragment;
+import com.example.administrator.guosounews.fragment.CopyOfHotFragment;
 import com.example.administrator.guosounews.utils.APIs;
 import com.google.gson.Gson;
 
@@ -118,8 +118,8 @@ public class NewsActivity extends Activity {
      */
     public void getNews() {
 
-        String json = getIntent().getStringExtra(HotFragment.HOTFRAGMENT);
-        int type = getIntent().getIntExtra(HotFragment.NEWS_TYPE, -1);
+        String json = getIntent().getStringExtra(CopyOfHotFragment.HOTFRAGMENT);
+        int type = getIntent().getIntExtra(CopyOfHotFragment.NEWS_TYPE, -1);
 
         if (type == APIs.ADV_NEWS) {
             newsCategory = new Gson().fromJson(json, NewsAdv.class);
@@ -153,7 +153,6 @@ public class NewsActivity extends Activity {
                 for (int i = 0; i < newsCategory.content.size(); i++) {
                     if (Objects.equals(newsCategory.content.get(i).type, "image")) {
                         ImageView im = new ImageView(NewsActivity.this);
-                        im.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(NewsActivity.this).load(newsCategory.content.get(i).value)
                                 .into(im);
 

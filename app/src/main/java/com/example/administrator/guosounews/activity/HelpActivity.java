@@ -76,6 +76,10 @@ public class HelpActivity extends FragmentActivity {
             llHelpPointGroup.addView(point);
         }
 
+        initAdapter();
+    }
+
+    private void initAdapter() {
         adapter = new MyAdvPagerAdapter(imageList);
         vpHelp.setAdapter(adapter);
         vpHelp.setCurrentItem(0);

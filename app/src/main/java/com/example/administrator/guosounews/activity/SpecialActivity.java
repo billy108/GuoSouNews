@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.SpecialNewsListAdapter;
 import com.example.administrator.guosounews.bean.NewsSpecial;
+import com.example.administrator.guosounews.fragment.CopyOfHotFragment;
 import com.example.administrator.guosounews.fragment.HomeFragment;
-import com.example.administrator.guosounews.fragment.HotFragment;
 import com.example.administrator.guosounews.ui.ListViewForScrollView;
 import com.example.administrator.guosounews.ui.RefreshLayout;
 import com.example.administrator.guosounews.utils.APIs;
@@ -201,7 +201,7 @@ public class SpecialActivity extends Activity {
                         LogUtils.d(responseInfo.result);
                         //跳转并传递json
                         Intent i = new Intent(SpecialActivity.this, NewsActivity.class);
-                        i.putExtra(HotFragment.HOTFRAGMENT, responseInfo.result);
+                        i.putExtra(CopyOfHotFragment.HOTFRAGMENT, responseInfo.result);
                         i.putExtra(NEWS_TYPE, type);
                         startActivity(i);
                     }
