@@ -3,7 +3,6 @@ package com.example.administrator.guosounews.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.GuidePagerAdapter;
-import com.example.administrator.guosounews.base.BasePage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +30,6 @@ public class GuideFragment extends Fragment implements ViewPager.OnPageChangeLis
 
     // 记录当前选中位置
     private int currentIndex;
-
-    public GuideFragment(Context context) {
-        this.context = context;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

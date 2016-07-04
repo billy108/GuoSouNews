@@ -1,21 +1,15 @@
 package com.example.administrator.guosounews.activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Menu;
 import android.view.Window;
 
 import com.example.administrator.guosounews.R;
-import com.example.administrator.guosounews.base.BaseFragment;
 import com.example.administrator.guosounews.fragment.HomeFragment;
 import com.example.administrator.guosounews.fragment.MenuFragment2;
 import com.example.administrator.guosounews.fragment.RightMenuFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends SlidingFragmentActivity {
     SlidingMenu slidingMenu;

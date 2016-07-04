@@ -1,8 +1,11 @@
 package com.example.administrator.guosounews.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +18,8 @@ import com.example.administrator.guosounews.base.BaseFragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -35,12 +34,13 @@ public class HomeFragment extends BaseFragment {
     private ImageButton top_title_sliding2;
 
     @ViewInject(R.id.viewpagertab)
-    private SmartTabLayout viewPagerTab;
+    private TabLayout viewPagerTab;
 
     @ViewInject(R.id.textView1)
     private TextView tv;
 
     private View view;
+    private ArrayList<String> mTitleList = new ArrayList<>();
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -80,9 +80,6 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
-
-    List<Fragment> list = new ArrayList<Fragment>();
-
     /**
      * 初始化viewPagerTab
      *
@@ -90,47 +87,73 @@ public class HomeFragment extends BaseFragment {
      */
     @Override
     public void initData(Bundle savedInstanceState) {
+        initContent();
+    }
 
-        list.add(new CopyOfHotFragment());
-        list.add(new PoliticsFragment());
-        list.add(new FinanceFragment());
-        list.add(new IntentNetFragment());
-        list.add(new LawFragment());
+    private void initContent() {
 
+        mTitleList.add("热搜");
+        mTitleList.add("时政");
+        mTitleList.add("互联网");
+        mTitleList.add("财经");
+        mTitleList.add("法治");
 
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-                getActivity().getSupportFragmentManager(), FragmentPagerItems.with(ct)
-                .add("热搜", CopyOfHotFragment.class)
-                .add("时政", PoliticsFragment.class)
-                .add("互联网", IntentNetFragment.class)
-                .add("财经", FinanceFragment.class)
-                .add("法治", LawFragment.class)
-                .create());
-
-        viewPager.setAdapter(adapter);
-
-        viewPagerTab.setViewPager(viewPager);
-
-        viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public int getCount() {
+                return mTitleList.size();
             }
 
             @Override
-            public void onPageSelected(int position) {
-                BaseFragment fragment = (BaseFragment) list.get(position);
-                if (!flag) {
-                    fragment.initData(null);
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 1:
+                        return new PoliticsFragment();
+                    case 2:
+                        return new FinanceFragment();
+                    case 3:
+                        return new IntentNetFragment();
+                    case 4:
+                        return new LawFragment();
+                    default:
+                        return new CopyOfHotFragment();
                 }
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public CharSequence getPageTitle(int position) {
+                return mTitleList.get(position);
             }
         });
 
+        viewPagerTab.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
+        viewPagerTab.setTabTextColors(Color.GRAY, Color.RED);
+        viewPagerTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == viewPagerTab.getTabAt(0)) {
+                    viewPager.setCurrentItem(0);
+                } else if (tab == viewPagerTab.getTabAt(1)) {
+                    viewPager.setCurrentItem(1);
+                }else if (tab == viewPagerTab.getTabAt(2)) {
+                    viewPager.setCurrentItem(2);
+                }else if (tab == viewPagerTab.getTabAt(3)) {
+                    viewPager.setCurrentItem(3);
+                }else if (tab == viewPagerTab.getTabAt(4)) {
+                    viewPager.setCurrentItem(4);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     public void toggleMenu(SlidingMenu slidingMenu) {

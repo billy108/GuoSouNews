@@ -6,24 +6,22 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.guosounews.R;
+import com.example.administrator.guosounews.adapter.CollectAdapter;
 import com.example.administrator.guosounews.adapter.CollectItemAdapter;
 import com.example.administrator.guosounews.utils.RecycleViewDivider;
 import com.example.administrator.guosounews.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,14 +100,12 @@ public class CollectActivity extends FragmentActivity {
         collectAdapter.setOnItemClickListener(new CollectItemAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void OnItemClick(View v, int position) {
-                Logger.d("22222");
             }
         });
 
         collectAdapter.setOnItemClickListener(new CollectItemAdapter.OnRecyclerViewItemDeleteClickListener() {
             @Override
             public void onItemDeleteClick(int position) {
-                Logger.d("33333333333333333333");
             }
         });
     }
@@ -211,44 +207,4 @@ public class CollectActivity extends FragmentActivity {
         }
     }
 
-    /**
-     *
-     */
-    class CollectAdapter extends PagerAdapter{
-        private List<View> mVList;
-        private List<String> mTList;
-
-        public CollectAdapter(List<View> mViewList, List<String> mTitleList) {
-            this.mVList = mViewList;
-            this.mTList = mTitleList;
-        }
-
-        @Override
-        public int getCount() {
-            return mVList.size();
-
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(mVList.get(position));
-            return mVList.get(position);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            Logger.d("remove");
-            container.removeView(mVList.get(position));
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTList.get(position);
-        }
-    }
 }

@@ -48,16 +48,9 @@
             android:launchMode="singleTask" />
         <activity android:name=".activity.SubscriptionNewsActivity" />
         <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.SettingsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.SharedActivity" />
         <activity android:name=".activity.HelpActivity" />
-        <activity android:name=".activity.TestActivity"></activity>
     </application>
 
 </manifest>
