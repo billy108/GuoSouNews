@@ -24,15 +24,17 @@
         <activity
             android:name=".activity.AppStart"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity
-            android:name=".activity.MainActivity"
-            android:theme="@style/ColorTranslucentTheme">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/ColorTranslucentTheme">
+
         </activity>
         <activity
             android:name=".activity.GuideActivity"
@@ -51,6 +53,7 @@
         <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.SharedActivity" />
         <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.WelcomeActivity" />
     </application>
 
 </manifest>
