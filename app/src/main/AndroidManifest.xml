@@ -17,9 +17,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/StyledIndicators">
         <activity
             android:name=".activity.AppStart"
@@ -36,9 +37,6 @@
             android:theme="@style/ColorTranslucentTheme">
 
         </activity>
-        <activity
-            android:name=".activity.GuideActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".activity.CollectActivity"
             android:theme="@style/Theme.AppCompat" />

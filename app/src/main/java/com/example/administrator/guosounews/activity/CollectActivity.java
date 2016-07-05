@@ -172,6 +172,7 @@ public class CollectActivity extends FragmentActivity {
                 collectAdapter.setDeleteShown(false);
                 break;
             case R.id.collect_back:
+                finish();
                 break;
             case R.id.iv_collect_edit:
                 if (currPostiton == 0) {

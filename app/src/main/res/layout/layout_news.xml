@@ -96,19 +96,6 @@
                 android:layout_height="wrap_content">
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/see_original"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:textStyle="italic"
-                android:text="@string/see_original"
-                android:textSize="18sp"
-                android:layout_below="@id/news_details_ll"
-                android:layout_alignEnd="@id/news_details_ll"
-                android:textColor="@android:color/holo_blue_bright"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
         </RelativeLayout>
     </ScrollView>
 

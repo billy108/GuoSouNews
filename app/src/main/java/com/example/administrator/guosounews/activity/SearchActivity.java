@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity implements View.OnClickListener{
     public static final String SEARCHACTIVITY = "searchActivity";
 
     public static final String AUTO = "auto";
@@ -107,6 +107,15 @@ public class SearchActivity extends Activity {
 
     private void initEditText() {
         etSearch.addTextChangedListener(new EditTextChangedListener());
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_search_back:
+                finish();
+                break;
+        }
     }
 
     class EditTextChangedListener implements TextWatcher {

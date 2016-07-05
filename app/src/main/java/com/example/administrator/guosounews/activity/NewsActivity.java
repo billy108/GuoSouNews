@@ -42,8 +42,6 @@ public class NewsActivity extends Activity {
     TextView newsFrom;
     @InjectView(R.id.news_details_ll)
     LinearLayout newsDetailsLl;
-    @InjectView(R.id.see_original)
-    TextView seeOriginal;
 
     NewsAdv newsCategory;
     NewsList newsCaty;
@@ -87,10 +85,11 @@ public class NewsActivity extends Activity {
      * 点击事件处理
      * @param view 组件
      */
-    @OnClick({R.id.news_back, R.id.news_collect, R.id.news_shared, R.id.see_original})
+    @OnClick({R.id.news_back, R.id.news_collect, R.id.news_shared})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.news_back:
+                finish();
                 break;
             case R.id.news_collect:
 
@@ -107,8 +106,6 @@ public class NewsActivity extends Activity {
                 }
                 break;
             case R.id.news_shared:
-                break;
-            case R.id.see_original:
                 break;
         }
     }

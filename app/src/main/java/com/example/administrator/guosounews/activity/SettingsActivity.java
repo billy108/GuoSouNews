@@ -37,6 +37,8 @@ public class SettingsActivity extends Activity {
     ToggleButton tbSettingsMsg;
     @InjectView(R.id.tb_settings_2g3g)
     ToggleButton tbSettings2g3g;
+    @InjectView(R.id.iv_settings_back)
+    ToggleButton ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,8 @@ public class SettingsActivity extends Activity {
     }
 
     @OnClick({R.id.rl_settings_shared, R.id.rl_settings_clean, R.id.rl_settings_help,
-            R.id.rl_settings_advice, R.id.rl_settings_about,R.id.tb_settings_msg, R.id.tb_settings_2g3g})
+            R.id.rl_settings_advice, R.id.rl_settings_about,R.id.tb_settings_msg, R.id.tb_settings_2g3g,
+            R.id.iv_settings_back})
     public void onClick(View view) {
         Intent i;
         switch (view.getId()) {
@@ -104,6 +107,9 @@ public class SettingsActivity extends Activity {
                 }
 
                 SPUtils.put(this, "isLoadImage", isLoadImage);
+                break;
+            case R.id.iv_settings_back:
+                finish();
                 break;
         }
     }

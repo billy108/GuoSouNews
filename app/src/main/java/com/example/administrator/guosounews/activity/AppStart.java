@@ -30,18 +30,18 @@ public class AppStart extends Activity {
         aa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation arg0) {
-//                if (!isFirstIn) {
-//                    Intent homeIntent = new Intent(AppStart.this, MainActivity.class);
-//                    startActivity(homeIntent);
-//                    finish();
-//                    LogUtils.d("MainActivity.class");
-//                } else {
+                if (!isFirstIn) {
+                    Intent homeIntent = new Intent(AppStart.this, MainActivity.class);
+                    startActivity(homeIntent);
+                    finish();
+                    LogUtils.d("MainActivity.class");
+                } else {
                     Intent guideIntent = new Intent(AppStart.this, WelcomeActivity.class);
                     startActivity(guideIntent);
                     finish();
                     LogUtils.d("GuideActivity.class");
                 }
-//            }
+            }
 
             @Override
             public void onAnimationRepeat(Animation animation) {

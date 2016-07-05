@@ -114,7 +114,8 @@ public class WelcomeActivity extends FragmentActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 }
