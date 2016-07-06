@@ -23,34 +23,41 @@ public class AppStart extends Activity {
 
         SharedPreferences preferences = getSharedPreferences(SHAREDPREFERENCES_NAME, MODE_PRIVATE);
         isFirstIn = preferences.getBoolean("isFirstIn", true);
-        // 渐变展示启动屏
-        AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
-        aa.setDuration(2000);
-        view.startAnimation(aa);
-        aa.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                if (!isFirstIn) {
-                    Intent homeIntent = new Intent(AppStart.this, MainActivity.class);
-                    startActivity(homeIntent);
-                    finish();
-                    LogUtils.d("MainActivity.class");
-                } else {
-                    Intent guideIntent = new Intent(AppStart.this, WelcomeActivity.class);
-                    startActivity(guideIntent);
-                    finish();
-                    LogUtils.d("GuideActivity.class");
-                }
-            }
 
+        new Thread(new Runnable() {
             @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
+            public void run() {
+                // 渐变展示启动屏
+                AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
+                aa.setDuration(2000);
+                view.startAnimation(aa);
+                aa.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd(Animation arg0) {
+                        if (!isFirstIn) {
+                            Intent homeIntent = new Intent(AppStart.this, MainActivity.class);
+                            startActivity(homeIntent);
+                            finish();
+                            LogUtils.d("MainActivity.class");
+                        } else {
+                            Intent guideIntent = new Intent(AppStart.this, WelcomeActivity.class);
+                            startActivity(guideIntent);
+                            finish();
+                            LogUtils.d("GuideActivity.class");
+                        }
+                    }
 
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
 
-        });
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                });
+            }
+        }).start();
+
     }
 }
