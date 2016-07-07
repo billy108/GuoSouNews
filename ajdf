@@ -1,0 +1,59 @@
+* [31m75d6936[m -[33m (HEAD -> master, origin/master, origin/develop, develop)[m optimize startup time [32m(3 hours ago) [1;34m<billy>[m
+* [31mafb65f5[m -[33m[m Verson1.0 [32m(24 hours ago) [1;34m<billy>[m
+* [31m8bca916[m -[33m[m Welcome done [32m(2 days ago) [1;34m<billy>[m
+* [31m3bdb97f[m -[33m[m package [32m(2 days ago) [1;34m<billy>[m
+* [31me084b8b[m -[33m[m homefragment smalltallayout change to TabLayout [32m(2 days ago) [1;34m<billy>[m
+* [31m07fd3c9[m -[33m[m alter other Tabfragment done [32m(5 days ago) [1;34m<billy>[m
+* [31mad158cf[m -[33m[m to alter other Tabfragment [32m(5 days ago) [1;34m<billy>[m
+* [31m5f32c67[m -[33m[m copyHotfragment done [32m(6 days ago) [1;34m<billy>[m
+* [31m9a50ddf[m -[33m[m first item missing, delete setHeader() Ok [32m(6 days ago) [1;34m<billy>[m
+* [31m2c63d2c[m -[33m[m copy layout done,next to click [32m(6 days ago) [1;34m<billy>[m
+* [31me5464a1[m -[33m[m add BaseRecyclerViewAdapter [32m(7 days ago) [1;34m<billy>[m
+* [31mfd88d23[m -[33m[m next is sharedSDK [32m(8 days ago) [1;34m<billy>[m
+* [31m4dda31b[m -[33m[m next to shared [32m(9 days ago) [1;34m<billy>[m
+* [31m6b94bf5[m -[33m[m hotfragment listnews click [32m(12 days ago) [1;34m<billy>[m
+* [31mc1e23e1[m -[33m[m click to collect, bug [32m(12 days ago) [1;34m<billy>[m
+* [31md20969c[m -[33m[m to collect [32m(12 days ago) [1;34m<billy>[m
+* [31mae46797[m -[33m[m collect bug [32m(13 days ago) [1;34m<billy>[m
+* [31ma92f424[m -[33m[m histroy sp done [32m(13 days ago) [1;34m<billy>[m
+* [31md41f56c[m -[33m[m next to collect [32m(13 days ago) [1;34m<billy>[m
+* [31m51e7143[m -[33m[m clean cache done [32m(13 days ago) [1;34m<billy>[m
+* [31mcb9533d[m -[33m[m next to clean cach [32m(13 days ago) [1;34m<billy>[m
+* [31m2c55d52[m -[33m[m next is settings clean [32m(2 weeks ago) [1;34m<billy>[m
+* [31mff51a9c[m -[33m[m settings layout done [32m(2 weeks ago) [1;34m<billy>[m
+* [31m47fc4ca[m -[33m[m next is auto to result [32m(2 weeks ago) [1;34m<billy>[m
+* [31mbc0b387[m -[33m[m search layout and test done [32m(2 weeks ago) [1;34m<billy>[m
+* [31ma104513[m -[33m[m to right MenuSliding [32m(2 weeks ago) [1;34m<billy>[m
+* [31m8465e75[m -[33m[m next to click Newschannle [32m(3 weeks ago) [1;34m<billy>[m
+* [31m58741e7[m -[33m[m next to channel onclick [32m(3 weeks ago) [1;34m<billy>[m
+* [31mdea68c3[m -[33m[m next to right subscription [32m(3 weeks ago) [1;34m<billy>[m
+* [31ma12d6fe[m -[33m[m subscription left layout done [32m(3 weeks ago) [1;34m<billy>[m
+* [31me64e033[m -[33m[m subscription layout done [32m(3 weeks ago) [1;34m<billy>[m
+* [31mb551b4b[m -[33m[m subscription done [32m(3 weeks ago) [1;34m<billy>[m
+* [31m4435912[m -[33m[m special done [32m(3 weeks ago) [1;34m<billy>[m
+* [31m0f727af[m -[33m[m list news done v0.1 [32m(4 weeks ago) [1;34m<billy>[m
+* [31m59981b6[m -[33m[m adv news details done [32m(4 weeks ago) [1;34m<billy>[m
+* [31m721e6d7[m -[33m[m next to NewsActivity [32m(4 weeks ago) [1;34m<billy>[m
+* [31m4b9bbed[m -[33m[m add settting layout [32m(4 weeks ago) [1;34m<billy>[m
+* [31m574ba51[m -[33m[m add note, change text color black [32m(4 weeks ago) [1;34m<billy>[m
+* [31mf865836[m -[33m[m optimize 0.1 [32m(4 weeks ago) [1;34m<billy>[m
+* [31mfae637a[m -[33m[m next is ,pull to refresh [32m(5 weeks ago) [1;34m<billy>[m
+* [31mc9947b4[m -[33m[m to pulltoRefresh [32m(5 weeks ago) [1;34m<billy>[m
+* [31md2ff0ff[m -[33m[m tab done [32m(5 weeks ago) [1;34m<billy>[m
+* [31m4b1473b[m -[33m[m collect layout done [32m(5 weeks ago) [1;34m<billy>[m
+* [31m7005544[m -[33m[m Tab only left [32m(5 weeks ago) [1;34m<billy>[m
+* [31mfe56c0e[m -[33m[m hot news done [32m(5 weeks ago) [1;34m<billy>[m
+* [31m493d422[m -[33m[m con net done [32m(6 weeks ago) [1;34m<billy>[m
+* [31ma6a4d97[m -[33m[m Gson excption done [32m(6 weeks ago) [1;34m<billy>[m
+* [31m8150a6c[m -[33m[m change xUtils expention [32m(6 weeks ago) [1;34m<billy>[m
+* [31md290932[m -[33m[m pulltorefresh done [32m(6 weeks ago) [1;34m<billy>[m
+* [31md4e122b[m -[33m[m News Category layout done [32m(7 weeks ago) [1;34m<billy>[m
+* [31m4cc5e89[m -[33m[m adv bar done [32m(7 weeks ago) [1;34m<billy>[m
+* [31mdebe5ab[m -[33m[m right menu of layout done [32m(7 weeks ago) [1;34m<billy>[m
+* [31m02574db[m -[33m[m top bar styl done [32m(8 weeks ago) [1;34m<billy>[m
+* [31m5e80cc8[m -[33m[m left slidingMenu styl done [32m(8 weeks ago) [1;34m<billy>[m
+* [31mfaca0a3[m -[33m[m left slidingMenu done [32m(8 weeks ago) [1;34m<billy>[m
+* [31m7b0398c[m -[33m[m GuideActiivty done, click to MainAcvitiy [32m(8 weeks ago) [1;34m<billy>[m
+* [31m256407a[m -[33m[m 3 skip to MainActivity or GuidieActivity [32m(8 weeks ago) [1;34m<billy>[m
+* [31md6a45c3[m -[33m[m 2 [32m(8 weeks ago) [1;34m<billy>[m
+* [31me59480b[m -[33m[m 1 [32m(8 weeks ago) [1;34m<billy>[m

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -38,7 +39,7 @@ public class SettingsActivity extends Activity {
     @InjectView(R.id.tb_settings_2g3g)
     ToggleButton tbSettings2g3g;
     @InjectView(R.id.iv_settings_back)
-    ToggleButton ivBack;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
