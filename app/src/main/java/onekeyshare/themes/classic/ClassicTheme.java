@@ -10,13 +10,14 @@ package onekeyshare.themes.classic;
 
 import android.content.Context;
 import android.content.res.Configuration;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
-import cn.sharesdk.onekeyshare.themes.classic.land.EditPageLand;
-import cn.sharesdk.onekeyshare.themes.classic.land.PlatformPageLand;
-import cn.sharesdk.onekeyshare.themes.classic.port.EditPagePort;
-import cn.sharesdk.onekeyshare.themes.classic.port.PlatformPagePort;
+import onekeyshare.OnekeyShareThemeImpl;
+import onekeyshare.themes.classic.land.EditPageLand;
+import onekeyshare.themes.classic.land.PlatformPageLand;
+import onekeyshare.themes.classic.port.EditPagePort;
+import onekeyshare.themes.classic.port.PlatformPagePort;
 
 /** 九宫格经典主题样式的实现类*/
 public class ClassicTheme extends OnekeyShareThemeImpl {

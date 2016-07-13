@@ -43,4 +43,5 @@ dependencies {
     compile 'com.android.support:support-v4:24.0.0'
     compile files('libs/ShareSDK-TencentWeibo-2.7.3.jar')
     compile files('libs/ShareSDK-QQ-2.7.3.jar')
+    compile files('libs/ShareSDK-Core-2.7.3.jar')
 }

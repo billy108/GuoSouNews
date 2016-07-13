@@ -8,7 +8,8 @@
 
 package onekeyshare;
 
-import cn.sharesdk.onekeyshare.themes.classic.ClassicTheme;
+
+import onekeyshare.themes.classic.ClassicTheme;
 
 /** 快捷分享的主题样式  */
 public enum OnekeyShareTheme {

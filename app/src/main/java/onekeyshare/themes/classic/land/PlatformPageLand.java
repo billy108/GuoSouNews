@@ -10,9 +10,10 @@ package onekeyshare.themes.classic.land;
 
 import java.util.ArrayList;
 
-import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
-import cn.sharesdk.onekeyshare.themes.classic.PlatformPage;
-import cn.sharesdk.onekeyshare.themes.classic.PlatformPageAdapter;
+import onekeyshare.OnekeyShareThemeImpl;
+import onekeyshare.themes.classic.PlatformPage;
+import onekeyshare.themes.classic.PlatformPageAdapter;
+
 
 /** 横屏的九宫格页面 */
 public class PlatformPageLand extends PlatformPage {

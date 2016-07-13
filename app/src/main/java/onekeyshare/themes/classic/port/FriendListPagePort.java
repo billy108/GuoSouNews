@@ -10,8 +10,9 @@ package onekeyshare.themes.classic.port;
 
 import com.mob.tools.utils.R;
 
-import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
-import cn.sharesdk.onekeyshare.themes.classic.FriendListPage;
+import onekeyshare.OnekeyShareThemeImpl;
+import onekeyshare.themes.classic.FriendListPage;
+
 
 /** 竖屏的好友列表 */
 public class FriendListPagePort extends FriendListPage {

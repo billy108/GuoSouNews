@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.sharesdk.onekeyshare.themes.classic.FriendAdapter.Following;
 
 import com.mob.tools.gui.AsyncImageView;
 import com.mob.tools.gui.BitmapProcessor;
@@ -77,7 +76,7 @@ public class FriendListItem extends LinearLayout {
 		}
 	}
 
-	public void update(Following following, boolean fling) {
+	public void update(FriendAdapter.Following following, boolean fling) {
 		tvName.setText(following.screenName);
 		ivCheck.setImageBitmap(following.checked ? bmChd : bmUnch);
 		if (aivIcon != null) {
