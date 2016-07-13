@@ -41,4 +41,6 @@ dependencies {
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.7'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
     compile 'com.android.support:support-v4:24.0.0'
+    compile files('libs/ShareSDK-TencentWeibo-2.7.3.jar')
+    compile files('libs/ShareSDK-QQ-2.7.3.jar')
 }
