@@ -73,7 +73,12 @@ public class SearchActivity extends Activity implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_search);
         ButterKnife.inject(this);
-
+        ivSearchBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         initData();
         initEditText();
         initHistroy();
