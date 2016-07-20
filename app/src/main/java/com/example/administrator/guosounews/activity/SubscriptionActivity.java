@@ -63,7 +63,11 @@ public class SubscriptionActivity extends Activity {
 
     static ArrayList<String> items = new ArrayList<String>();
 
+    /**
+     * 初始化订阅频道。
+     */
     private void initRecyclerView() {
+        //获取在订阅管理频道添加的频道信息并显示
         bundle = getIntent().getExtras();
         if (bundle != null) {
             subLIst = (ArrayList<SubscriptionChannel>) bundle.getSerializable("data");
@@ -79,6 +83,7 @@ public class SubscriptionActivity extends Activity {
                 items.add(mychannels.get(i).title);
             }
         }
+        //把添加频道按键一直显示在第一个
         items.add(" ");
 
         //设置固定大小
@@ -93,11 +98,8 @@ public class SubscriptionActivity extends Activity {
         mAdapter.setOnItemClickListener(new SubscriptionItemAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int postiton) {
-                Intent i;
-                if (postiton == (items.size() - 1)) {
-                    i = new Intent(SubscriptionActivity.this, SubscripManagerActivity.class);
-                } else {
-                    i = new Intent(SubscriptionActivity.this, SubscriptionNewsActivity.class);
+                Intent i = new Intent(SubscriptionActivity.this, SubscripManagerActivity.class);
+                if (postiton != (items.size() - 1)) {
                     i.putExtra("url", mychannels.get(postiton).url);
                 }
                 startActivity(i);
@@ -105,12 +107,18 @@ public class SubscriptionActivity extends Activity {
         });
     }
 
+    /**
+     * 注销ButterKnife
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.reset(this);
     }
 
+    /**
+     * 按标题栏的菜单键返回主页面
+     */
     @OnClick(R.id.subscription_bar_sliding)
     public void onClick() {
         Intent i = new Intent(this, MainActivity.class);
@@ -118,6 +126,9 @@ public class SubscriptionActivity extends Activity {
         finish();
     }
 
+    /**
+     * 按返回键到主页面
+     */
     @Override
     public void onBackPressed() {
         Intent i = new Intent(this, MainActivity.class);

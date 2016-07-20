@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class SubscriptionItemAdapter extends RecyclerView.Adapter implements View.OnClickListener{
     public OnRecyclerViewItemClickListener mOnItemClickListener = null;
     ArrayList<String> items;
-    private LayoutInflater mInflater;
     Context ct;
 
     public SubscriptionItemAdapter(ArrayList<String> items, Context ct) {

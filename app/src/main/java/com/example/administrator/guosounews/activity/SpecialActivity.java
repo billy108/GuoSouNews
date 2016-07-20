@@ -19,7 +19,6 @@ import com.example.administrator.guosounews.R;
 import com.example.administrator.guosounews.adapter.SpecialNewsListAdapter;
 import com.example.administrator.guosounews.bean.NewsSpecial;
 import com.example.administrator.guosounews.fragment.CopyOfHotFragment;
-import com.example.administrator.guosounews.fragment.HomeFragment;
 import com.example.administrator.guosounews.ui.ListViewForScrollView;
 import com.example.administrator.guosounews.ui.RefreshLayout;
 import com.example.administrator.guosounews.utils.APIs;
@@ -63,7 +62,6 @@ public class SpecialActivity extends Activity {
     RefreshLayout specialSwipeLayout;
 
     private NewsSpecial specica;
-    private HomeFragment hotFragment = new HomeFragment();;
     String slide_url;
     private List<ImageView> imageNewsList;
     private List<String> list_url_list = new ArrayList<String>();
@@ -90,7 +88,7 @@ public class SpecialActivity extends Activity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.special_back:
-                Toast.makeText(this, "1111111111111111111111111", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
     }
